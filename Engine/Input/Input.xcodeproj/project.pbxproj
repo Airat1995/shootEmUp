@@ -1,0 +1,764 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		3C2722D7751840A5BEC9CD31 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2E48CD2A2812449EBBECED33 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				784EA318E1996C036192D6F2 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				EC68059083054124B43861AD /* PBXTargetDependency */,
+				C58A460BA32A4495BE50E227 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		F795513A583E456282E4350A /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CBD50A77324C49F7B315E688 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				34EC89850CB82EA6A875102D /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		130EAAE0E0A34A67B0ED20BE /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.h */ = {isa = PBXBuildFile; fileRef = BCC47FF58BEA470CA340C880 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.h */; };
+		16A9998E09FD4A9B8DDF5E54 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp */ = {isa = PBXBuildFile; fileRef = 698A81E873E04F5697EACD99 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp */; };
+		2EDB2DA97224422D85204BB7 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp */ = {isa = PBXBuildFile; fileRef = BB44E5D3F15A43C2B1EA9E27 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp */; };
+		5F2E5000464F46A4A0EB365B /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.h */ = {isa = PBXBuildFile; fileRef = D910CF69DDA047A8A6B5AEAF /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.h */; };
+		642EA40779E94524BCDEE683 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.h */ = {isa = PBXBuildFile; fileRef = B7FA6B4169414A2EABEF1DA2 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.h */; };
+		67C83761DB7B439FAF5C58E5 /* /Users/airat/Projects/shootEmUp/Engine/Input/KeyCode.h */ = {isa = PBXBuildFile; fileRef = 2B341E5161E244728531CE71 /* /Users/airat/Projects/shootEmUp/Engine/Input/KeyCode.h */; };
+		8E174037C7144A7EAB3325DC /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = C3E0BF7062C44CB6A9AE4DB7 /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */; };
+		C39265BB19304EEFAB39197C /* /Users/airat/Projects/shootEmUp/Engine/Input/InputState.h */ = {isa = PBXBuildFile; fileRef = 2C90632BDB9F4EDFB2A84860 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputState.h */; };
+		E7281B6F6C324F3AA3C025CA /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp */ = {isa = PBXBuildFile; fileRef = 9FB3824566104968970E9DFB /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		0F742AAB295D4FA0B5CC745C /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		165513589F4A446C894CA16C /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		E1835B512D854FE2A0E64223 /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		E66D4B3EBF704A9FAB33851A /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		17AFD1F1F45447449A24091A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66B55ADE1224FF7ADA71C94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F795513A583E456282E4350A;
+			remoteInfo = ZERO_CHECK;
+		};
+		31BDC2423F63470EB7F9302F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66B55ADE1224FF7ADA71C94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F795513A583E456282E4350A;
+			remoteInfo = ZERO_CHECK;
+		};
+		A9A189AB780D4FDA83B0CC47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66B55ADE1224FF7ADA71C94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07272F52A84F448B843528F0;
+			remoteInfo = Input;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B341E5161E244728531CE71 /* /Users/airat/Projects/shootEmUp/Engine/Input/KeyCode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = KeyCode.h; path = KeyCode.h; sourceTree = SOURCE_ROOT; };
+		2C90632BDB9F4EDFB2A84860 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputState.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = InputState.h; path = InputState.h; sourceTree = SOURCE_ROOT; };
+		698A81E873E04F5697EACD99 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = InputHandler.cpp; path = InputHandler.cpp; sourceTree = SOURCE_ROOT; };
+		9FB3824566104968970E9DFB /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = InputContext.cpp; path = InputContext.cpp; sourceTree = SOURCE_ROOT; };
+		A4C45B0AE5EA4C6AAC779772 /* Input */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libInput.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF22B9463CCD4DA8B9C3ACD3 /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		B7FA6B4169414A2EABEF1DA2 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = InputMap.h; path = InputMap.h; sourceTree = SOURCE_ROOT; };
+		BB44E5D3F15A43C2B1EA9E27 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = InputMap.cpp; path = InputMap.cpp; sourceTree = SOURCE_ROOT; };
+		BCC47FF58BEA470CA340C880 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = InputContext.h; path = InputContext.h; sourceTree = SOURCE_ROOT; };
+		C3E0BF7062C44CB6A9AE4DB7 /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		D910CF69DDA047A8A6B5AEAF /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = InputHandler.h; path = InputHandler.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DBE16DF35BA641E5B4205DE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		20432C6E218A400FA490ECD9 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				9FB3824566104968970E9DFB /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp */,
+				698A81E873E04F5697EACD99 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp */,
+				BB44E5D3F15A43C2B1EA9E27 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		3E589F7686E548AB9A5FF1F1 /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				BCC47FF58BEA470CA340C880 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.h */,
+				D910CF69DDA047A8A6B5AEAF /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.h */,
+				B7FA6B4169414A2EABEF1DA2 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.h */,
+				2C90632BDB9F4EDFB2A84860 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputState.h */,
+				2B341E5161E244728531CE71 /* /Users/airat/Projects/shootEmUp/Engine/Input/KeyCode.h */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		6FD6F844FF194F139D4ACAA0 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				20432C6E218A400FA490ECD9 /* Source Files */,
+				3E589F7686E548AB9A5FF1F1 /* Header Files */,
+				C3E0BF7062C44CB6A9AE4DB7 /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		93572F1A005E4A9EA8B9CD09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B533D9FFD6A4117B52E2BAB /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		A410DB3771E9475FA1B5BD85 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A4C45B0AE5EA4C6AAC779772 /* Input */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A907184E0ACA457CB2A51013 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				9B533D9FFD6A4117B52E2BAB /* CMake Rules */,
+				AF22B9463CCD4DA8B9C3ACD3 /* /Users/airat/Projects/shootEmUp/Engine/Input/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		E5369CD8CCBE4E7EABD51BC2 = {
+			isa = PBXGroup;
+			children = (
+				6FD6F844FF194F139D4ACAA0 /* Input */,
+				A907184E0ACA457CB2A51013 /* ALL_BUILD */,
+				A410DB3771E9475FA1B5BD85 /* Products */,
+				93572F1A005E4A9EA8B9CD09 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		07272F52A84F448B843528F0 /* Input */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4D211FC21444DF594B329D5 /* Build configuration list for PBXNativeTarget "Input" */;
+			buildPhases = (
+				B252AAC9142942BF9E0619C4 /* Sources */,
+				DBE16DF35BA641E5B4205DE5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7FDCB99097C94AC8993C8A36 /* PBXTargetDependency */,
+			);
+			name = Input;
+			productName = Input;
+			productReference = A4C45B0AE5EA4C6AAC779772 /* Input */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B66B55ADE1224FF7ADA71C94 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 41A8E8FA6EF740B38F96CBA8 /* Build configuration list for PBXProject "Input" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				0F742AAB295D4FA0B5CC745C /* Debug */,
+				E66D4B3EBF704A9FAB33851A /* Release */,
+				E1835B512D854FE2A0E64223 /* MinSizeRel */,
+				165513589F4A446C894CA16C /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = E5369CD8CCBE4E7EABD51BC2;
+			projectDirPath = .;
+			projectRoot = "";
+			targets = (
+				3C2722D7751840A5BEC9CD31 /* ALL_BUILD */,
+				07272F52A84F448B843528F0 /* Input */,
+				F795513A583E456282E4350A /* ZERO_CHECK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		34EC89850CB82EA6A875102D /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+/Users/airat/Projects/shootEmUp/Engine/Input/CMakeFiles/ZERO_CHECK			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  make -f /Users/airat/Projects/shootEmUp/Engine/Input/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  make -f /Users/airat/Projects/shootEmUp/Engine/Input/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  make -f /Users/airat/Projects/shootEmUp/Engine/Input/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  make -f /Users/airat/Projects/shootEmUp/Engine/Input/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		784EA318E1996C036192D6F2 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+/Users/airat/Projects/shootEmUp/Engine/Input/CMakeFiles/ALL_BUILD			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/airat/Projects/shootEmUp/Engine/Input
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B252AAC9142942BF9E0619C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7281B6F6C324F3AA3C025CA /* /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp */,
+				16A9998E09FD4A9B8DDF5E54 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp */,
+				2EDB2DA97224422D85204BB7 /* /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7FDCB99097C94AC8993C8A36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F795513A583E456282E4350A /* ZERO_CHECK */;
+			targetProxy = 17AFD1F1F45447449A24091A /* PBXContainerItemProxy */;
+		};
+		C58A460BA32A4495BE50E227 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F795513A583E456282E4350A /* ZERO_CHECK */;
+			targetProxy = 31BDC2423F63470EB7F9302F /* PBXContainerItemProxy */;
+		};
+		EC68059083054124B43861AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07272F52A84F448B843528F0 /* Input */;
+			targetProxy = A9A189AB780D4FDA83B0CC47 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		326D5FC583174FD6862BA5E9 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		357ED543A9B64B0288532155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		6354AB35092F45A6A0820E95 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/airat/Projects/shootEmUp/build;
+			};
+			name = RelWithDebInfo;
+		};
+		651BF497214B455BBE39DD4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		6B7876C93EAF49E183BDB9B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/airat/Projects/shootEmUp/build;
+			};
+			name = Release;
+		};
+		6EA6C4099C8843679764163A /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/airat/Projects/shootEmUp/Engine/Input/MinSizeRel;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/airat/Projects/shootEmUp/shootEmUp,/opt/homebrew/Cellar/sdl2/2.28.5/include,/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2,/opt/homebrew/include,/Users/airat/Projects/shootEmUp/include,/Users/airat/Projects/shootEmUp/Engine,/Users/airat/Projects/shootEmUp/Engine/Input/..,/Users/airat/Projects/shootEmUp/Engine/Input/.,/Users/airat/Projects/shootEmUp/Engine/Input/../Shared,"$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++17' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Input;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/airat/Projects/shootEmUp/build/Input.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		AE38A41596CA4CB9988299CE /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		AF4A624BC77E4E60A7E249E5 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/airat/Projects/shootEmUp/Engine/Input/RelWithDebInfo;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/airat/Projects/shootEmUp/shootEmUp,/opt/homebrew/Cellar/sdl2/2.28.5/include,/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2,/opt/homebrew/include,/Users/airat/Projects/shootEmUp/include,/Users/airat/Projects/shootEmUp/Engine,/Users/airat/Projects/shootEmUp/Engine/Input/..,/Users/airat/Projects/shootEmUp/Engine/Input/.,/Users/airat/Projects/shootEmUp/Engine/Input/../Shared,"$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++17' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Input;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/airat/Projects/shootEmUp/build/Input.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		B0BC04A7301440679547E0F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/airat/Projects/shootEmUp/Engine/Input/Release;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/airat/Projects/shootEmUp/shootEmUp,/opt/homebrew/Cellar/sdl2/2.28.5/include,/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2,/opt/homebrew/include,/Users/airat/Projects/shootEmUp/include,/Users/airat/Projects/shootEmUp/Engine,/Users/airat/Projects/shootEmUp/Engine/Input/..,/Users/airat/Projects/shootEmUp/Engine/Input/.,/Users/airat/Projects/shootEmUp/Engine/Input/../Shared,"$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++17' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Input;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/airat/Projects/shootEmUp/build/Input.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		B9D7750BD5894DDEADFA5226 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk;
+				SYMROOT = /Users/airat/Projects/shootEmUp/build;
+			};
+			name = Debug;
+		};
+		CC102E4F851044B8B6B46E13 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		CF39924E49084C07881A7986 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		D089D82F5FF24EEBA5DEC033 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = /Users/airat/Projects/shootEmUp/Engine/Input/Debug;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/airat/Projects/shootEmUp/shootEmUp,/opt/homebrew/Cellar/sdl2/2.28.5/include,/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2,/opt/homebrew/include,/Users/airat/Projects/shootEmUp/include,/Users/airat/Projects/shootEmUp/Engine,/Users/airat/Projects/shootEmUp/Engine/Input/..,/Users/airat/Projects/shootEmUp/Engine/Input/.,/Users/airat/Projects/shootEmUp/Engine/Input/../Shared,"$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "   '-std=gnu++17' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Input;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/airat/Projects/shootEmUp/build/Input.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		D742FFF26A414975ABC7548E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		E285420A48964A3D8F71E5F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		F854974E28C54ACE8306379B /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = /Users/airat/Projects/shootEmUp/build;
+			};
+			name = MinSizeRel;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E48CD2A2812449EBBECED33 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				357ED543A9B64B0288532155 /* Debug */,
+				E285420A48964A3D8F71E5F3 /* Release */,
+				CF39924E49084C07881A7986 /* MinSizeRel */,
+				AE38A41596CA4CB9988299CE /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		41A8E8FA6EF740B38F96CBA8 /* Build configuration list for PBXProject "Input" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9D7750BD5894DDEADFA5226 /* Debug */,
+				6B7876C93EAF49E183BDB9B8 /* Release */,
+				F854974E28C54ACE8306379B /* MinSizeRel */,
+				6354AB35092F45A6A0820E95 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B4D211FC21444DF594B329D5 /* Build configuration list for PBXNativeTarget "Input" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D089D82F5FF24EEBA5DEC033 /* Debug */,
+				B0BC04A7301440679547E0F3 /* Release */,
+				6EA6C4099C8843679764163A /* MinSizeRel */,
+				AF4A624BC77E4E60A7E249E5 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CBD50A77324C49F7B315E688 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				651BF497214B455BBE39DD4A /* Debug */,
+				D742FFF26A414975ABC7548E /* Release */,
+				CC102E4F851044B8B6B46E13 /* MinSizeRel */,
+				326D5FC583174FD6862BA5E9 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B66B55ADE1224FF7ADA71C94 /* Project object */;
+}

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libAsset.a CMakeFiles/Asset.dir/Image/IImage.cpp.o CMakeFiles/Asset.dir/Material/IMaterial.cpp.o
+/usr/bin/ranlib libAsset.a

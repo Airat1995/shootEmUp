@@ -1,0 +1,15 @@
+{
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "files.associations": {
+        "*.cpp": "cpp",
+        "vector": "cpp",
+        "array": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp"
+    },
+    "cmake.debugConfig": {
+        "args": [
+            "-DDEBUG_CODE=1"
+        ]
+    }
+}

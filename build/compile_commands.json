@@ -1,0 +1,194 @@
+[
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -isystem /opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/shootEmUp.dir/main.cpp.o -c /Users/airat/Projects/shootEmUp/main.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/main.cpp",
+  "output": "CMakeFiles/shootEmUp.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Window",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Window/Window -I/Users/airat/Projects/shootEmUp/Engine/Window/.. -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Window.dir/SDLWindow.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Window/SDLWindow.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Window/SDLWindow.cpp",
+  "output": "Engine/Window/CMakeFiles/Window.dir/SDLWindow.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Window",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Window/Window -I/Users/airat/Projects/shootEmUp/Engine/Window/.. -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Window.dir/IWindow.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Window/IWindow.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Window/IWindow.cpp",
+  "output": "Engine/Window/CMakeFiles/Window.dir/IWindow.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/AssetWrapper/BufferlessVulkanImage.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/BufferlessVulkanImage.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/BufferlessVulkanImage.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/AssetWrapper/BufferlessVulkanImage.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/AssetWrapper/VulkanImage.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/VulkanImage.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/VulkanImage.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/AssetWrapper/VulkanImage.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/AssetWrapper/VulkanMeshData.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/VulkanMeshData.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/AssetWrapper/VulkanMeshData.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/AssetWrapper/VulkanMeshData.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Buffer/IDepthBuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Buffer/IDepthBuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Buffer/IDepthBuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Buffer/IDepthBuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Buffer/IFramebuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Buffer/IFramebuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Buffer/IFramebuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Buffer/IFramebuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Buffer/VulkanBuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanBuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanBuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Buffer/VulkanBuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Buffer/VulkanDepthBuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanDepthBuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanDepthBuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Buffer/VulkanDepthBuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Buffer/VulkanFramebuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanFramebuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Buffer/VulkanFramebuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Buffer/VulkanFramebuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Command/ICommandBuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Command/ICommandBuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Command/ICommandBuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Command/ICommandBuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Command/ICommandPool.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Command/ICommandPool.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Command/ICommandPool.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Command/ICommandPool.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Command/VulkanCommandBuffer.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Command/VulkanCommandBuffer.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Command/VulkanCommandBuffer.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Command/VulkanCommandBuffer.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Command/VulkanCommandPool.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Command/VulkanCommandPool.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Command/VulkanCommandPool.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Command/VulkanCommandPool.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Pipeline/IPipeline.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/IPipeline.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/IPipeline.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Pipeline/IPipeline.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Pipeline/IVulkanRenderMeshBufferCreator.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/IVulkanRenderMeshBufferCreator.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/IVulkanRenderMeshBufferCreator.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Pipeline/IVulkanRenderMeshBufferCreator.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Pipeline/VulkanPipeline.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/VulkanPipeline.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Pipeline/VulkanPipeline.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Pipeline/VulkanPipeline.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Render/IRender.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Render/IRender.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Render/IRender.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Render/IRender.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Render/IRenderpass.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Render/IRenderpass.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Render/IRenderpass.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Render/IRenderpass.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Render/VulkanRender.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Render/VulkanRender.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Render/VulkanRender.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Render/VulkanRender.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Render/VulkanRenderpass.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Render/VulkanRenderpass.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Render/VulkanRenderpass.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Render/VulkanRenderpass.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Shader/VulkanShader.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Shader/VulkanShader.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Shader/VulkanShader.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Shader/VulkanShader.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Shadowmap/VulkanOmniShadowmap.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Shadowmap/VulkanOmniShadowmap.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Shadowmap/VulkanOmniShadowmap.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Shadowmap/VulkanOmniShadowmap.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Render",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Render/.. -I/Users/airat/Projects/shootEmUp/Engine/Render/. -I/Users/airat/Projects/shootEmUp/Engine/Render/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Render.dir/Swapchain/ISwapchain.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Render/Swapchain/ISwapchain.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Render/Swapchain/ISwapchain.cpp",
+  "output": "Engine/Render/CMakeFiles/Render.dir/Swapchain/ISwapchain.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Asset",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Asset/.. -I/Users/airat/Projects/shootEmUp/Engine/Asset/. -I/Users/airat/Projects/shootEmUp/Engine/Asset/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Asset.dir/Image/IImage.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Asset/Image/IImage.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Asset/Image/IImage.cpp",
+  "output": "Engine/Asset/CMakeFiles/Asset.dir/Image/IImage.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Asset",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Asset/.. -I/Users/airat/Projects/shootEmUp/Engine/Asset/. -I/Users/airat/Projects/shootEmUp/Engine/Asset/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Asset.dir/Material/IMaterial.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Asset/Material/IMaterial.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Asset/Material/IMaterial.cpp",
+  "output": "Engine/Asset/CMakeFiles/Asset.dir/Material/IMaterial.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Common",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Common/.. -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Common.dir/IO/FileReader.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Common/IO/FileReader.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Common/IO/FileReader.cpp",
+  "output": "Engine/Common/CMakeFiles/Common.dir/IO/FileReader.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Camera",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Camera/.. -I/Users/airat/Projects/shootEmUp/Engine/Camera/. -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Camera.dir/ICamera.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Camera/ICamera.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Camera/ICamera.cpp",
+  "output": "Engine/Camera/CMakeFiles/Camera.dir/ICamera.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Input",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Input/.. -I/Users/airat/Projects/shootEmUp/Engine/Input/. -I/Users/airat/Projects/shootEmUp/Engine/Input/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Input.dir/InputContext.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Input/InputContext.cpp",
+  "output": "Engine/Input/CMakeFiles/Input.dir/InputContext.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Input",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Input/.. -I/Users/airat/Projects/shootEmUp/Engine/Input/. -I/Users/airat/Projects/shootEmUp/Engine/Input/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Input.dir/InputHandler.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Input/InputHandler.cpp",
+  "output": "Engine/Input/CMakeFiles/Input.dir/InputHandler.cpp.o"
+},
+{
+  "directory": "/Users/airat/Projects/shootEmUp/build/Engine/Input",
+  "command": "/usr/bin/clang++  -I/Users/airat/Projects/shootEmUp/shootEmUp -I/opt/homebrew/Cellar/sdl2/2.28.5/include -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2 -I/opt/homebrew/include -I/Users/airat/Projects/shootEmUp/include -I/Users/airat/Projects/shootEmUp/Engine -I/Users/airat/Projects/shootEmUp/Engine/Input/.. -I/Users/airat/Projects/shootEmUp/Engine/Input/. -I/Users/airat/Projects/shootEmUp/Engine/Input/../Shared -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o CMakeFiles/Input.dir/InputMap.cpp.o -c /Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp",
+  "file": "/Users/airat/Projects/shootEmUp/Engine/Input/InputMap.cpp",
+  "output": "Engine/Input/CMakeFiles/Input.dir/InputMap.cpp.o"
+}
+]
