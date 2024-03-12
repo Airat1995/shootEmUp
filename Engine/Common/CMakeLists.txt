@@ -1,11 +1,11 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.8)
 
 project(Common)
 
 file(GLOB_RECURSE Common_SRC
         "*.h"
         "*.cpp"
-        )
+)
 
 include_directories(../)
 

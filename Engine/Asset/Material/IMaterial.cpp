@@ -1,8 +1,8 @@
 #include "IMaterial.h"
 
-IMaterial::IMaterial(map<ShaderType, IShader>& shaders, RenderQueue renderQueue) : _shaders(shaders), _renderQueue(renderQueue)
+IMaterial::IMaterial(std::map<ShaderType, IShader>& shaders, RenderQueue renderQueue) : _shaders(shaders), _renderQueue(renderQueue)
 {
-	_buffers = vector<IBuffer*>();
+	_buffers = std::vector<IBuffer*>();
 }
 
 void IMaterial::AddBuffer(IBuffer* buffer)
@@ -15,17 +15,17 @@ void IMaterial::AddImage(IImage* image)
 	_images.push_back(image);
 }
 
-map<ShaderType, IShader>& IMaterial::MaterialShaders()
+std::map<ShaderType, IShader>& IMaterial::MaterialShaders()
 {
 	return _shaders;
 }
 
-vector<IBuffer*>& IMaterial::Buffers()
+std::vector<IBuffer*>& IMaterial::Buffers()
 {
 	return _buffers;
 }
 
-vector<IImage*>& IMaterial::Images()
+std::vector<IImage*>& IMaterial::Images()
 {
 	return _images;
 }

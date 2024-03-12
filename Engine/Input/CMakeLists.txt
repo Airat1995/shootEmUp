@@ -1,13 +1,13 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.8)
 
 project(Input)
 
-set (CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB_RECURSE Input_SRC
         "*.h"
         "*.cpp"
-        )
+)
 
 include_directories(../)
 include_directories(.)

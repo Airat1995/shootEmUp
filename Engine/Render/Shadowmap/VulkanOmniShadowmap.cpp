@@ -17,40 +17,40 @@ VulkanOmniShadowmap::VulkanOmniShadowmap(vec4* lightPosition, CameraObject* curr
 	_frameBuffer = new VulkanFramebuffer(_device, drawQueue, presentQueue, *swapchain, *_image, *_offscreenRenderpass, *commandPool, *_depthBuffer);
 
 
-	vector<BaseVertexDescriptor>* vertices = new vector<BaseVertexDescriptor>();
-	for (size_t meshIndex = 0; meshIndex < meshDataCollection->size(); meshIndex++)
-	{
-		VulkanMeshData* meshData = meshDataCollection->at(meshIndex);
-		for (auto& mesh : meshData->Meshes()) 
-		{
-			vector<vec4>* vertexDatas = mesh->VertexPositions();
-			for (auto& verticie : *vertexDatas)
-			{
-				VertexData* vertexData = new VertexData();
-				vertexData->position = verticie;
-
-				BaseVertexDescriptor* vertex = new BaseVertexDescriptor(*vertexData);
-				vertices->push_back(*vertex);
-			}
-		}
-	}
-
-	IShader vertexShader = IShader(_vertexLoc, _shaderName);
-	IShader fragmentShader = IShader(_fragmentLoc, _shaderName);
-	map<ShaderType, IShader> shaders = map<ShaderType, IShader>();
-	shaders.insert(shaders.end(), std::pair<ShaderType, IShader>(ShaderType::Vertex, vertexShader));
-	shaders.insert(shaders.end(), std::pair<ShaderType, IShader>(ShaderType::Fragment, fragmentShader));
-
-	IMaterial* shadowMapMaterial = new IMaterial(shaders, PreOpaque);
-	Mesh<BaseVertexDescriptor, VertexData>* skyboxMesh = new Mesh<BaseVertexDescriptor, VertexData>(*vertices, shadowMapMaterial);
-	_shadowmapBuffer = ShadowmapBuffer();
-	IBuffer* shadowmapBuffer = new BaseBuffer<ShadowmapBuffer>(BufferUsageFlag::UniformBuffer,
-	                                                           BufferSharingMode::Exclusive, &_shadowmapBuffer,
-	                                                           BufferStageFlag::Vertex, 0);
-	
-	skyboxMesh->Material()->AddBuffer(shadowmapBuffer);
-	
-	CreateVulkanPipeline(skyboxMesh);
+//	vector<BaseVertexDescriptor>* vertices = new vector<BaseVertexDescriptor>();
+//	for (size_t meshIndex = 0; meshIndex < meshDataCollection->size(); meshIndex++)
+//	{
+//		VulkanMeshData* meshData = meshDataCollection->at(meshIndex);
+//		for (auto& mesh : meshData->Meshes())
+//		{
+//			vector<vec4>* vertexDatas = mesh->VertexPositions();
+//			for (auto& verticie : *vertexDatas)
+//			{
+//				VertexData* vertexData = new VertexData();
+//				vertexData->position = verticie;
+//
+//				BaseVertexDescriptor* vertex = new BaseVertexDescriptor(*vertexData);
+//				vertices->push_back(*vertex);
+//			}
+//		}
+//	}
+//
+////	IShader vertexShader = IShader(_vertexLoc, _shaderName);
+////	IShader fragmentShader = IShader(_fragmentLoc, _shaderName);
+//	map<ShaderType, IShader> shaders = map<ShaderType, IShader>();
+////	shaders.insert(shaders.end(), std::pair<ShaderType, IShader>(ShaderType::Vertex, vertexShader));
+////	shaders.insert(shaders.end(), std::pair<ShaderType, IShader>(ShaderType::Fragment, fragmentShader));
+//
+//	IMaterial* shadowMapMaterial = new IMaterial(shaders, PreOpaque);
+//	Mesh<BaseVertexDescriptor, VertexData>* skyboxMesh = new Mesh<BaseVertexDescriptor, VertexData>(*vertices, shadowMapMaterial);
+//	_shadowmapBuffer = ShadowmapBuffer();
+//	IBuffer* shadowmapBuffer = new BaseBuffer<ShadowmapBuffer>(BufferUsageFlag::UniformBuffer,
+//	                                                           BufferSharingMode::Exclusive, &_shadowmapBuffer,
+//	                                                           BufferStageFlag::Vertex, 0);
+//
+//	skyboxMesh->Material()->AddBuffer(shadowmapBuffer);
+//
+//	CreateVulkanPipeline(skyboxMesh);
 }
 
 

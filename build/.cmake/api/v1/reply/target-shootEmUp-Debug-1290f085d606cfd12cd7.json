@@ -1,0 +1,244 @@
+{
+  "artifacts": [
+    {
+      "path": "shootEmUp"
+    }
+  ],
+  "backtrace": 1,
+  "backtraceGraph": {
+    "commands": [
+      "add_executable",
+      "target_link_libraries",
+      "include_directories"
+    ],
+    "files": [
+      "CMakeLists.txt"
+    ],
+    "nodes": [
+      {
+        "file": 0
+      },
+      {
+        "command": 0,
+        "file": 0,
+        "line": 6,
+        "parent": 0
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 18,
+        "parent": 0
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 19,
+        "parent": 0
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 30,
+        "parent": 0
+      },
+      {
+        "command": 2,
+        "file": 0,
+        "line": 13,
+        "parent": 0
+      },
+      {
+        "command": 2,
+        "file": 0,
+        "line": 21,
+        "parent": 0
+      },
+      {
+        "command": 2,
+        "file": 0,
+        "line": 16,
+        "parent": 0
+      }
+    ]
+  },
+  "compileGroups": [
+    {
+      "compileCommandFragments": [
+        {
+          "fragment": "-g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1"
+        }
+      ],
+      "includes": [
+        {
+          "backtrace": 5,
+          "path": "/Users/airat/Projects/shootEmUp/shootEmUp"
+        },
+        {
+          "backtrace": 5,
+          "path": "/opt/homebrew/Cellar/sdl2/2.28.5/include"
+        },
+        {
+          "backtrace": 6,
+          "path": "/Users/airat/Projects/shootEmUp/include"
+        },
+        {
+          "backtrace": 6,
+          "path": "/Users/airat/Projects/shootEmUp/Engine"
+        },
+        {
+          "backtrace": 5,
+          "isSystem": true,
+          "path": "/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2"
+        },
+        {
+          "backtrace": 7,
+          "isSystem": true,
+          "path": "/opt/homebrew/include"
+        }
+      ],
+      "language": "CXX",
+      "languageStandard": {
+        "backtraces": [
+          1
+        ],
+        "standard": "17"
+      },
+      "sourceIndexes": [
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "backtrace": 4,
+      "id": "Window::@a4368dc7e71635a75bb7"
+    },
+    {
+      "backtrace": 4,
+      "id": "Render::@56bc1e72de10de61d898"
+    },
+    {
+      "backtrace": 4,
+      "id": "Asset::@b460e80b0674eca16ad3"
+    },
+    {
+      "backtrace": 4,
+      "id": "Common::@af1f526a9f0c544f33fd"
+    },
+    {
+      "backtrace": 4,
+      "id": "Camera::@49dd95eb794d06d6a63d"
+    },
+    {
+      "backtrace": 4,
+      "id": "Input::@fd38241c40742e02d4e0"
+    }
+  ],
+  "id": "shootEmUp::@6890427a1f51a3e7e1df",
+  "link": {
+    "commandFragments": [
+      {
+        "fragment": "-g",
+        "role": "flags"
+      },
+      {
+        "fragment": "",
+        "role": "flags"
+      },
+      {
+        "backtrace": 2,
+        "fragment": "-L/opt/homebrew/Cellar/sdl2/2.28.5/lib",
+        "role": "libraryPath"
+      },
+      {
+        "fragment": "-Wl,-rpath,/opt/homebrew/Cellar/sdl2/2.28.5/lib -Wl,-rpath,/usr/local/lib",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 2,
+        "fragment": "/opt/homebrew/Cellar/sdl2/2.28.5/lib/libSDL2.dylib",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 3,
+        "fragment": "/usr/local/lib/libvulkan.dylib",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Render/libRender.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Window/libWindow.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Asset/libAsset.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Common/libCommon.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Camera/libCamera.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Input/libInput.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Render/libRender.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Asset/libAsset.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Common/libCommon.a",
+        "role": "libraries"
+      },
+      {
+        "backtrace": 4,
+        "fragment": "Engine/Camera/libCamera.a",
+        "role": "libraries"
+      }
+    ],
+    "language": "CXX"
+  },
+  "name": "shootEmUp",
+  "nameOnDisk": "shootEmUp",
+  "paths": {
+    "build": ".",
+    "source": "."
+  },
+  "sourceGroups": [
+    {
+      "name": "Source Files",
+      "sourceIndexes": [
+        0
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "backtrace": 1,
+      "compileGroupIndex": 0,
+      "path": "main.cpp",
+      "sourceGroupIndex": 0
+    }
+  ],
+  "type": "EXECUTABLE"
+}

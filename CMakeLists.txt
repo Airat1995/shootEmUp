@@ -3,7 +3,15 @@ project(shootEmUp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(shootEmUp main.cpp)
+file(GLOB_RECURSE Game_SRC
+        "Game/**.h"
+        "Game/**.cpp"
+)
+
+add_executable(shootEmUp ${Game_SRC} main.cpp
+        Game/Assets/Mesh/MainMesh.cpp
+        Game/Assets/Mesh/MainMesh.h
+)
 
 if (DEBUG_CODE)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DENGINE_DEBUG")
@@ -26,5 +34,6 @@ add_subdirectory(Engine/Asset)
 add_subdirectory(Engine/Common)
 add_subdirectory(Engine/Camera)
 add_subdirectory(Engine/Input)
+add_subdirectory(Tools/ShaderToCode)
 
 target_link_libraries(shootEmUp Render Window Asset Common Camera Input)

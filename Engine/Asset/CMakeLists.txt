@@ -1,11 +1,11 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.8)
 
 project(Asset)
 
 file(GLOB_RECURSE Asset_SRC
         "*.h"
         "*.cpp"
-        )
+)
 
 include_directories(../)
 include_directories(.)

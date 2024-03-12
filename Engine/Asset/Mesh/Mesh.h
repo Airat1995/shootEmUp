@@ -3,14 +3,12 @@
 #include <utility>
 
 #include "IMesh.h"
-#include "IVertexDescriptor.h"
+#include "BaseVertexDescriptor.h"
 
 template
 <
-	typename Vertex,
 	typename VertexDataT,
-	typename = enable_if<is_base_of_v<VertexData, VertexDataT>>,
-	typename = enable_if<is_base_of_v<IVertexDescriptor<VertexDataT>, Vertex>>
+	typename = enable_if<is_base_of_v<VertexDataT, BaseVertexDescriptor>>
 >
 class Mesh : public IMesh
 {
@@ -21,25 +19,18 @@ public:
 	Mesh& operator=(Mesh&&) = delete;       // Move assignment operator
 	virtual ~Mesh() = default;
 
-	Mesh(vector<Vertex>& vertices, IMaterial* material) : IMesh(), _vertices(vertices), _material(material)
+	Mesh(VertexDataT& vertexDescriptor, IMaterial& material) : IMesh(), _vertexDescriptor(vertexDescriptor), _vertices(), _material(std::move(material)), _indexes(vertexDescriptor.Indices())
 	{
 		FillVertexDatas();
-	}
-
-	Mesh(vector<Vertex>& vertices, std::vector<uint16_t> indexes, IMaterial* material) : IMesh(), _vertices(vertices),
-	                                                            _indexes(std::move(indexes)), _material(material), _indexed(true)
-	{
-		FillVertexDatas();
-	}
-
-	Mesh(): IMesh(), _material(nullptr)
-	{
-		_vertices = vector<Vertex>();
+        if(!_indexes.empty())
+        {
+            _indexed = true;
+        }
 	}
 
 	void FillVertexDatas()
 	{
-		_vertexDatas = vector<VertexDataT>();
+		_vertexDatas = vector<BaseVertexData>();
 		for (size_t index = 0; index < _vertices.size(); ++index)
 		{
 			_vertexDatas.push_back(_vertices[index].GetVertexData());
@@ -63,12 +54,12 @@ public:
 
 	int RequiredBufferSize() override
 	{
-		return _vertices[0].VertexSize() * _vertexDatas.size();
+		return VertexSize() * _vertexDatas.size();
 	}
 
 	int VertexSize() override
 	{
-		return sizeof(Vertex);
+		return VertexDataT::VertexSize();
 	}
 
 	int IndexSize() override
@@ -78,7 +69,7 @@ public:
 
 	vector<VertexAttributeInfo> VertexInfo() override
 	{
-		return _vertices.at(0).GetVertexInfo();
+		return VertexDataT::GetVertexInfo();
 	}
 
 	vector<VertexBindingInfo> GetVertexBindingInfo() override
@@ -88,12 +79,12 @@ public:
 
 	map<ShaderType, IShader>& Shaders() override
 	{
-		return _material->MaterialShaders();
+		return _material.MaterialShaders();
 	}
 
 	IMaterial* Material() override
 	{
-		return _material;
+		return &_material;
 	}
 
 	void AddPerObjectBuffer(IBuffer* buffer) override
@@ -106,35 +97,21 @@ public:
 		return _perObjectBuffers;
 	}
 
-	vector<vec4>* VertexPositions() override
-	{
-		if(_positions == nullptr)
-		{
-			_positions = new vector<vec4>();
-			for (size_t vertexIndex = 0; vertexIndex < _vertices.size(); vertexIndex++)
-			{
-				_positions->push_back(_vertices.at(vertexIndex).VertexPosition());
-			}
-		}
-				
-		return _positions;
-	}
-	
 protected:
 
-	vector<Vertex> _vertices;
+	vector<VertexDataT> _vertices;
 
 	vector<uint16_t> _indexes;
 
 	vector<IBuffer*> _perObjectBuffers;
 
-	vector<vec4>* _positions = nullptr;
+    VertexDataT& _vertexDescriptor;
 
 private:
 	bool _indexed = false;
 
-	vector<VertexDataT> _vertexDatas;
+	vector<BaseVertexData> _vertexDatas;
 
-	IMaterial* _material;
+	IMaterial _material;
 };
 

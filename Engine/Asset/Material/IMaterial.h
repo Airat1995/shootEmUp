@@ -25,9 +25,15 @@ public:
     std::vector<IImage*>& Images();
 
 	RenderQueue GetRenderQueue();
-private:
+
+protected:
+
+    //Used in code generated materials
+    IMaterial()
+    {
+    }
 	
-	map<ShaderType, IShader> _shaders;
+	std::map<ShaderType, IShader> _shaders;
 
     std::vector<IBuffer*> _buffers;
 

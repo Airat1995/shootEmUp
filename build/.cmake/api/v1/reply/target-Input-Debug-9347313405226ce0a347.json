@@ -1,0 +1,201 @@
+{
+  "archive": {},
+  "artifacts": [
+    {
+      "path": "Engine/Input/libInput.a"
+    }
+  ],
+  "backtrace": 1,
+  "backtraceGraph": {
+    "commands": [
+      "add_library",
+      "include_directories"
+    ],
+    "files": [
+      "Engine/Input/CMakeLists.txt",
+      "CMakeLists.txt"
+    ],
+    "nodes": [
+      {
+        "file": 0
+      },
+      {
+        "command": 0,
+        "file": 0,
+        "line": 17,
+        "parent": 0
+      },
+      {
+        "file": 1
+      },
+      {
+        "command": 1,
+        "file": 1,
+        "line": 13,
+        "parent": 2
+      },
+      {
+        "command": 1,
+        "file": 1,
+        "line": 16,
+        "parent": 2
+      },
+      {
+        "command": 1,
+        "file": 1,
+        "line": 21,
+        "parent": 2
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 12,
+        "parent": 0
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 13,
+        "parent": 0
+      },
+      {
+        "command": 1,
+        "file": 0,
+        "line": 14,
+        "parent": 0
+      }
+    ]
+  },
+  "compileGroups": [
+    {
+      "compileCommandFragments": [
+        {
+          "fragment": "-g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1"
+        }
+      ],
+      "includes": [
+        {
+          "backtrace": 3,
+          "path": "/Users/airat/Projects/shootEmUp/shootEmUp"
+        },
+        {
+          "backtrace": 3,
+          "path": "/opt/homebrew/Cellar/sdl2/2.28.5/include"
+        },
+        {
+          "backtrace": 3,
+          "path": "/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2"
+        },
+        {
+          "backtrace": 4,
+          "path": "/opt/homebrew/include"
+        },
+        {
+          "backtrace": 5,
+          "path": "/Users/airat/Projects/shootEmUp/include"
+        },
+        {
+          "backtrace": 5,
+          "path": "/Users/airat/Projects/shootEmUp/Engine"
+        },
+        {
+          "backtrace": 6,
+          "path": "/Users/airat/Projects/shootEmUp/Engine/Input/.."
+        },
+        {
+          "backtrace": 7,
+          "path": "/Users/airat/Projects/shootEmUp/Engine/Input/."
+        },
+        {
+          "backtrace": 8,
+          "path": "/Users/airat/Projects/shootEmUp/Engine/Input/../Shared"
+        }
+      ],
+      "language": "CXX",
+      "languageStandard": {
+        "backtraces": [
+          1
+        ],
+        "standard": "17"
+      },
+      "sourceIndexes": [
+        0,
+        2,
+        4
+      ]
+    }
+  ],
+  "id": "Input::@fd38241c40742e02d4e0",
+  "name": "Input",
+  "nameOnDisk": "libInput.a",
+  "paths": {
+    "build": "Engine/Input",
+    "source": "Engine/Input"
+  },
+  "sourceGroups": [
+    {
+      "name": "Source Files",
+      "sourceIndexes": [
+        0,
+        2,
+        4
+      ]
+    },
+    {
+      "name": "Header Files",
+      "sourceIndexes": [
+        1,
+        3,
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "backtrace": 1,
+      "compileGroupIndex": 0,
+      "path": "Engine/Input/InputContext.cpp",
+      "sourceGroupIndex": 0
+    },
+    {
+      "backtrace": 1,
+      "path": "Engine/Input/InputContext.h",
+      "sourceGroupIndex": 1
+    },
+    {
+      "backtrace": 1,
+      "compileGroupIndex": 0,
+      "path": "Engine/Input/InputHandler.cpp",
+      "sourceGroupIndex": 0
+    },
+    {
+      "backtrace": 1,
+      "path": "Engine/Input/InputHandler.h",
+      "sourceGroupIndex": 1
+    },
+    {
+      "backtrace": 1,
+      "compileGroupIndex": 0,
+      "path": "Engine/Input/InputMap.cpp",
+      "sourceGroupIndex": 0
+    },
+    {
+      "backtrace": 1,
+      "path": "Engine/Input/InputMap.h",
+      "sourceGroupIndex": 1
+    },
+    {
+      "backtrace": 1,
+      "path": "Engine/Input/InputState.h",
+      "sourceGroupIndex": 1
+    },
+    {
+      "backtrace": 1,
+      "path": "Engine/Input/KeyCode.h",
+      "sourceGroupIndex": 1
+    }
+  ],
+  "type": "STATIC_LIBRARY"
+}
