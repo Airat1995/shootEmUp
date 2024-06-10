@@ -1,11 +1,11 @@
 #pragma once
+
 #include "Format.h"
 
-struct VertexAttributeInfo
-{
-	int Location;
+struct VertexAttributeInfo {
+    int Location;
 
-	Format Format;
+    Format Format;
 
-	int Offset;
+    int Offset;
 };

@@ -1,15 +1,15 @@
 #pragma once
+
 #include <glm/glm.hpp>
 
-struct CameraObject
-{
+struct CameraObject {
     glm::mat4 _model = glm::transpose(glm::mat4(
-        1, 0, 0, 1,
-        0, 1, 0, 1,
-        0, 0, 1, 1,
-        0, 0, 0, 1
-        ));
-    glm::mat4 _view;
-    glm::mat4 _proj;
+            1, 0, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 1, 1,
+            0, 0, 0, 1
+    ));
+    glm::mat4 _view{1};
+    glm::mat4 _proj{1};
 };
 

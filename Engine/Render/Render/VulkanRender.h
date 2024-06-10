@@ -1,4 +1,5 @@
 #pragma once
+
 #include <filesystem>
 #include "glm/fwd.hpp"
 #include "vulkan/vulkan.h"
@@ -13,135 +14,136 @@
 #include "Render/Shadowmap/VulkanOmniShadowmap.h"
 
 
-class VulkanRender : public IRender
-{
+class VulkanRender : public IRender {
 public:
-	VulkanRender();	
+    VulkanRender();
 
-	void Init() override
-	{
-	}	
-	
-	void Init(vector<const char*>* extensions);
+    void Init() override {
+    }
 
-	~VulkanRender();	
+    void Init(vector<const char *> *extensions);
 
-	void InitSurface(int screenWidth, int screenHeight);
+    ~VulkanRender();
 
-	VkInstance GetInstance() const;
+    void InitSurface(int screenWidth, int screenHeight);
 
-	VkSurfaceKHR* GetSurface();
+    VkInstance GetInstance() const;
 
-	void DrawFrame() override;
+    VkSurfaceKHR *GetSurface();
 
-	void AddMesh(IMesh* mesh) override;
+    void DrawFrame() override;
 
-	void RemoveMesh(IMesh* mesh) override;
+    void AddMesh(IMesh *mesh) override;
 
-	void AddShadowmap(glm::vec4* lightPosition, CameraObject* camera) override;
+    void RemoveMesh(IMesh *mesh) override;
 
-	VkDevice& Device();
+    void AddShadowmap(glm::vec4 *lightPosition, CameraObject *camera) override;
 
-	uint32_t GraphicsQueueFamilyIndex();
+    VkDevice &Device();
 
-	uint32_t PresentQueueFamilyIndex();
-	
-	VkPhysicalDevice Physical();
+    uint32_t GraphicsQueueFamilyIndex();
+
+    uint32_t PresentQueueFamilyIndex();
+
+    VkPhysicalDevice Physical();
 
 protected:
-	static std::vector<const char*> GetLayers();
+    static std::vector<const char *> GetLayers();
 
-	static VkApplicationInfo CreateAppInfo();
+    static VkApplicationInfo CreateAppInfo();
 
-	void CreateInstanceCreateInfo(VkApplicationInfo appInfo, vector<const char*>* extensions, vector<const char*>* layers);
+    void
+    CreateInstanceCreateInfo(VkApplicationInfo appInfo, vector<const char *> *extensions, vector<const char *> *layers);
 
-	void CreateCommandPool(int queueFamilyIndex);
+    void CreateCommandPool(int queueFamilyIndex);
 
-	static bool IsDeviceSuitable(VkPhysicalDevice device);
+    static bool IsDeviceSuitable(VkPhysicalDevice device);
 
-	void CreateCommandBuffer();
+    void CreateCommandBuffer();
 
-	void EnumeratePhysicalDevices();	
+    void EnumeratePhysicalDevices();
 
-	void InitDevice();
+    void InitDevice();
 
-	VkBool32* GetQueuesSupportPresenting(uint32_t queueFamilyCount) const;
-	
-	bool GetGraphicsAndPresentQueue(uint32_t queueFamilyCount, vector<VkQueueFamilyProperties> queueProps);
+    VkBool32 *GetQueuesSupportPresenting(uint32_t queueFamilyCount) const;
 
-	VkDeviceQueueCreateInfo _queueInfo;
+    bool GetGraphicsAndPresentQueue(uint32_t queueFamilyCount, vector<VkQueueFamilyProperties> queueProps);
 
-	VkInstance _instance = nullptr;
+    VkDeviceQueueCreateInfo _queueInfo;
 
-	VkDevice _device = nullptr;
+    VkInstance _instance = nullptr;
 
-	VkSurfaceKHR _surface = nullptr;
+    VkDevice _device = nullptr;
 
-	VulkanCommandPool* _commandPool;
+    VkSurfaceKHR _surface = nullptr;
 
-	VkExtent2D _swapchainExtent;
+    VulkanCommandPool *_commandPool;
 
-	VkDebugUtilsMessengerEXT debugMessenger;
+    VkExtent2D _swapchainExtent;
 
-	vector<VkPhysicalDevice> _gpus;
+    VkDebugUtilsMessengerEXT debugMessenger;
 
-	uint32_t _graphicsQueueFamilyIndex;
-	
-	uint32_t _presentQueueFamilyIndex;
+    vector<VkPhysicalDevice> _gpus;
 
-	VulkanDepthBuffer* _depthBuffer;
+    uint32_t _graphicsQueueFamilyIndex;
 
-	VulkanFramebuffer* _framebuffer;
-	
-	ISwapchain* _swapchain;
-	
-	std::map<RenderQueue, vector<VulkanPipeline*>> _pipelines{};
+    uint32_t _presentQueueFamilyIndex;
 
-	std::vector<VulkanMeshData*> _meshDataCollection{};
+    VulkanDepthBuffer *_depthBuffer;
 
-	std::vector<VulkanOmniShadowmap*> _shadowmaps;
+    VulkanFramebuffer *_framebuffer;
 
-	VulkanRenderpass* _renderpass;
+    ISwapchain *_swapchain;
 
-	std::vector<IBuffer> _mapBuffers;
+    std::map<RenderQueue, vector<VulkanPipeline *>> _pipelines{};
 
-	VulkanBuffer* _buffer;
+    std::vector<VulkanMeshData *> _meshDataCollection{};
 
-	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
-		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-		VkDebugUtilsMessageTypeFlagsEXT messageType,
-		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-		void* pUserData) {
+    std::vector<VulkanOmniShadowmap *> _shadowmaps;
 
-		std::ofstream outfile;
-		outfile.open(DEBUG_FILENAME.c_str(), std::ios_base::app); // append instead of overwrite
-		outfile << pCallbackData->pMessage << endl;
-		outfile.close();
-		return VK_FALSE;
-	}
+    VulkanRenderpass *_renderpass;
 
-	void SetupDebugMessenger();
+    std::vector<IBuffer> _mapBuffers;
 
-	VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
-		auto func = PFN_vkCreateDebugUtilsMessengerEXT(vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"));
-		if (func != nullptr) {
-			return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-		}
-		else {
-			return VK_ERROR_EXTENSION_NOT_PRESENT;
-		}
-	}
+    VulkanBuffer *_buffer;
+
+    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+            VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+            VkDebugUtilsMessageTypeFlagsEXT messageType,
+            const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
+            void *pUserData) {
+
+        std::ofstream outfile;
+        outfile.open(DEBUG_FILENAME.c_str(), std::ios_base::app); // append instead of overwrite
+        outfile << pCallbackData->pMessage << endl;
+        outfile.close();
+        return VK_FALSE;
+    }
+
+    void SetupDebugMessenger();
+
+    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
+                                          const VkAllocationCallbacks *pAllocator,
+                                          VkDebugUtilsMessengerEXT *pDebugMessenger) {
+        auto func = PFN_vkCreateDebugUtilsMessengerEXT(
+                vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"));
+        if (func != nullptr) {
+            return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+        } else {
+            return VK_ERROR_EXTENSION_NOT_PRESENT;
+        }
+    }
 
 private:
-	static const uint32_t INCORRECT_WIDTH = 0xFFFFFFFF;
-	
-	inline static const string DEBUG_FILENAME = "debugLog.log";
+    static const uint32_t INCORRECT_WIDTH = 0xFFFFFFFF;
 
-	vector<const char*> _extensions;
+    inline static const string DEBUG_FILENAME = "debugLog.log";
 
-	int _width;
+    vector<const char *> _extensions;
 
-	int _height;
+    int _width;
+
+    int _height;
 
 };
 

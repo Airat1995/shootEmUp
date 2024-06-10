@@ -1,10 +1,9 @@
 #pragma once
 
-struct VertexBindingInfo
-{
-	bool Instanced;
+struct VertexBindingInfo {
+    bool Instanced;
 
-	int Size;
+    int Size;
 
-	int BindId;
+    int BindId;
 };

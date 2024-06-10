@@ -1,8 +1,10 @@
 #pragma once
 
+#include <SDL_keycode.h>
+
 #include "SDL2/SDL_scancode.h"
 
-enum class KeyCode {
+enum class KeyCode : uint8_t {
     UNKNOWN = 0,
     A = 4,
     B = 5,

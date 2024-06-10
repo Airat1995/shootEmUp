@@ -6,8 +6,8 @@
 
 class MainMaterial : public IMaterial {
 public:
-	MainMaterial() {
-		_shaders.emplace(ShaderType::Fragment, MainFragmentShader{});
-		_shaders.emplace(ShaderType::Vertex, MainVertexShader{});
-	}
+    MainMaterial() {
+        _shaders.emplace(ShaderType::Fragment, MainFragmentShader{});
+        _shaders.emplace(ShaderType::Vertex, MainVertexShader{});
+    }
 };

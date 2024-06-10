@@ -1,96 +1,83 @@
-#include <iostream>
-#include <SDL2/SDL.h>
+#define TINYOBJLOADER_IMPLEMENTATION
 
-#include "Camera/TPCamera.h"
+#include <cmath>
+
+#include "Camera/Camera.h"
+#include "Engine/Component/Entity/Entity.h"
 #include "Engine/Window/SDLWindow.h"
 #include "Engine/Render/Render/VulkanRender.h"
 #include "Engine/Asset/Mesh/Mesh.h"
 #include "Game/Assets/Mesh/MainMaterial.h"
 #include "Input/InputHandler.h"
 #include "Game/Assets/Mesh/MainMesh.h"
+#include "Engine/Common/Application/Application.h"
+
+#include "Game/Scripts/Player.h"
+
 
 int main()
 {
-    IRender *render = new VulkanRender();
-    IWindow *window = new SDLWindow(800, 600, "shootEmUp", WindowType::Windowed, render);
-
+    VulkanRender render {};
+    SDLWindow window {800, 600, "shootEmUp", WindowType::Windowed, &render};
     InputHandler inputHandler;
-    InputMap mapForward("forwardKey", KeyCode::W);
-    InputMap mapBackward("backwardKey", KeyCode::S);
-    InputMap mapLeft("leftKey", KeyCode::A);
-    InputMap mapRight("rightKey", KeyCode::D);
-    InputMap mapUp("upKey", KeyCode::E);
-    InputMap mapDown("downKey", KeyCode::Q);
 
-    InputContext context;
-    context.AddInputMap(&mapForward);
-    context.AddInputMap(&mapBackward);
-    context.AddInputMap(&mapLeft);
-    context.AddInputMap(&mapRight);
-    inputHandler.Subscribe(&context);
+    vector<Entity*> entities;
 
-    TPCamera camera(10.0f);
-    camera.SetPerspective(110, 1.66f, 0.1, 10000);
-    BaseBuffer uniformBuffer(BufferUsageFlag::UniformBuffer, BufferSharingMode::Exclusive, &camera.GetCameraObject(),
-                             BufferStageFlag::Vertex, 0);
+    Camera camera(1.0f);
+    camera.SetPerspective(60, 800.0f/600.0f, 0.1, 100);
+    vec3 initialPos = glm::vec3(0.0f, 0.0f, -10.0f);
+    camera.SetPosition(initialPos);
 
-    MainMaterial mainMaterial{};
-    mainMaterial.AddBuffer(&uniformBuffer);
 
-    vector<MainVertexData> vertecies;
-    vertecies.push_back(MainVertexData{vec4(.0, -.5, .0, 1.0)});
-    vertecies.push_back(MainVertexData{vec4(.5, .5, .0, 1.0)});
-    vertecies.push_back(MainVertexData{vec4(-.5, .5, .0, 1.0)});
+    Player player {inputHandler, camera, render};
 
-    MainMesh* mesh = new MainMesh(vertecies, &mainMaterial);
-    mesh->Material();
+    entities.push_back(&player);
 
-    render->AddMesh(mesh);
 
-    bool isEnabled = true;
-    chrono::time_point<chrono::steady_clock> start;
-    while (isEnabled)
+    double time = 0.0;
+    double targetFrameTime = 8.0f;
+    chrono::time_point<chrono::steady_clock> start = std::chrono::steady_clock::now();
+    double updateDelta = 0.0;
+    double accumulator = 0.0;
+
+    unsigned long long previousFrame = -1;
+    unsigned long long currentFrame = Application::GetInstance().GetCurrentFrame();
+
+    while (!Application::GetInstance().IsReadyToExit())
     {
-        std::chrono::duration<double, std::milli> deltaTime = std::chrono::duration<double, std::milli>(
-            std::chrono::steady_clock::now() - start
-            );
-        start = std::chrono::steady_clock::now();
+        Application::GetInstance().IncreaseFrame();
+        auto newTime = std::chrono::steady_clock::now();
+        double deltaTime = std::chrono::duration<double, std::milli>(
+            newTime - start
+            ).count();
 
-        printf("%f\n", deltaTime.count());
+        inputHandler.Update(deltaTime);
+        window.Update();
 
-        window->Update();
-        inputHandler.Update(deltaTime.count());
-        render->DrawFrame();
-        if (mapBackward.State() == InputMapState::KeyDown && mapForward.State() == InputMapState::KeyDown)
-            isEnabled = false;
+        start = newTime;
+        accumulator += deltaTime;
 
-        vec3 delta(0);
-        if (mapBackward.State() == InputMapState::Pressed)
+        for (auto entity : entities) 
         {
-            delta += vec3(0.0f, 0.0f, 0.1f);
-        }
-        if (mapForward.State() == InputMapState::Pressed)
-        {
-            delta += vec3(0.0f, 0.0f, -0.1f);
-        }
-        if (mapLeft.State() == InputMapState::Pressed)
-        {
-            delta += vec3(0.1f, 0.0f, 0.0f);
-        }
-        if (mapRight.State() == InputMapState::Pressed)
-        {
-            delta += vec3(-0.1f, 0.0f, 0.0f);
-        }
-        if (mapUp.State() == InputMapState::Pressed)
-        {
-            delta += vec3(0.0f, 0.1f, 0.0f);
-        }
-        if (mapDown.State() == InputMapState::Pressed)
-        {
-            delta += vec3(0.0f, -0.1f, 0.0f);
+            entity->Update(deltaTime);
         }
 
-        camera.Move(delta);
+        while (accumulator >= targetFrameTime)
+        {
+            for (auto entity : entities) 
+            {
+                entity->FixedUpdate(targetFrameTime);
+            }
+            time += targetFrameTime;
+            accumulator -= targetFrameTime;
+        }
+
+        double alpha = accumulator / targetFrameTime;
+        for (auto entity : entities) 
+        {
+            entity->PrerenderUpdate(alpha);
+        }
+        render.DrawFrame();
 
     }
     return 0;

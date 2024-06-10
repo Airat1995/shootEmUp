@@ -2,9 +2,9 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 
-class FileReader
-{
+class FileReader {
 public:
     static std::vector<char> Read(const std::string &fileLocation);
 };

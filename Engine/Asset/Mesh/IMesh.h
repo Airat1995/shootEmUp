@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -10,10 +11,10 @@
 #include "VertexBindingInfo.h"
 #include "Shared/RenderAsset/IBuffer.h"
 
-class IMesh
-{
+class IMesh {
 public:
     virtual ~IMesh() = default;
+
     virtual const void *VerticesData() = 0;
 
     virtual void const *IndicesData() = 0;
@@ -40,14 +41,20 @@ public:
 
     virtual IMaterial *Material() = 0;
 
-    virtual bool IsStatic()
-    {
+    virtual bool IsStatic() {
         return _isStatic;
     }
 
-    virtual void SetStatic(bool isStatic)
-    {
+    virtual void SetStatic(bool isStatic) {
         _isStatic = isStatic;
+    }
+
+    virtual void Move(glm::vec3& delta) {
+        _model = glm::translate(_model, delta);
+    }
+
+    virtual void SetPosition(glm::vec3& position) {
+        _model = glm::translate(glm::mat4(1), position);
     }
 
 protected:
@@ -55,8 +62,8 @@ protected:
 
     bool _isStatic;
 
-    IMaterial* _material;
-    IBuffer* _modelBuffer;
-    std::vector<IBuffer*> _perObjectBuffers;
-    std::vector<int> _indicies;
+    IMaterial *_material;
+    IBuffer *_modelBuffer;
+    std::vector<IBuffer *> _perObjectBuffers;
+    std::vector<uint32_t> _indicies;
 };

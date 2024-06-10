@@ -1,10 +1,10 @@
 #pragma once
+
 #include <vulkan/vulkan_core.h>
 #include <iostream>
 #include "Asset/Material/IShader.h"
 
-class VulkanShader
-{
+class VulkanShader {
 public:
     VulkanShader(VkDevice device, IShader &basicShader, ShaderType shaderType);
 

@@ -10,7 +10,7 @@ class VulkanCommandPool : public ICommandPool
 {
 public:
 	VulkanCommandPool(VkDevice device, int queueFamilyIndex);
-	
+
 	virtual ~VulkanCommandPool();
 
 	void AddCommandBuffer();
@@ -33,7 +33,7 @@ private:
 	VkDevice _device;
 
 	std::vector<VkCommandBuffer> _vulkanCommandBuffers;
-	
+
 	std::vector<VulkanCommandBuffer> _commandBuffers;
 };
 

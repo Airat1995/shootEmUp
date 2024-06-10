@@ -213,10 +213,18 @@ void VulkanPipeline::Initialize(VkDevice device, VulkanMeshData &vulkanMeshData,
 
 
     vector<VkDescriptorPoolSize> typeCounts = vector<VkDescriptorPoolSize>();
-    for (auto bufferDescription : buffersDescriptions)
+    for (const auto& bufferDescription : buffersDescriptions)
     {
         VkDescriptorPoolSize poolInfo = {};
         poolInfo.type = bufferDescription.DescriptorBindingInfo().descriptorType;
+        poolInfo.descriptorCount = 1;
+        typeCounts.push_back(poolInfo);
+    }
+
+    for (const auto& constantBufferDescription : perObjectDescriptions)
+    {
+        VkDescriptorPoolSize poolInfo = {};
+        poolInfo.type = constantBufferDescription.DescriptorBindingInfo().descriptorType;
         poolInfo.descriptorCount = 1;
         typeCounts.push_back(poolInfo);
     }
@@ -289,9 +297,7 @@ vector<VulkanShader> VulkanPipeline::BaseShadersToVulkanShader(VkDevice device, 
 {
     auto vulkanShaders = vector<VulkanShader>();
     for (auto &shader : shaders)
-    {
         vulkanShaders.push_back(VulkanShader(device, shader.second, shader.first));
-    }
 
     return vulkanShaders;
 }
@@ -316,9 +322,7 @@ void VulkanPipeline::BindBuffer(VkCommandBuffer commandBuffer)
     vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipelineLayout, 0, 1, &_descriptorSets, 0,
                             nullptr);
     for (auto &dataBuffer : _dataBuffers)
-    {
         dataBuffer.Fill();
-    }
 }
 
 void VulkanPipeline::BindPipeline(VkCommandBuffer commandBuffer)
@@ -341,8 +345,8 @@ void VulkanPipeline::BuildCommandbuffer(VkCommandBuffer commandBuffer)
         vkCmdBindVertexBuffers(commandBuffer, _firstBinding, _bindingCount, &meshBuffer.Buffer(), offsets);
         if (indexedDraw)
         {
-            vkCmdBindIndexBuffer(commandBuffer, _indices[0].Buffer(), 0, VK_INDEX_TYPE_UINT16);
-            vkCmdDrawIndexed(commandBuffer, _indicesSize[meshBuffer], 1, 0, 0, 0);
+            vkCmdBindIndexBuffer(commandBuffer, _indices[0].Buffer(), 0, VK_INDEX_TYPE_UINT32);
+            vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(_indicesSize[meshBuffer]), 1, 0, 0, 0);
         }
         else
         {
@@ -378,13 +382,13 @@ void VulkanPipeline::CreateBuffers(VulkanMeshData &meshData)
         if (mesh->IndexCount() > 0)
         {
             VulkanBuffer indexedBuffer = VulkanBuffer(_device, _physical, BufferStageFlag::Vertex,
-                                                      BufferUsageFlag::IndexBuffer, BufferSharingMode::Exclusive,
-                                                      mesh->IndicesData(), mesh->IndexSize() * sizeof(uint16_t), 0);
+                                                      BufferUsageFlag::IndexBuffer | BufferUsageFlag::TransferDst, BufferSharingMode::Exclusive,
+                                                      mesh->IndicesData(), mesh->IndexSize() * mesh->IndexCount(), 0);
 
             indexedBuffer.Fill();
 
             _indices.push_back(indexedBuffer);
-            _indicesSize.insert({*vertexBuffer, mesh->IndexSize()});
+            _indicesSize.insert({*vertexBuffer, mesh->IndexCount()});
         }
     }
 

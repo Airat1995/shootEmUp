@@ -34,6 +34,7 @@ add_subdirectory(Engine/Asset)
 add_subdirectory(Engine/Common)
 add_subdirectory(Engine/Camera)
 add_subdirectory(Engine/Input)
+add_subdirectory(Engine/Component)
 add_subdirectory(Tools/ShaderToCode)
 
-target_link_libraries(shootEmUp Render Window Asset Common Camera Input)
+target_link_libraries(shootEmUp Render Window Asset Common Camera Input Component)

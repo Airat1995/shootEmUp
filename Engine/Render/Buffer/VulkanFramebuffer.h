@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vulkan/vulkan.h>
 #include "IFramebuffer.h"
 #include "Render/Swapchain/ISwapchain.h"
@@ -11,54 +12,53 @@
 
 using namespace std;
 
-class VulkanFramebuffer : public IFramebuffer
-{
+class VulkanFramebuffer : public IFramebuffer {
 public:
-	VulkanFramebuffer(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI, ISwapchain& swapchain,
-		VulkanRenderpass& renderpass, VulkanCommandPool& commandPool, VulkanDepthBuffer& depthBuffer);
+    VulkanFramebuffer(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI, ISwapchain &swapchain,
+                      VulkanRenderpass &renderpass, VulkanCommandPool &commandPool, VulkanDepthBuffer &depthBuffer);
 
-	VulkanFramebuffer(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI, ISwapchain& swapchain,
-		BufferlessVulkanImage& image, VulkanRenderpass& renderpass, VulkanCommandPool& commandPool,
-		VulkanDepthBuffer& depthBuffer);
+    VulkanFramebuffer(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI, ISwapchain &swapchain,
+                      BufferlessVulkanImage &image, VulkanRenderpass &renderpass, VulkanCommandPool &commandPool,
+                      VulkanDepthBuffer &depthBuffer);
 
 
-	VkFramebuffer* Framebuffer(int index);
-	
-	int FramebufferCount() const;
+    VkFramebuffer *Framebuffer(int index);
 
-	void CreateQueues(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI);
+    int FramebufferCount() const;
 
-	virtual ~VulkanFramebuffer();
-	
-	void SubmitFramebuffer(int index);
+    void CreateQueues(VkDevice device, uint32_t grapQueueFI, uint32_t presentQueueFI);
 
-	VkQueue PresentQueue();
+    virtual ~VulkanFramebuffer();
 
-	VkQueue DrawQueue();
+    void SubmitFramebuffer(int index);
+
+    VkQueue PresentQueue();
+
+    VkQueue DrawQueue();
 
 private:
-	vector<VkFramebuffer>* _swapChainFramebuffers;
+    vector<VkFramebuffer> *_swapChainFramebuffers;
 
-	vector<SwapchainBuffer>* _swapchainBuffers;
+    vector<SwapchainBuffer> *_swapchainBuffers;
 
-	VkDevice _device;
+    VkDevice _device;
 
-	VkQueue _drawQueue;
+    VkQueue _drawQueue;
 
-	VkQueue _presentQueue;
+    VkQueue _presentQueue;
 
-	ISwapchain& _swapchain;
+    ISwapchain &_swapchain;
 
-	VulkanCommandPool& _commandPool;
+    VulkanCommandPool &_commandPool;
 
-	VulkanRenderpass& _renderpass;
+    VulkanRenderpass &_renderpass;
 
-	VkSemaphore presentCompleteSemaphore;
-	
-	VkSemaphore renderCompleteSemaphore;
+    VkSemaphore presentCompleteSemaphore;
 
-	std::vector<VkFence> waitFences;
+    VkSemaphore renderCompleteSemaphore;
 
-	PFN_vkQueuePresentKHR fpQueuePresentKHR;
+    std::vector<VkFence> waitFences;
+
+    PFN_vkQueuePresentKHR fpQueuePresentKHR;
 };
 

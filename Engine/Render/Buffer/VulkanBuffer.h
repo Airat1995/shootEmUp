@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
 #include <vulkan/vulkan.h>
@@ -7,57 +8,59 @@
 
 using namespace std;
 
-class VulkanBuffer
-{
+class VulkanBuffer {
 public:
 
-	VulkanBuffer(VkDevice device, VkPhysicalDevice physical, BufferStageFlag stageFlag, BufferUsageFlag usage, BufferSharingMode sharingMode, const void* data, int size, int bindingId);
-	
-	static uint32_t FindMemoryType(uint32_t typeFilter, VkPhysicalDeviceMemoryProperties memoryProperties, VkMemoryPropertyFlags properties);
+    VulkanBuffer(VkDevice device, VkPhysicalDevice physical, BufferStageFlag stageFlag, BufferUsageFlag usage,
+                 BufferSharingMode sharingMode, const void *data, int size, int bindingId);
 
-	void Fill();
+    static uint32_t FindMemoryType(uint32_t typeFilter, VkPhysicalDeviceMemoryProperties memoryProperties,
+                                   VkMemoryPropertyFlags properties);
 
-	void Flush();
+    void Fill();
 
-	virtual ~VulkanBuffer();
+    void Flush();
 
-	void Destroy();
+    virtual ~VulkanBuffer();
 
-	VkBuffer& Buffer();
+    void Destroy() const noexcept;
 
-	int Binding() const;
+    VkBuffer &Buffer();
 
-	int Size() const;
+    [[nodiscard]] int Binding() const;
 
-	const void* DataLocation();
+    [[nodiscard]] int Size() const;
 
-	VkDescriptorSetLayout DescriptorSetLayout() const;
+    const void *DataLocation() const;
 
-	VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
-	
-	VkDescriptorBufferInfo* BufferDescriptorInfo();
+    [[nodiscard]] VkDescriptorSetLayout DescriptorSetLayout() const;
 
-	static VkDescriptorType BufferUsageToDescriptorType(BufferUsageFlag bufferUsageFlag);
-	
-	static VkShaderStageFlagBits GetUsage(BufferStageFlag stage);
+    [[nodiscard]] VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
+
+    VkDescriptorBufferInfo *BufferDescriptorInfo();
+
+    static VkDescriptorType BufferUsageToDescriptorType(BufferUsageFlag bufferUsageFlag);
+
+    static VkShaderStageFlagBits GetUsage(BufferStageFlag stage);
+
 protected:
-	VkBuffer _buffer;
-	VkDeviceMemory _memory;
-	VkDescriptorBufferInfo _bufferDescriptorInfo;
-	VkDescriptorSetLayoutBinding _layoutBinding;
-	VkDevice _device;
-	VkBufferCreateInfo _bufferInfo;
-	VkMemoryRequirements _memoryReq;
-	VkPhysicalDevice _physical;
-	BufferUsageFlag _usage;
-	BufferSharingMode _sharingMode;
-	VkDescriptorSetLayout _descriptorSetLayout;
+    VkBuffer _buffer;
+    VkDeviceMemory _memory;
+    VkDescriptorBufferInfo _bufferDescriptorInfo;
+    VkDescriptorSetLayoutBinding _layoutBinding;
+    VkDevice _device;
+    VkBufferCreateInfo _bufferInfo;
+    VkMemoryRequirements _memoryReq;
+    VkPhysicalDevice _physical;
+    BufferUsageFlag _usage;
+    BufferSharingMode _sharingMode;
+    VkDescriptorSetLayout _descriptorSetLayout;
 
-	int _size;
-	int _bindingId;
-	int _dataSize;
-	const void* _dataLocation;
-	uint8_t* _dataPointer = nullptr;
+    int _size;
+    int _bindingId;
+    int _dataSize;
+    const void *_dataLocation;
+    uint8_t *_dataPointer = nullptr;
 
 
 };

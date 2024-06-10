@@ -25,7 +25,7 @@ public:
 	VkPipelineLayout PipelineLayout();
 
 	void DestroyPipeline();
-	
+
 	void BindBuffer(VkCommandBuffer commandBuffer);
 
 	void BindPipeline(VkCommandBuffer commandBuffer);
@@ -38,7 +38,7 @@ public:
 private:
 
 	void CreateBuffers(VulkanMeshData& meshData);
-	
+
 	vector<VulkanShader> BaseShadersToVulkanShader(VkDevice device, std::map<ShaderType, IShader>& shaders);
 
 	VkDynamicState _dynamicStates[2] = {
@@ -51,7 +51,7 @@ private:
 	VkDevice _device{};
 
 	VkPhysicalDevice _physical;
-	
+
 	VkPipeline _pipeline{};
 
 	VkDescriptorPool _descriptorPool;
@@ -69,7 +69,7 @@ private:
 	std::map<VertexBuffer, vector<VulkanBuffer>> _perObjectBuffer;
 
 	vector<VulkanBuffer> _indices;
-	
+
 	std::map<VertexBuffer, int> _indicesSize;
 
 	vector<VulkanBuffer> _dataBuffers;

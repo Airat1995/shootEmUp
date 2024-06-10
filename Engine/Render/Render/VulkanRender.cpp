@@ -1,17 +1,16 @@
 #include "VulkanRender.h"
 
-VulkanRender::VulkanRender()
-{
+VulkanRender::VulkanRender() {
 }
 
-void VulkanRender::Init(vector<const char *> *extensions)
-{
+void VulkanRender::Init(vector<const char *> *extensions) {
     const VkApplicationInfo appInfo = CreateAppInfo();
     std::vector<const char *> layers = GetLayers();
 #if ENGINE_DEBUG
     extensions->push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     extensions->push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
     extensions->push_back("VK_EXT_debug_report");
+    extensions->push_back("VK_KHR_get_physical_device_properties2");
     //extensions->push_back("GL_KHR_vulkan_glsl ");
     if (filesystem::exists(DEBUG_FILENAME.c_str()))
         remove(DEBUG_FILENAME.c_str());
@@ -21,40 +20,34 @@ void VulkanRender::Init(vector<const char *> *extensions)
     SetupDebugMessenger();
 }
 
-VulkanRender::~VulkanRender()
-{
+VulkanRender::~VulkanRender() {
     vkDestroySurfaceKHR(_instance, _surface, nullptr);
     vkDestroyDevice(_device, nullptr);
     vkDestroyInstance(_instance, nullptr);
 }
 
-void VulkanRender::InitSurface(int screenWidth, int screenHeight)
-{
+void VulkanRender::InitSurface(int screenWidth, int screenHeight) {
     InitDevice();
     CreateCommandPool(_queueInfo.queueFamilyIndex);
     VkSurfaceCapabilitiesKHR surfaceCapabilities;
     VkResult result = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_gpus.at(0), _surface, &surfaceCapabilities);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("unable to get surface capabilities!");
     }
 
     uint32_t presentModeCount;
     result = vkGetPhysicalDeviceSurfacePresentModesKHR(_gpus.at(0), _surface, &presentModeCount, nullptr);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("unable to get physical device present modes count!");
     }
 
     VkPresentModeKHR *presentModes = new VkPresentModeKHR[presentModeCount];
     result = vkGetPhysicalDeviceSurfacePresentModesKHR(_gpus.at(0), _surface, &presentModeCount, presentModes);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("unable to get physical device present modes!");
     }
 
-    if (surfaceCapabilities.currentExtent.width == INCORRECT_WIDTH)
-    {
+    if (surfaceCapabilities.currentExtent.width == INCORRECT_WIDTH) {
         _swapchainExtent.width = screenWidth;
         _swapchainExtent.height = screenHeight;
 
@@ -67,14 +60,13 @@ void VulkanRender::InitSurface(int screenWidth, int screenHeight)
             _swapchainExtent.height = surfaceCapabilities.minImageExtent.height;
         else if (_swapchainExtent.height > surfaceCapabilities.maxImageExtent.height)
             _swapchainExtent.height = surfaceCapabilities.maxImageExtent.height;
-    }
-    else
+    } else
         _swapchainExtent = surfaceCapabilities.currentExtent;
     _width = _swapchainExtent.width;
     _height = _swapchainExtent.height;
     _swapchain = new ISwapchain(_device, _swapchainExtent, surfaceCapabilities, _surface, _gpus,
                                 _graphicsQueueFamilyIndex, _presentQueueFamilyIndex);
-    for (auto swapchain : _swapchain->SwapchainBuffers())
+    for (auto swapchain: _swapchain->SwapchainBuffers())
         _commandPool->AddCommandBuffer();
 
     _depthBuffer = new VulkanDepthBuffer(_device, _gpus[0], _width, _height);
@@ -89,28 +81,22 @@ void VulkanRender::InitSurface(int screenWidth, int screenHeight)
     vector<VulkanMeshData> meshData = vector<VulkanMeshData>();
 }
 
-VkInstance VulkanRender::GetInstance() const
-{
+VkInstance VulkanRender::GetInstance() const {
     return _instance;
 }
 
-VkSurfaceKHR *VulkanRender::GetSurface()
-{
+VkSurfaceKHR *VulkanRender::GetSurface() {
     return &_surface;
 }
 
-void VulkanRender::DrawFrame()
-{
+void VulkanRender::DrawFrame() {
     int frameBuffersCount = _framebuffer->FramebufferCount();
-    for (size_t frameBufferIndex = 0; frameBufferIndex < frameBuffersCount; frameBufferIndex++)
-    {
+    for (size_t frameBufferIndex = 0; frameBufferIndex < frameBuffersCount; frameBufferIndex++) {
         VulkanCommandBuffer commandBuffer = _commandPool->CommandBuffer(frameBufferIndex);
         commandBuffer.BeginCommandBuffer();
 
-        for (auto *shadowmap : _shadowmaps)
-        {
-            for (int index = 0; index < 6; index++)
-            {
+        for (auto *shadowmap: _shadowmaps) {
+            for (int index = 0; index < 6; index++) {
                 shadowmap->Update(index);
                 shadowmap->Draw(&commandBuffer, frameBufferIndex);
             }
@@ -119,10 +105,8 @@ void VulkanRender::DrawFrame()
         _renderpass->BeginRenderPass(_width, _height, *_framebuffer->Framebuffer(frameBufferIndex),
                                      commandBuffer.CommandBuffer());
 
-        for (auto &&renderQueuePipelines : _pipelines)
-        {
-            for (auto &&renderPipeline : renderQueuePipelines.second)
-            {
+        for (auto &&renderQueuePipelines: _pipelines) {
+            for (auto &&renderPipeline: renderQueuePipelines.second) {
                 renderPipeline->BindPipeline(commandBuffer.CommandBuffer());
                 renderPipeline->BindBuffer(commandBuffer.CommandBuffer());
                 renderPipeline->BuildCommandbuffer(commandBuffer.CommandBuffer());
@@ -132,8 +116,7 @@ void VulkanRender::DrawFrame()
         _renderpass->EndRenderPass(commandBuffer.CommandBuffer());
         commandBuffer.EndCommandBuffer();
 
-        for (auto *shadowmap : _shadowmaps)
-        {
+        for (auto *shadowmap: _shadowmaps) {
             shadowmap->Submit(frameBufferIndex);
         }
         _framebuffer->SubmitFramebuffer(frameBufferIndex);
@@ -142,12 +125,10 @@ void VulkanRender::DrawFrame()
     _commandPool->ResetCommandBuffers();
 }
 
-void VulkanRender::AddMesh(IMesh *mesh)
-{
+void VulkanRender::AddMesh(IMesh *mesh) {
 
     vector<VulkanBuffer> buffers{};
-    for (vector<IBuffer *>::value_type &buffer : mesh->PerObjectBuffers())
-    {
+    for (vector<IBuffer *>::value_type &buffer: mesh->PerObjectBuffers()) {
         VulkanBuffer meshBuffer = VulkanBuffer(_device, _gpus[0], buffer->StageFlag(),
                                                buffer->Usage(), buffer->SharingMode(),
                                                buffer->RawData(), buffer->Size(), buffer->BindingId());
@@ -155,10 +136,8 @@ void VulkanRender::AddMesh(IMesh *mesh)
     }
 
 
-    for (auto &&meshData : _meshDataCollection)
-    {
-        if (meshData->ShouldCombine(mesh))
-        {
+    for (auto &&meshData: _meshDataCollection) {
+        if (meshData->ShouldCombine(mesh)) {
             meshData->AddMesh(mesh, buffers);
             return;
         }
@@ -166,8 +145,7 @@ void VulkanRender::AddMesh(IMesh *mesh)
 
 
     vector<VulkanBuffer> vulkanBuffers = vector<VulkanBuffer>();
-    for (auto *buffer : mesh->Material()->Buffers())
-    {
+    for (auto *buffer: mesh->Material()->Buffers()) {
         VulkanBuffer bufferData = VulkanBuffer(_device, _gpus[0], buffer->StageFlag(), buffer->Usage(),
                                                buffer->SharingMode(), buffer->RawData(), buffer->Size(),
                                                buffer->BindingId());;
@@ -175,8 +153,7 @@ void VulkanRender::AddMesh(IMesh *mesh)
     }
 
     vector<VulkanImage> images = vector<VulkanImage>();
-    for (auto *image : mesh->Material()->Images())
-    {
+    for (auto *image: mesh->Material()->Images()) {
         auto imageData = VulkanImage(_commandPool, image->Format(), image->Type(), image->Usage(), image->Stage(),
                                      image->Width(), image->Height(),
                                      *image->ImageData(), _device, _gpus[0], image->Binding(),
@@ -191,56 +168,47 @@ void VulkanRender::AddMesh(IMesh *mesh)
     RenderQueue renderQueue = mesh->Material()->GetRenderQueue();
 
     auto pipelineIter = _pipelines.find(renderQueue);
-    if (pipelineIter == _pipelines.end())
-    {
+    if (pipelineIter == _pipelines.end()) {
         vector<VulkanPipeline *> emptyPipelines;
         _pipelines.insert(pair(renderQueue, emptyPipelines));
     }
     _pipelines.at(renderQueue).push_back(pipeline);
 }
 
-void VulkanRender::RemoveMesh(IMesh *mesh)
-{
+void VulkanRender::RemoveMesh(IMesh *mesh) {
 }
 
-void VulkanRender::AddShadowmap(vec4 *lightPosition, CameraObject *camera)
-{
+void VulkanRender::AddShadowmap(vec4 *lightPosition, CameraObject *camera) {
     VulkanOmniShadowmap *vulkan_omni_shadowmap = new VulkanOmniShadowmap(
-        lightPosition, camera, &_meshDataCollection, _commandPool, _swapchain, _device, _gpus[0],
-        _graphicsQueueFamilyIndex, _presentQueueFamilyIndex, 0, _graphicsQueueFamilyIndex,
-        _width, _height);
+            lightPosition, camera, &_meshDataCollection, _commandPool, _swapchain, _device, _gpus[0],
+            _graphicsQueueFamilyIndex, _presentQueueFamilyIndex, 0, _graphicsQueueFamilyIndex,
+            _width, _height);
     _shadowmaps.push_back(vulkan_omni_shadowmap);
 }
 
-VkDevice &VulkanRender::Device()
-{
+VkDevice &VulkanRender::Device() {
     return _device;
 }
 
-glm::uint32 VulkanRender::GraphicsQueueFamilyIndex()
-{
+glm::uint32 VulkanRender::GraphicsQueueFamilyIndex() {
     return _graphicsQueueFamilyIndex;
 }
 
-uint32_t VulkanRender::PresentQueueFamilyIndex()
-{
+uint32_t VulkanRender::PresentQueueFamilyIndex() {
     return _presentQueueFamilyIndex;
 }
 
-VkPhysicalDevice VulkanRender::Physical()
-{
+VkPhysicalDevice VulkanRender::Physical() {
     return _gpus[0];
 }
 
-vector<const char *> VulkanRender::GetLayers()
-{
+vector<const char *> VulkanRender::GetLayers() {
     std::vector<const char *> layers;
     layers.push_back("VK_LAYER_KHRONOS_validation");
     return layers;
 }
 
-VkApplicationInfo VulkanRender::CreateAppInfo()
-{
+VkApplicationInfo VulkanRender::CreateAppInfo() {
     VkApplicationInfo appInfo = {};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pNext = nullptr;
@@ -248,14 +216,13 @@ VkApplicationInfo VulkanRender::CreateAppInfo()
     appInfo.applicationVersion = 1;
     appInfo.pEngineName = "";
     appInfo.engineVersion = 1;
-    appInfo.apiVersion = VK_API_VERSION_1_3;
+    appInfo.apiVersion = VK_API_VERSION_1_2;
 
     return appInfo;
 }
 
 void VulkanRender::CreateInstanceCreateInfo(VkApplicationInfo appInfo, vector<const char *> *extensions,
-                                            vector<const char *> *layers)
-{
+                                            vector<const char *> *layers) {
     VkInstanceCreateInfo instInfo = {};
     instInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     instInfo.pNext = nullptr;
@@ -269,98 +236,85 @@ void VulkanRender::CreateInstanceCreateInfo(VkApplicationInfo appInfo, vector<co
     VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
     createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
-        VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
-        VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT;
+                                 VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                 VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
+                                 VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT;
     createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
-        VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+                             VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
     createInfo.pfnUserCallback = debugCallback;
     createInfo.pUserData = nullptr;
     instInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&createInfo);
 #else
-	instInfo.enabledLayerCount = 0;
-	instInfo.pNext = nullptr;
+    instInfo.enabledLayerCount = 0;
+    instInfo.pNext = nullptr;
 #endif
 
     const VkResult createResult = vkCreateInstance(&instInfo, nullptr, &_instance);
-    if (createResult != VK_SUCCESS)
-    {
+    if (createResult != VK_SUCCESS) {
         throw std::runtime_error("Unable to create vulkan instance");
     }
 }
 
-void VulkanRender::CreateCommandPool(int queueFamilyIndex)
-{
+void VulkanRender::CreateCommandPool(int queueFamilyIndex) {
     _commandPool = new VulkanCommandPool(_device, queueFamilyIndex);
 }
 
-bool VulkanRender::IsDeviceSuitable(VkPhysicalDevice device)
-{
+bool VulkanRender::IsDeviceSuitable(VkPhysicalDevice device) {
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceFeatures deviceFeatures;
     vkGetPhysicalDeviceProperties(device, &deviceProperties);
     vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
     return deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU ||
-        deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU;
+           deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU;
 }
 
-void VulkanRender::CreateCommandBuffer()
-{
+void VulkanRender::CreateCommandBuffer() {
 }
 
-void VulkanRender::EnumeratePhysicalDevices()
-{
+void VulkanRender::EnumeratePhysicalDevices() {
     uint32_t gpu_count = 1;
     VkResult result = vkEnumeratePhysicalDevices(_instance, &gpu_count, nullptr);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("Unable to enumerate physical devices!");
     }
     vector<VkPhysicalDevice> *suitableGpus = new vector<VkPhysicalDevice>(gpu_count);
     result = vkEnumeratePhysicalDevices(_instance, &gpu_count, suitableGpus->data());
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("Unable to get physical devices!");
     }
     _gpus = vector<VkPhysicalDevice>();
-    for (auto &suitableGpu : *suitableGpus)
-    {
-        if (IsDeviceSuitable(suitableGpu))
-        {
+    for (auto &suitableGpu: *suitableGpus) {
+        if (IsDeviceSuitable(suitableGpu)) {
             _gpus.push_back(suitableGpu);
         }
     }
 }
 
-VkBool32 *VulkanRender::GetQueuesSupportPresenting(uint32_t queueFamilyCount) const
-{
+VkBool32 *VulkanRender::GetQueuesSupportPresenting(uint32_t queueFamilyCount) const {
     auto pSupportsPresent = new VkBool32[queueFamilyCount];
-    for (uint32_t i = 0; i < queueFamilyCount; i++)
-    {
+    for (uint32_t i = 0; i < queueFamilyCount; i++) {
         vkGetPhysicalDeviceSurfaceSupportKHR(_gpus.at(0), i, _surface, &pSupportsPresent[i]);
     }
     return pSupportsPresent;
 }
 
-bool VulkanRender::GetGraphicsAndPresentQueue(uint32_t queueFamilyCount, vector<VkQueueFamilyProperties> queueProps)
-{
+bool VulkanRender::GetGraphicsAndPresentQueue(uint32_t queueFamilyCount, vector<VkQueueFamilyProperties> queueProps) {
     VkBool32 *pSupportsPresent = new VkBool32[queueFamilyCount];
-    for (uint32_t i = 0; i < queueFamilyCount; i++)
-    {
+    for (uint32_t i = 0; i < queueFamilyCount; i++) {
         vkGetPhysicalDeviceSurfaceSupportKHR(_gpus.at(0), i, _surface, &pSupportsPresent[i]);
     }
 
     bool found = false;
-    for (unsigned int i = 0; i < queueFamilyCount; i++)
-    {
+    for (unsigned int i = 0; i < queueFamilyCount; i++) {
         if ((queueProps[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) == 0)
             continue;
 
         if (_graphicsQueueFamilyIndex == UINT32_MAX)
             _queueInfo.queueFamilyIndex = i;
 
-        if (pSupportsPresent[i] == VK_TRUE)
-        {
+        if (pSupportsPresent[i] == VK_TRUE) {
             _graphicsQueueFamilyIndex = i;
             _presentQueueFamilyIndex = i;
             break;
@@ -372,31 +326,30 @@ bool VulkanRender::GetGraphicsAndPresentQueue(uint32_t queueFamilyCount, vector<
     return found;
 }
 
-void VulkanRender::SetupDebugMessenger()
-{
+void VulkanRender::SetupDebugMessenger() {
 #ifndef  ENGINE_DEBUG
-	return;
+    return;
 #else
     VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
     createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
-        VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+                                 VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                 VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
     createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
-        VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+                             VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
     createInfo.pfnUserCallback = debugCallback;
     createInfo.pUserData = nullptr;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
 
-    if (CreateDebugUtilsMessengerEXT(_instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
-    {
+    if (CreateDebugUtilsMessengerEXT(_instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
         throw std::runtime_error("failed to set up debug messenger!");
     }
 #endif
 }
 
-void VulkanRender::InitDevice()
-{
+void VulkanRender::InitDevice() {
     _queueInfo = {};
 
     uint32_t queueFamilyCount;
@@ -415,6 +368,7 @@ void VulkanRender::InitDevice()
     _queueInfo.pQueuePriorities = queue_priorities;
 
     _extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+    _extensions.push_back("VK_KHR_portability_subset");
 
     VkDeviceCreateInfo device_info = {};
     device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -427,8 +381,7 @@ void VulkanRender::InitDevice()
     device_info.pEnabledFeatures = nullptr;
 
     const VkResult result = vkCreateDevice(_gpus.at(0), &device_info, nullptr, &_device);
-    if (result != VK_SUCCESS)
-    {
+    if (result != VK_SUCCESS) {
         throw std::runtime_error("Unable to create physical device!");
     }
 }

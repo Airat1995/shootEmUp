@@ -13,7 +13,7 @@ public:
 	VkCommandBuffer CommandBuffer();
 
 	virtual ~VulkanCommandBuffer();
-	
+
 	bool BeginCommandBuffer();
 
 	void EndCommandBuffer();

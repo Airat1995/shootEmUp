@@ -1,8 +1,8 @@
 #pragma once
+
 #include "Common/IO/FileReader.h"
 
-enum class ShaderType
-{
+enum class ShaderType {
     Vertex = 0x00000001,
     TesselationControl = 0x00000002,
     TesselationEvaluation = 0x00000004,
@@ -15,37 +15,31 @@ enum class ShaderType
     Mesh = 0x00000080,
 };
 
-class IShader
-{
+class IShader {
 public:
-    explicit IShader(char *shaderData, unsigned long size, std::string name):
-        _name(std::move(name)), _size(size)
-    {
+    explicit IShader(char *shaderData, unsigned long size, std::string name) :
+            _name(std::move(name)), _size(size) {
         _shaderData = new char[size];
         memcpy(_shaderData, shaderData, size);
     }
 
 
-    char *ShaderData()
-    {
+    char *ShaderData() {
         return _shaderData;
     }
 
-    int ShaderSize()
-    {
+    int ShaderSize() {
         return _size;
     }
 
 
-    std::string &Name() noexcept
-    {
+    std::string &Name() noexcept {
         return _name;
     }
 
 protected:
     //Used in code generated shaders
-    IShader()
-    {
+    IShader() {
     }
 
     std::string _name;
