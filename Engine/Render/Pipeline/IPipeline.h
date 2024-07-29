@@ -1,5 +1,8 @@
 #pragma once
-class IPipeline
-{
-};
 
+namespace Engine::Render::Pipeline
+{
+    class IPipeline
+    {
+    };
+}

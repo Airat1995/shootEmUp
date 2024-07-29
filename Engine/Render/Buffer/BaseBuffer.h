@@ -2,28 +2,32 @@
 
 #include "Shared/RenderAsset/IBuffer.h"
 
-template<typename T>
-class BaseBuffer :
-        public IBuffer {
-public:
+namespace Engine::Render::Buffer
+{
+    using namespace Engine::Shared::RenderAsset;
 
-    BaseBuffer(BufferUsageFlag usage, BufferSharingMode sharingMode, T *data, BufferStageFlag stageFlag,
-               int bindingId) {
-        _usage = usage;
-        _sharingMode = sharingMode;
-        _data = data;
-        _stageFlag = stageFlag;
-        _bindingId = bindingId;
-    }
+    template<typename T>
+    class BaseBuffer : public IBuffer {
+    public:
 
-    const void *RawData() override {
-        return _data;
-    }
+        BaseBuffer(BufferUsageFlag usage, BufferSharingMode sharingMode, T *data, BufferStageFlag stageFlag,
+                   int bindingId) {
+            _usage = usage;
+            _sharingMode = sharingMode;
+            _data = data;
+            _stageFlag = stageFlag;
+            _bindingId = bindingId;
+        }
 
-    int Size() override {
-        return sizeof(T);
-    }
+        const void *RawData() override {
+            return _data;
+        }
 
-protected:
-    T *_data;
-};
+        int Size() override {
+            return sizeof(T);
+        }
+
+    protected:
+        T *_data;
+    };
+}

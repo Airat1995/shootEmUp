@@ -6,68 +6,78 @@
 #include "Render/Command/VulkanCommandPool.h"
 #include "VulkanImage.h"
 
-class BufferlessVulkanImage : public IImage
+namespace Engine::Render::AssetWrapper
 {
-public:
-	BufferlessVulkanImage(VulkanCommandPool* commandPool, ImageFormat format, ImageType type, ImageUsage imageUsage, BufferStageFlag stage,
-		int width, int height, int imageCount, VkDevice device,	VkPhysicalDevice gpu, int binding, int graphicsFamilyIndex, int samples);
+    using namespace std;
+    using namespace Assets::Image;
+    using namespace Engine::Render::Buffer;
+    using namespace Engine::Render::Command;
 
-	VkImageView View();
+    class BufferlessVulkanImage : public IImage
+    {
+    public:
+        BufferlessVulkanImage(VulkanCommandPool* commandPool, ImageFormat format,
+                              ImageType type, ImageUsage imageUsage,
+                              BufferStageFlag stage,
+            int width, int height, int imageCount, VkDevice device,	VkPhysicalDevice gpu, int binding, int graphicsFamilyIndex, int samples);
 
-	VkImage Image();
+        VkImageView View();
 
-	static VkFormat ImageFormatToVulkan(ImageFormat format);
+        VkImage Image();
 
-	static VkImageType ImageTypeToVulkan(ImageType type);
+        static VkFormat ImageFormatToVulkan(ImageFormat format);
 
-	static VkImageViewType ImageTypeToVulkanViewType(ImageType type);
+        static VkImageType ImageTypeToVulkan(ImageType type);
 
-	static VkImageUsageFlagBits ImageUsageToVulkan(ImageUsage usage);
+        static VkImageViewType ImageTypeToVulkanViewType(ImageType type);
 
-	static int ImageCount(vector<unsigned char>& image, ImageType imageType, int width, int height, int channelsCount);
+        static VkImageUsageFlagBits ImageUsageToVulkan(ImageUsage usage);
 
-	static int ChannelsCount(ImageFormat format);
+        static int ImageCount(vector<unsigned char>& image, ImageType imageType, int width, int height, int channelsCount);
 
-	static VkImageMemoryBarrier CreateImageMemoryBarrier();
+        static int ChannelsCount(ImageFormat format);
 
-	static bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties memoryProperties, uint32_t typeBits, VkFlags requirements_mask, uint32_t* typeIndex);
+        static VkImageMemoryBarrier CreateImageMemoryBarrier();
 
-protected:
+        static bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties memoryProperties, uint32_t typeBits, VkFlags requirements_mask, uint32_t* typeIndex);
 
-	void CreateCopyCommandBuffer(VkImageUsageFlagBits imageUsage);
+    protected:
 
-	void CreateSampler();
+        void CreateCopyCommandBuffer(VkImageUsageFlagBits imageUsage);
 
-	void CreateDescriptorSetLayout();
+        void CreateSampler();
 
-	std::vector<VkBufferImageCopy> CreateRegion() const;
+        void CreateDescriptorSetLayout();
 
-	VkImage _image;
+        std::vector<VkBufferImageCopy> CreateRegion() const;
 
-	VkDeviceMemory _mem;
+        VkImage _image;
 
-	VkImageView _view;
+        VkDeviceMemory _mem;
 
-	VkImageLayout _imageLayout;
+        VkImageView _view;
 
-	VkDescriptorSetLayout _descriptorSetLayout;
+        VkImageLayout _imageLayout;
 
-	VkPhysicalDeviceMemoryProperties _memoryProperties;
+        VkDescriptorSetLayout _descriptorSetLayout;
 
-	VkDevice _device;
+        VkPhysicalDeviceMemoryProperties _memoryProperties;
 
-	VulkanCommandBuffer* _commandBuffer;
+        VkDevice _device;
 
-	VulkanCommandPool* _commandPool;
+        VulkanCommandBuffer* _commandBuffer;
 
-	VkQueue _imageSubmitQueue;
+        VulkanCommandPool* _commandPool;
 
-	VkSampler _sampler;
+        VkQueue _imageSubmitQueue;
 
-	VkDescriptorImageInfo _imageInfo;
+        VkSampler _sampler;
 
-	VkDescriptorSetLayoutBinding _samplerLayoutBinding;
+        VkDescriptorImageInfo _imageInfo;
 
-	int _graphicsFamilyIndex;
+        VkDescriptorSetLayoutBinding _samplerLayoutBinding;
 
-};
+        int _graphicsFamilyIndex;
+
+    };
+}

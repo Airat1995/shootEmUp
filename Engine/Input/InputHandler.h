@@ -6,19 +6,24 @@
 #include "Common/System/UpdatableSystem.h"
 #include "InputMap.h"
 
-class InputHandler : UpdatableSystem {
-private:
+namespace Engine::Input
+{
+    class InputHandler : Common::System::UpdatableSystem {
+    public:
 
-    std::queue<InputContext*> _allInputMaps;
-    InputContext* _activeInput = nullptr;
-public:
+        void Update(double deltaTime) override;
 
-    void Update(double deltaTime) override;
+        void Subscribe(InputContext *inputMap);
 
-    void Subscribe(InputContext* inputMap);
+        void UnsubscribeLast();
 
-    static void ClearAllInputs(InputContext* inputContext);
+        void UnsubscribeAll();
 
-    void Unsubscribe();
-};
+    private:
 
+        void ClearAllInputs(InputContext* inputContext);
+
+        std::queue<InputContext *> _allInputMaps;
+        InputContext *_activeInput = nullptr;
+    };
+}

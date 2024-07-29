@@ -1,19 +1,24 @@
 ﻿#pragma once
 #include "Render/Command/ICommandBuffer.h"
 
-class IShadowmap
+namespace Engine::Render::Shadowmap
 {
-public:
+    using namespace Engine::Render::Command;
 
-	IShadowmap(int width, int height, int binding) : _width(width), _height(height), _binding(binding) {}
-	
-	virtual void Draw(ICommandBuffer* commandBuffer, int index) = 0;
+    class IShadowmap
+    {
+    public:
 
-protected:
-	
-	int _width;
+        IShadowmap(int width, int height, int binding) : _width(width), _height(height), _binding(binding) {}
 
-	int _height;
+        virtual void Draw(ICommandBuffer* commandBuffer, int index) = 0;
 
-	int _binding;
-};
+    protected:
+
+        int _width;
+
+        int _height;
+
+        int _binding;
+    };
+}

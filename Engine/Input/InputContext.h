@@ -1,28 +1,40 @@
 #pragma once
+
+#include <array>
 #include <cstdint>
 
 #include "InputMap.h"
 
-class InputContext
+namespace
 {
-    friend class InputHandler;
-private:
     static constexpr uint8_t MAX_INPUT_MAP_PER_CONTEXT = 254;
+}
 
-    static uint64_t _idIndexer;
-    bool _isActive;
-    int8_t _currentInputMapCount;
+namespace Engine::Input
+{
+    class InputContext
+    {
+        friend class InputHandler;
 
-    void SetEnabled(bool enabled);
+    public:
+        InputContext();
 
-public:
+        [[nodiscard]] bool IsActive() const noexcept;
 
-    InputContext();
+        void Update(double deltaTime, const SDL_Event& event) noexcept;
 
-    [[nodiscard]] bool IsActive() const noexcept;
+        void AddInputMap(IInputKeyboard *inputKeyboard);
 
-    void AddInputMap(InputMap* inputMap);
-    void RemoveInputMap(uint64_t id);
+        void RemoveInputMap(IInputKeyboard *inputKeyboard);
 
-    std::array<InputMap*, MAX_INPUT_MAP_PER_CONTEXT> inputMaps = {};
-};
+        void SetEnabled(bool enabled);
+
+        InputMapState GetState(KeyCode keycode);
+
+        std::array<IInputKeyboard*, MAX_INPUT_MAP_PER_CONTEXT> inputMaps = {};
+
+    private:
+        bool _isActive;
+        int8_t _currentInputMapCount;
+    };
+}

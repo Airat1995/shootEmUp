@@ -1,30 +1,24 @@
 #include "IMaterial.h"
 
-IMaterial::IMaterial(std::map<ShaderType, IShader> &shaders, RenderQueue renderQueue) : _shaders(shaders),
-                                                                                        _renderQueue(renderQueue) {
-    _buffers = std::vector<IBuffer *>();
-}
+namespace Engine::Assets::Material
+{
+    IMaterial::IMaterial(std::map<ShaderType, IShader> &shaders, RenderQueue renderQueue) :
+        _shaders(shaders), _renderQueue(renderQueue)
+    {
+        _buffers = std::vector<IBuffer *>();
+    }
 
-void IMaterial::AddBuffer(IBuffer *buffer) {
-    _buffers.push_back(buffer);
-}
+    void IMaterial::SetRenderQueue(int value) {_renderQueue = value;}
 
-void IMaterial::AddImage(IImage *image) {
-    _images.push_back(image);
-}
+    void IMaterial::AddBuffer(IBuffer *buffer) { _buffers.push_back(buffer); }
 
-std::map<ShaderType, IShader> &IMaterial::MaterialShaders() {
-    return _shaders;
-}
+    void IMaterial::AddImage(IImage *image) { _images.push_back(image); }
 
-std::vector<IBuffer *> &IMaterial::Buffers() {
-    return _buffers;
-}
+    std::map<ShaderType, IShader> &IMaterial::MaterialShaders() { return _shaders; }
 
-std::vector<IImage *> &IMaterial::Images() {
-    return _images;
-}
+    std::vector<IBuffer *> &IMaterial::Buffers() { return _buffers; }
 
-RenderQueue IMaterial::GetRenderQueue() {
-    return _renderQueue;
+    std::vector<IImage *> &IMaterial::Images() { return _images; }
+
+    int IMaterial::GetRenderQueue() const { return _renderQueue; }
 }

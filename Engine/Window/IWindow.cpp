@@ -1,34 +1,38 @@
 #include "IWindow.h"
 #include <utility>
 
-IWindow::IWindow(int width, int height, string name, WindowType windowType, IRender* render)
+namespace Engine::Window
 {
-	_width = width;
-	_height = height;
-	_name = std::move(name);
-	_renderSystem = render;
-}
+    IWindow::IWindow(int width, int height, string name, WindowType windowType, IRender* render)
+    {
+        IWindow::SetHeight(height);
+        IWindow::SetWidth(width);
+        _name = std::move(name);
+        _renderSystem = render;
+        _windowType = windowType;;
+    }
 
-void IWindow::SetWidth(int width)
-{
-	if(width == _width)
-		return;
-	if (width < MinWidth)
-		width = MinWidth;
-	_width = width;
-}
+    void IWindow::SetWidth(int width)
+    {
+        if(width == _width)
+            return;
+        if (width < MinWidth)
+            width = MinWidth;
+        _width = width;
+    }
 
-void IWindow::SetHeight(int height)
-{
-	if (height == _height)
-		return;
-	if (height < MinHeight)
-		height = MinHeight;
-	_height = height;
+    void IWindow::SetHeight(int height)
+    {
+        if (height == _height)
+            return;
+        if (height < MinHeight)
+            height = MinHeight;
+        _height = height;
 
-}
+    }
 
-void IWindow::SetName(string name)
-{
-	_name = std::move(name);
+    void IWindow::SetName(string name)
+    {
+        _name = std::move(name);
+    }
 }

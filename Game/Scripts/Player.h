@@ -2,38 +2,56 @@
 #pragma once
 
 
+#include "Camera/Camera.h"
 #include "Component/Entity/Entity.h"
 #include "Input/InputHandler.h"
-#include "Camera/Camera.h"
 #include "Render/Render/VulkanRender.h"
 
-#include "../Assets/Mesh/MainMesh.h"
+#include "../../Engine/Component/Component/State.h"
 #include "../Assets/Mesh/MainMaterial.h"
-#include "Component/Entity/State.h"
+#include "../Assets/Mesh/MainMesh.h"
+#include "Component/Component/Transform.h"
+#include "Input/InputSOCD.h"
 
 
-class Player : public Entity {
-public:
-    Player(InputHandler& inputHandler, Camera& camera, VulkanRender& render);
+namespace Game::Scripts
+{
+    using namespace Engine::Component::Entity;
+    using namespace Engine::Input;
+    using namespace Engine::Camera;
+    using namespace Engine::Render::Render;
+    using namespace Assets::Mesh;
 
-    void Update(double deltaTime) override;
+    class Player : public Entity
+    {
+    public:
+        Player(InputHandler &inputHandler, Camera &camera, Engine::Render::Render::IRender &render);
 
-    void FixedUpdate(double deltaTime) override;
+        void Update(double deltaTime) override;
 
-    void PrerenderUpdate(double alpha) override;
+        void FixedUpdate(double deltaTime) override;
 
-protected:
+        void PrerenderUpdate(double alpha) override;
 
-    InputHandler& _inputHandler;
-    Camera& _camera;
-    VulkanRender& _render;
-    InputContext _context;
-    MainMesh* _mesh;
-    glm::vec3 moveDelta;
+    protected:
+        InputHandler &_inputHandler;
+        IBuffer *uniformBuffer;
+        Camera &_camera;
+        IRender &_render;
+        InputContext _context;
+        MainMesh *_mesh;
+        MainMaterial *_mainMaterial;
+        Transform *_transform;
+        glm::vec3 moveDelta;
 
-    float _speed = 0.01f;
+        InputMap *forwardInput;
+        InputMap *backwardInput;
+        InputMap *removeInput;
+        InputMap *addInput;
+        InputMap *exitGameInput;
 
-    State _previousState;
-    State _currentState;
+        InputSOCD *moveInput;
 
-};
+        float _speed = 0.01f;
+    };
+} // namespace Game::Scripts

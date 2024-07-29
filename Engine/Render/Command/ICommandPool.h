@@ -1,5 +1,7 @@
 #pragma once
-class ICommandPool
+namespace Engine::Render::Command
 {
-};
-
+    class ICommandPool
+    {
+    };
+}

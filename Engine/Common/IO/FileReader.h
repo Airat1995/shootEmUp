@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
-class FileReader {
-public:
-    static std::vector<char> Read(const std::string &fileLocation);
-};
+namespace Engine::Common::IO
+{
+    class FileReader {
+    public:
+        static std::vector<char> Read(const std::string &fileLocation);
+    };
+}

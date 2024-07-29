@@ -1,8 +1,11 @@
 #pragma once
 
-class UpdatableSystem {
-public:
-    virtual ~UpdatableSystem() = default;
+namespace Engine::Common::System
+{
+    class UpdatableSystem {
+    public:
+        virtual ~UpdatableSystem() = default;
 
-    virtual void Update(double deltaTime) = 0;
-};
+        virtual void Update(double deltaTime) = 0;
+    };
+}

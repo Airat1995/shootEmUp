@@ -1,66 +1,70 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "BaseBuffer.h"
 
 
-using namespace std;
+namespace Engine::Render::Buffer
+{
+    using namespace std;
+    using namespace Engine::Assets::Image;
+    using namespace Engine::Shared::RenderAsset;
 
-class VulkanBuffer {
-public:
+    class VulkanBuffer {
+    public:
 
-    VulkanBuffer(VkDevice device, VkPhysicalDevice physical, BufferStageFlag stageFlag, BufferUsageFlag usage,
-                 BufferSharingMode sharingMode, const void *data, int size, int bindingId);
+        VulkanBuffer(VkDevice device, VkPhysicalDevice physical, Assets::Image::BufferStageFlag stageFlag, BufferUsageFlag usage,
+                     BufferSharingMode sharingMode, const void *data, int size, int bindingId);
 
-    static uint32_t FindMemoryType(uint32_t typeFilter, VkPhysicalDeviceMemoryProperties memoryProperties,
-                                   VkMemoryPropertyFlags properties);
+        static uint32_t FindMemoryType(uint32_t typeFilter, VkPhysicalDeviceMemoryProperties memoryProperties,
+                                       VkMemoryPropertyFlags properties);
 
-    void Fill();
+        void Fill();
 
-    void Flush();
+        void Flush();
 
-    virtual ~VulkanBuffer();
+        virtual ~VulkanBuffer();
 
-    void Destroy() const noexcept;
+        void Destroy() const noexcept;
 
-    VkBuffer &Buffer();
+        VkBuffer &Buffer();
 
-    [[nodiscard]] int Binding() const;
+        [[nodiscard]] int Binding() const;
 
-    [[nodiscard]] int Size() const;
+        [[nodiscard]] int Size() const;
 
-    const void *DataLocation() const;
+        const void *DataLocation() const;
 
-    [[nodiscard]] VkDescriptorSetLayout DescriptorSetLayout() const;
+        [[nodiscard]] VkDescriptorSetLayout DescriptorSetLayout() const;
 
-    [[nodiscard]] VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
+        [[nodiscard]] VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
 
-    VkDescriptorBufferInfo *BufferDescriptorInfo();
+        VkDescriptorBufferInfo *BufferDescriptorInfo();
 
-    static VkDescriptorType BufferUsageToDescriptorType(BufferUsageFlag bufferUsageFlag);
+        static VkDescriptorType BufferUsageToDescriptorType(BufferUsageFlag bufferUsageFlag);
 
-    static VkShaderStageFlagBits GetUsage(BufferStageFlag stage);
+        static VkShaderStageFlagBits GetUsage(Assets::Image::BufferStageFlag stage);
 
-protected:
-    VkBuffer _buffer;
-    VkDeviceMemory _memory;
-    VkDescriptorBufferInfo _bufferDescriptorInfo;
-    VkDescriptorSetLayoutBinding _layoutBinding;
-    VkDevice _device;
-    VkBufferCreateInfo _bufferInfo;
-    VkMemoryRequirements _memoryReq;
-    VkPhysicalDevice _physical;
-    BufferUsageFlag _usage;
-    BufferSharingMode _sharingMode;
-    VkDescriptorSetLayout _descriptorSetLayout;
+    protected:
+        VkBuffer _buffer;
+        VkDeviceMemory _memory;
+        VkDescriptorBufferInfo _bufferDescriptorInfo;
+        VkDescriptorSetLayoutBinding _layoutBinding;
+        VkDevice _device;
+        VkBufferCreateInfo _bufferInfo;
+        VkMemoryRequirements _memoryReq;
+        VkPhysicalDevice _physical;
+        BufferUsageFlag _usage;
+        BufferSharingMode _sharingMode;
+        VkDescriptorSetLayout _descriptorSetLayout;
 
-    int _size;
-    int _bindingId;
-    int _dataSize;
-    const void *_dataLocation;
-    uint8_t *_dataPointer = nullptr;
+        int _size;
+        int _bindingId;
+        int _dataSize;
+        const void *_dataLocation;
+        uint8_t *_dataPointer = nullptr;
 
 
-};
+    };
+}

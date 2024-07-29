@@ -6,46 +6,50 @@
 #include "Asset/Mesh/IMesh.h"
 #include "MainDescriptor.h"
 
+namespace Game::Assets::Mesh
+{
+    using namespace Game::Assets::Mesh;
 
-class MainMesh : public IMesh {
-public:
+    class MainMesh : public IMesh {
+    public:
 
-    explicit MainMesh(std::vector<MainVertexData> vertecies, IMaterial *material);
+        explicit MainMesh(std::vector<MainVertexData> vertecies, IMaterial *material);
 
-    MainMesh(std::vector<MainVertexData> vertecies, std::vector<uint32_t> indicies, IMaterial *material);
+        MainMesh(std::vector<MainVertexData> vertecies, std::vector<uint32_t> indicies, IMaterial *material);
 
-    static MainMesh *Parse(const std::filesystem::path &filePath, IMaterial *material);
+        static MainMesh *Parse(const std::filesystem::path &filePath, IMaterial *material);
 
-    const void *VerticesData() override;
+        const void *VerticesData() override;
 
-    const void *IndicesData() override;
+        const void *IndicesData() override;
 
-    int VertexCount() override;
+        int VertexCount() override;
 
-    int IndexCount() override;
+        int IndexCount() override;
 
-    int RequiredBufferSize() override;
+        int RequiredBufferSize() override;
 
-    int VertexSize() override;
+        int VertexSize() override;
 
-    int IndexSize() override;
+        int IndexSize() override;
 
-    std::vector<VertexAttributeInfo> VertexInfo() override;
+        std::vector<VertexAttributeInfo> VertexInfo() override;
 
-    std::vector<VertexBindingInfo> GetVertexBindingInfo() override;
+        std::vector<VertexBindingInfo> GetVertexBindingInfo() override;
 
-    std::map<ShaderType, IShader> &Shaders() override;
+        std::map<ShaderType, IShader> &Shaders() override;
 
-    void AddPerObjectBuffer(IBuffer *buffer) override;
+        void AddPerObjectBuffer(IBuffer *buffer) override;
 
-    std::vector<IBuffer *> &PerObjectBuffers() override;
+        std::vector<IBuffer *> &PerObjectBuffers() override;
 
-    IMaterial *Material() override;
+        IMaterial *Material() override;
 
-    std::vector<MainVertexData> &GetVertecies();
+        std::vector<MainVertexData> &GetVertecies();
 
-private:
+    private:
 
-    std::vector<MainVertexData> _vertecies;
+        std::vector<MainVertexData> _vertecies;
 
-};
+    };
+}

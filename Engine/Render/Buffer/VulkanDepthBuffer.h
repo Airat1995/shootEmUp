@@ -2,54 +2,57 @@
 
 #include <vector>
 #include <vulkan/vulkan.h>
-#include <stdexcept>
 
 #include "IDepthBuffer.h"
-#include "Render/AssetWrapper/VulkanImage.h"
 
-class VulkanDepthBuffer :
-        public IDepthBuffer {
-public:
-    VulkanDepthBuffer(VkDevice device, VkPhysicalDevice gpu, int width, int height, bool useAsSampler = false);
+namespace Engine::Render::Buffer
+{
+    using namespace std;
+    using namespace Engine::Render::Buffer;
 
-    void Destroy();
+    class VulkanDepthBuffer :
+            public IDepthBuffer {
+    public:
+        VulkanDepthBuffer(VkDevice device, VkPhysicalDevice gpu, int width, int height, bool useAsSampler = false);
 
-    VkFormat Format();
+        void Destroy();
 
-    VkImageView View();
+        VkFormat Format();
 
-protected:
+        VkImageView View();
 
-    VkImage _image;
+    protected:
 
-    VkDeviceMemory _memory;
+        VkImage _image;
 
-    VkImageView _view;
+        VkDeviceMemory _memory;
 
-    VkDevice _device;
+        VkImageView _view;
 
-    VkPhysicalDevice _gpu;
+        VkDevice _device;
 
-    VkAttachmentDescription _depthAttachment;
+        VkPhysicalDevice _gpu;
 
-    VkFormat _depthFormat;
+        VkAttachmentDescription _depthAttachment;
 
-    int _width;
+        VkFormat _depthFormat;
 
-    int _height;
+        int _width;
 
-    bool _useAsSampler;
+        int _height;
 
-private:
-    VkFormat
-    FindSupportedFormat(std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+        bool _useAsSampler;
 
-    static bool HasStencilComponent(VkFormat format);
+    private:
+        VkFormat
+        FindSupportedFormat(std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 
-    void CreateImage(VkFormat format);
+        static bool HasStencilComponent(VkFormat format);
 
-    void BindImage();
+        void CreateImage(VkFormat format);
 
-    void CreateView(VkFormat format);
-};
+        void BindImage();
 
+        void CreateView(VkFormat format);
+    };
+}

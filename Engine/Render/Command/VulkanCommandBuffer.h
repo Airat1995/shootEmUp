@@ -4,22 +4,23 @@
 #include <stdexcept>
 #include "ICommandBuffer.h"
 
-
-class VulkanCommandBuffer : public ICommandBuffer
+namespace Engine::Render::Command
 {
-public:
-	VulkanCommandBuffer(VkDevice device, VkCommandPool commandPool);
+    class VulkanCommandBuffer : public ICommandBuffer
+    {
+    public:
+        VulkanCommandBuffer(VkDevice device, VkCommandPool commandPool);
 
-	VkCommandBuffer CommandBuffer();
+        VkCommandBuffer CommandBuffer();
 
-	virtual ~VulkanCommandBuffer();
+        virtual ~VulkanCommandBuffer();
 
-	bool BeginCommandBuffer();
+        bool BeginCommandBuffer();
 
-	void EndCommandBuffer();
+        void EndCommandBuffer();
 
-	void Reset();
-private:
-	VkCommandBuffer _commandBuffer;
-};
-
+        void Reset();
+    private:
+        VkCommandBuffer _commandBuffer;
+    };
+}

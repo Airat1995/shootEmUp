@@ -1,5 +1,7 @@
 #pragma once
 
-class IDepthBuffer {
-};
-
+namespace Engine::Render::Buffer
+{
+    class IDepthBuffer {
+    };
+}

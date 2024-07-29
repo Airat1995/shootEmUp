@@ -9,33 +9,41 @@
 #include "Shared/RenderAsset/RenderQueue.h"
 #include "IShader.h"
 
-class IMaterial {
-public:
-    IMaterial(std::map<ShaderType, IShader> &shaders, RenderQueue renderQueue);
+namespace Engine::Assets::Material
+{
+    using namespace Engine::Assets::Image;
+    using namespace Engine::Render::Buffer;
+    using namespace Engine::Shared::RenderAsset;
 
-    void AddBuffer(IBuffer *buffer);
+    class IMaterial {
+    public:
+        IMaterial(std::map<ShaderType, IShader> &shaders, RenderQueue renderQueue);
+        void SetRenderQueue(int value);
 
-    void AddImage(IImage *image);
+        void AddBuffer(IBuffer *buffer);
 
-    std::map<ShaderType, IShader> &MaterialShaders();
+        void AddImage(IImage *image);
 
-    std::vector<IBuffer *> &Buffers();
+        std::map<ShaderType, IShader> &MaterialShaders();
 
-    std::vector<IImage *> &Images();
+        std::vector<IBuffer *> &Buffers();
 
-    RenderQueue GetRenderQueue();
+        std::vector<IImage *> &Images();
 
-protected:
+        int GetRenderQueue() const;
 
-    //Used in code generated materials
-    IMaterial() {
-    }
+    protected:
 
-    std::map<ShaderType, IShader> _shaders;
+        //Used in code generated materials
+        IMaterial() {
+        }
 
-    std::vector<IBuffer *> _buffers;
+        std::map<ShaderType, IShader> _shaders;
 
-    std::vector<IImage *> _images;
+        std::vector<IBuffer *> _buffers;
 
-    RenderQueue _renderQueue;
-};
+        std::vector<IImage *> _images;
+
+        int _renderQueue;
+    };
+}

@@ -4,25 +4,30 @@
 #include <iostream>
 #include "Asset/Material/IShader.h"
 
-class VulkanShader {
-public:
-    VulkanShader(VkDevice device, IShader &basicShader, ShaderType shaderType);
+namespace Engine::Render::Shader
+{
+    using namespace Engine::Assets::Material;
 
-    virtual ~VulkanShader();
+    class VulkanShader {
+    public:
+        VulkanShader(VkDevice device, IShader &basicShader, ShaderType shaderType);
 
-    void DestroyShader() const;
+        virtual ~VulkanShader();
 
-    VkPipelineShaderStageCreateInfo GetShaderStageInfo() const noexcept;
+        void DestroyShader() const;
 
-protected:
-    VkShaderModule _shaderModule{};
+        VkPipelineShaderStageCreateInfo GetShaderStageInfo() const noexcept;
 
-    VkPipelineShaderStageCreateInfo _pipelineShader{};
+    protected:
+        VkShaderModule _shaderModule{};
 
-    VkDevice _device;
+        VkPipelineShaderStageCreateInfo _pipelineShader{};
 
-private:
-    void CreatePipelineShaderStageCreateInfo(ShaderType shaderType, const std::string &moduleName);
+        VkDevice _device;
 
-    bool CreateShaderModule(VkDevice device, const char *fileData, unsigned long size);
-};
+    private:
+        void CreatePipelineShaderStageCreateInfo(ShaderType shaderType, const std::string &moduleName);
+
+        bool CreateShaderModule(VkDevice device, const char *fileData, unsigned long size);
+    };
+}

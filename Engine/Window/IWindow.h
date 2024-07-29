@@ -2,43 +2,45 @@
 #include "Render/Render/IRender.h"
 #include <string>
 
-enum class WindowType;
-using namespace std;
-
-class IWindow
+namespace Engine::Window
 {
-public:
-	explicit IWindow(int width, int height, string name, WindowType windowType, IRender* render);
+    using namespace std;
+    using namespace Engine::Render::Render;
 
-	virtual ~IWindow() = default;
+    enum class WindowType;
 
-	virtual void SetWidth(int width);
+    class IWindow
+    {
+    public:
+        explicit IWindow(int width, int height, string name, WindowType windowType, IRender* render);
 
-	virtual void SetHeight(int height);
+        virtual ~IWindow() = default;
 
-	virtual void SetName(string name);
+        virtual void SetWidth(int width);
 
-	virtual void Update() = 0;
+        virtual void SetHeight(int height);
 
-protected:
-	int _width;
-	
-	int _height;
-	
-	string _name;
+        virtual void SetName(string name);
 
-	IRender* _renderSystem;
+        virtual void Update() = 0;
 
-private:
-	const int MinWidth = 720;
+    protected:
+        int _width;
+        int _height;
+        string _name;
+        WindowType _windowType;
 
-	const int MinHeight = 1280;
-};
+    private:
+        IRender* _renderSystem;
 
-enum class WindowType
-{
-	Fullscreen,
-	Borderless,
-	Windowed
-};
+        const int MinWidth = 720;
+        const int MinHeight = 1280;
+    };
 
+    enum class WindowType
+    {
+        Fullscreen,
+        Borderless,
+        Windowed
+    };
+}

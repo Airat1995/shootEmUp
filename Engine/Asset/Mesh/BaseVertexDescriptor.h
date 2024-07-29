@@ -4,43 +4,45 @@
 #include "VertexAttributeInfo.h"
 #include "VertexBindingInfo.h"
 
-using namespace std;
-using namespace glm;
+namespace Engine::Assets::Mesh
+{
+    using namespace glm;
+    using namespace std;
 
-class BaseVertexData {
-};
+    class BaseVertexData {
+    };
 
-/**
- * Base data description structure
- * MUST FIT _bindingDescriptions and _attributeDescriptions to properly work with vertex input buffer
- */
-class BaseVertexDescriptor {
-public:
-    virtual ~BaseVertexDescriptor() = default;
+    /**
+     * Base data description structure
+     * MUST FIT _bindingDescriptions and _attributeDescriptions to properly work with vertex input buffer
+     */
+    class BaseVertexDescriptor {
+    public:
+        virtual ~BaseVertexDescriptor() = default;
 
-    vector<BaseVertexData> Vertecies() {
-        return _vertexData;
-    }
+        vector<BaseVertexData> Vertecies() {
+            return _vertexData;
+        }
 
-    vector<uint16_t> Indicies() {
-        return _indices;
-    }
+        vector<uint16_t> Indicies() {
+            return _indices;
+        }
 
-    vector<VertexBindingInfo> &GetBindingInfo() {
-        return _bindingInfo;
-    }
+        vector<VertexBindingInfo> &GetBindingInfo() {
+            return _bindingInfo;
+        }
 
-    vector<VertexAttributeInfo> &GetVertexInfo() {
-        return _vertexInfo;
-    }
+        vector<VertexAttributeInfo> &GetVertexInfo() {
+            return _vertexInfo;
+        }
 
-protected:
-    vector<VertexAttributeInfo> _vertexInfo;
+    protected:
+        vector<VertexAttributeInfo> _vertexInfo;
 
-    vector<VertexBindingInfo> _bindingInfo;
+        vector<VertexBindingInfo> _bindingInfo;
 
-    vector<BaseVertexData> _vertexData;
+        vector<BaseVertexData> _vertexData;
 
-    vector<uint16_t> _indices;
-};
-
+        vector<uint16_t> _indices;
+    };
+}

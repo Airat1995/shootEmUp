@@ -1,5 +1,8 @@
 #pragma once
-class ICommandBuffer
+namespace Engine::Render::Command
 {
-};
+    class ICommandBuffer
+    {
+    };
+}
 

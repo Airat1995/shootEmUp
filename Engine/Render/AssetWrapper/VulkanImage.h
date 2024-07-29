@@ -1,7 +1,6 @@
 #pragma once
 #include <vulkan/vulkan.h>
 #include <vector>
-#include <iostream>
 
 #include "Asset/Image/ImageFlags.h"
 #include "Asset/Image/IImage.h"
@@ -10,64 +9,73 @@
 #include "Render/Command/VulkanCommandPool.h"
 #include "BufferlessVulkanImage.h"
 
-class VulkanImage : public IImage
+namespace Engine::Render::AssetWrapper
 {
-public:
-	explicit VulkanImage(VulkanCommandPool* commandPool, ImageFormat format, ImageType type, ImageUsage imageUsage, BufferStageFlag stage,
-	                     int width, int height, vector<unsigned char>& imageData, VkDevice device,
-	                     VkPhysicalDevice gpu, int binding, int graphicsFamilyIndex, int samples);
-	void Clean() const;
+    using namespace std;
+    using namespace Engine::Assets::Image;
+    using namespace Engine::Render::Command;
+    using namespace Engine::Render::Buffer;
 
-	VkImageView View() const;
-	
-	VkDescriptorSetLayout DescriptorSetLayout() const;
+    class VulkanImage : public IImage
+    {
+    public:
+        explicit VulkanImage(VulkanCommandPool* commandPool, ImageFormat format,
+                             ImageType type, ImageUsage imageUsage,
+                             BufferStageFlag stage,
+                             int width, int height, vector<unsigned char>& imageData, VkDevice device,
+                             VkPhysicalDevice gpu, int binding, int graphicsFamilyIndex, int samples);
+        void Clean() const;
 
-	const VkDescriptorImageInfo *const ImageInfo();
+        VkImageView View() const;
 
-	VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
+        VkDescriptorSetLayout DescriptorSetLayout() const;
 
-	~VulkanImage();
+        const VkDescriptorImageInfo *const ImageInfo();
 
-protected:
+        VkDescriptorSetLayoutBinding DescriptorBindingInfo() const;
 
-	void CreateCopyCommandBuffer(VkImageUsageFlagBits imageUsage);
+        ~VulkanImage();
 
-	void CreateSampler();
+    protected:
 
-	std::vector<VkBufferImageCopy> CreateRegion() const;
+        void CreateCopyCommandBuffer(VkImageUsageFlagBits imageUsage);
 
-	void CreateDescriptorSetLayout();
-	
-	void CreateCopyCommandBuffer();
+        void CreateSampler();
 
-	VkImage _image;
+        std::vector<VkBufferImageCopy> CreateRegion() const;
 
-	VkDeviceMemory _mem;
+        void CreateDescriptorSetLayout();
 
-	VkImageView _view;
+        void CreateCopyCommandBuffer();
 
-	VkImageLayout _imageLayout;
+        VkImage _image;
 
-	VkDescriptorSetLayout _descriptorSetLayout;
-	
-	VkPhysicalDeviceMemoryProperties _memoryProperties;
-	
-	VkDevice _device;
+        VkDeviceMemory _mem;
 
-	VulkanBuffer* _buffer;
+        VkImageView _view;
 
-	VulkanCommandBuffer* _commandBuffer;
+        VkImageLayout _imageLayout;
 
-	VulkanCommandPool* _commandPool;
+        VkDescriptorSetLayout _descriptorSetLayout;
 
-	VkQueue _imageSubmitQueue;
+        VkPhysicalDeviceMemoryProperties _memoryProperties;
 
-	VkSampler _sampler;
+        VkDevice _device;
 
-	VkDescriptorImageInfo _imageInfo;
+        VulkanBuffer* _buffer;
 
-	VkDescriptorSetLayoutBinding _samplerLayoutBinding;
+        VulkanCommandBuffer* _commandBuffer;
 
-	int _graphicsFamilyIndex;
-};
+        VulkanCommandPool* _commandPool;
 
+        VkQueue _imageSubmitQueue;
+
+        VkSampler _sampler;
+
+        VkDescriptorImageInfo _imageInfo;
+
+        VkDescriptorSetLayoutBinding _samplerLayoutBinding;
+
+        int _graphicsFamilyIndex;
+    };
+}

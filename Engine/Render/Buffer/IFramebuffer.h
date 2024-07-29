@@ -1,5 +1,6 @@
 #pragma once
-
-class IFramebuffer {
-};
-
+namespace Engine::Render::Buffer
+{
+    class IFramebuffer {
+    };
+}

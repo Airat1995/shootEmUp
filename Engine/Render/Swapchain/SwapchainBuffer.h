@@ -1,33 +1,36 @@
 #pragma once
 #include "vulkan/vulkan.h"
 
-class SwapchainBuffer
-{	
+namespace Engine::Render::Swapchain
+{
+    class SwapchainBuffer
+    {
 
-protected:
-	VkImage _image = nullptr;
+    protected:
+        VkImage _image = nullptr;
 
-	VkImageView _view = nullptr;
+        VkImageView _view = nullptr;
 
-public:
+    public:
 
-	VkImage* Image()
-	{
-		return &_image;
-	}
+        VkImage* Image()
+        {
+            return &_image;
+        }
 
-	void Image(VkImage image)
-	{
-		_image = image;
-	}
+        void Image(VkImage image)
+        {
+            _image = image;
+        }
 
-	VkImageView* View()
-	{
-		return &_view;
-	}
+        VkImageView* View()
+        {
+            return &_view;
+        }
 
-	void View(VkImageView view)
-	{
-		_view = view;
-	}
-};
+        void View(VkImageView view)
+        {
+            _view = view;
+        }
+    };
+}

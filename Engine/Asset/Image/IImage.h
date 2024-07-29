@@ -5,49 +5,52 @@
 #include "ImageFlags.h"
 #include "StageFlag.h"
 
-class IImage {
-public:
-    IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
-           int height, int sampleCount, std::vector<unsigned char> &imageData);
+namespace Engine::Assets::Image
+{
+    class IImage {
+    public:
+        IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
+               int height, int sampleCount, std::vector<unsigned char> &imageData);
 
-    IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
-           int height, int sampleCount);
+        IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
+               int height, int sampleCount);
 
-    int Width() const;
+        int Width() const;
 
-    int Height() const;
+        int Height() const;
 
-    ImageType Type() const;
+        ImageType Type() const;
 
-    ImageFormat Format() const;
+        ImageFormat Format() const;
 
-    std::vector<unsigned char> *ImageData();
+        std::vector<unsigned char> *ImageData();
 
-    ImageUsage Usage() const;
+        ImageUsage Usage() const;
 
-    BufferStageFlag Stage() const;
+        BufferStageFlag Stage() const;
 
-    int Binding() const;
+        int Binding() const;
 
-    int SampleCount() const;
+        int SampleCount() const;
 
-protected:
+    protected:
 
-    const int _width;
+        const int _width;
 
-    const int _height;
+        const int _height;
 
-    int _binding;
+        int _binding;
 
-    const int _sampleCount;
+        const int _sampleCount;
 
-    std::vector<unsigned char> _imageData;
+        std::vector<unsigned char> _imageData;
 
-    ImageFormat _format;
+        ImageFormat _format;
 
-    ImageType _type;
+        ImageType _type;
 
-    ImageUsage _usage;
+        ImageUsage _usage;
 
-    BufferStageFlag _stage;
-};
+        BufferStageFlag _stage;
+    };
+}

@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Format.h"
+namespace Engine::Assets::Mesh
+{
+    struct VertexAttributeInfo {
+        int Location;
 
-struct VertexAttributeInfo {
-    int Location;
+        Format Format;
 
-    Format Format;
-
-    int Offset;
-};
+        int Offset;
+    };
+}

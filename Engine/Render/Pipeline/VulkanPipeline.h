@@ -8,73 +8,84 @@
 #include "Render/Buffer/VulkanBuffer.h"
 #include "Render/AssetWrapper/VulkanMeshData.h"
 
-using namespace std;
-
-class VulkanPipeline : public IPipeline, public IVulkanRenderMeshBufferCreator
+namespace Engine::Render::Pipeline
 {
-public:
-	explicit VulkanPipeline(VkDevice device, VkPhysicalDevice physical, VulkanRenderpass& renderpass,
-		VulkanMeshData& vulkanMeshData, VkExtent2D extent);
+    using namespace std;
+    using namespace Engine::Render::AssetWrapper;
+    using namespace Engine::Render::Render;
+    using namespace Engine::Render::Shader;
 
-	virtual ~VulkanPipeline();
+    class VulkanPipeline : public IPipeline, public IVulkanRenderMeshBufferCreator
+    {
+    public:
+        explicit VulkanPipeline(VkDevice device, VkPhysicalDevice physical, VulkanRenderpass& renderpass,
+            VulkanMeshData& vulkanMeshData, VkExtent2D extent);
 
-	void Initialize(VkDevice device, VulkanMeshData& vulkanMeshData, VkExtent2D extent);
+        virtual ~VulkanPipeline();
 
-	VkPipeline Pipeline();
+        void Initialize(VkDevice device, VulkanMeshData& vulkanMeshData, VkExtent2D extent);
 
-	VkPipelineLayout PipelineLayout();
+        VkPipeline Pipeline();
 
-	void DestroyPipeline();
+        VkPipelineLayout PipelineLayout();
 
-	void BindBuffer(VkCommandBuffer commandBuffer);
+        void DestroyPipeline() const;
 
-	void BindPipeline(VkCommandBuffer commandBuffer);
+        void BindBuffer(VkCommandBuffer commandBuffer);
 
-	void BuildCommandbuffer(VkCommandBuffer commandBuffer);
+        void BindPipeline(VkCommandBuffer commandBuffer);
+
+        void BuildCommandbuffer(VkCommandBuffer commandBuffer);
 
 
-	void AddMesh(IMesh* mesh, vector<VulkanBuffer> perObjectBuffers) override;
+        void AddMesh(IMesh* mesh, vector<VulkanBuffer> perObjectBuffers) override;
 
-private:
+        void RemoveMesh(IMesh* mesh) override;
 
-	void CreateBuffers(VulkanMeshData& meshData);
+    private:
 
-	vector<VulkanShader> BaseShadersToVulkanShader(VkDevice device, std::map<ShaderType, IShader>& shaders);
+        void CreateBuffers(VulkanMeshData& meshData);
 
-	VkDynamicState _dynamicStates[2] = {
-		VK_DYNAMIC_STATE_VIEWPORT,
-		VK_DYNAMIC_STATE_LINE_WIDTH
-	};
+        vector<VulkanShader> BaseShadersToVulkanShader(VkDevice device, std::map<ShaderType, IShader>& shaders);
 
-	VkPipelineLayout _pipelineLayout{};
+        VkDynamicState _dynamicStates[2] = {
+            VK_DYNAMIC_STATE_VIEWPORT,
+            VK_DYNAMIC_STATE_LINE_WIDTH
+        };
 
-	VkDevice _device{};
+        VkPipelineLayout _pipelineLayout{};
 
-	VkPhysicalDevice _physical;
+        VkDevice _device{};
 
-	VkPipeline _pipeline{};
+        VkPhysicalDevice _physical;
 
-	VkDescriptorPool _descriptorPool;
+        VkPipeline _pipeline{};
 
-	VkDescriptorSet _descriptorSets;
+        VkDescriptorPool _descriptorPool;
 
-	VkDescriptorSetLayout _descriptorSetLayout;
+        VkDescriptorSet _descriptorSets;
 
-	VulkanRenderpass& _renderPass;
+        VkDescriptorSetLayout _descriptorSetLayout;
 
-	VulkanMeshData& _meshData;
+        VulkanRenderpass& _renderPass;
 
-	vector<VertexBuffer> _meshBuffers;
+        VulkanMeshData& _meshData;
 
-	std::map<VertexBuffer, vector<VulkanBuffer>> _perObjectBuffer;
+        vector<VertexBuffer> _meshBuffers;
 
-	vector<VulkanBuffer> _indices;
+        std::map<VertexBuffer, vector<VulkanBuffer>> _perObjectBuffer;
 
-	std::map<VertexBuffer, int> _indicesSize;
+        std::map<IMesh*, int> _meshPosition;
+        std::map<IMesh*, int> _perObjectsBuffersPosition;
 
-	vector<VulkanBuffer> _dataBuffers;
+        vector<VulkanBuffer> _indices;
 
-	uint32_t _firstBinding;
+        std::map<VertexBuffer, int> _indicesSize;
 
-	size_t _bindingCount;
-};
+        vector<VulkanBuffer> _dataBuffers;
+
+        uint32_t _firstBinding;
+
+        size_t _bindingCount;
+    };
+}

@@ -10,62 +10,71 @@
 #include "Render/Swapchain/ISwapchain.h"
 #include "Render/Buffer/VulkanFramebuffer.h"
 
-class VulkanOmniShadowmap : public IShadowmap
+namespace Engine::Render::Shadowmap
 {
-public:
+    using namespace std;
+    using namespace glm;
+    using namespace Engine::Camera;
+    using namespace Engine::Render::AssetWrapper;
+    using namespace Engine::Render::Render;
 
-	VulkanOmniShadowmap(vec4* lightPosition, CameraObject* currentCamera, vector<VulkanMeshData*>* meshDataCollection, 
-		VulkanCommandPool* commandPool, ISwapchain* swapchain, VkDevice device, VkPhysicalDevice gpu, int drawQueue, int presentQueue, int binding, int graphicsFamilyIndex, int width, int height);
+    class VulkanOmniShadowmap : public IShadowmap
+    {
+    public:
 
-	void Draw(ICommandBuffer* commandBuffer, int index) override;
+        VulkanOmniShadowmap(vec4* lightPosition, CameraObject* currentCamera, vector<VulkanMeshData*>* meshDataCollection,
+            VulkanCommandPool* commandPool, ISwapchain* swapchain, VkDevice device, VkPhysicalDevice gpu, int drawQueue, int presentQueue, int binding, int graphicsFamilyIndex, int width, int height);
 
-	void Update(int indexFace);
+        void Draw(ICommandBuffer* commandBuffer, int index) override;
 
-	void Submit(int index);
-		
-protected:
+        void Update(int indexFace);
 
-	BufferlessVulkanImage* _image;
+        void Submit(int index);
 
-	VulkanDepthBuffer* _depthBuffer;
+    protected:
 
-	VulkanRenderpass* _offscreenRenderpass;
+        BufferlessVulkanImage* _image;
 
-	VulkanPipeline* _pipeline;
-	
-	ShadowmapBuffer _shadowmapBuffer;
+        VulkanDepthBuffer* _depthBuffer;
 
-	vec4* _lightPosition;
+        VulkanRenderpass* _offscreenRenderpass;
 
-	CameraObject* _currentCamera;
-	ISwapchain* _swapchain;
+        VulkanPipeline* _pipeline;
 
-private:
-		
-	void CreateVulkanPipeline(IMesh* mesh);
+        ShadowmapBuffer _shadowmapBuffer;
 
-	static void SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout,
-	                           VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange,
-	                           VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask);
+        vec4* _lightPosition;
+
+        CameraObject* _currentCamera;
+        ISwapchain* _swapchain;
+
+    private:
+
+        void CreateVulkanPipeline(IMesh* mesh);
+
+        static void SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout,
+                                   VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange,
+                                   VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask);
 
 
-	VulkanFramebuffer* _frameBuffer;
+        VulkanFramebuffer* _frameBuffer;
 
-	VkDevice _device;
+        VkDevice _device;
 
-	VkPhysicalDevice _gpu;
+        VkPhysicalDevice _gpu;
 
-	int _drawQueue;
-	
-	int _presentQueue;
+        int _drawQueue;
 
-	int _indexFace;
+        int _presentQueue;
+
+        int _indexFace;
 #pragma region constants
 
-	string _vertexLoc = "C:\\Users\\airat\\OneDrive\\Documents\\DRawEngine\\omniShadowmapVert.spv";
+        string _vertexLoc = "C:\\Users\\airat\\OneDrive\\Documents\\DRawEngine\\omniShadowmapVert.spv";
 
-	string _fragmentLoc = "C:\\Users\\airat\\OneDrive\\Documents\\DRawEngine\\omniShadowmapFrag.spv";
+        string _fragmentLoc = "C:\\Users\\airat\\OneDrive\\Documents\\DRawEngine\\omniShadowmapFrag.spv";
 
-	string _shaderName = "main";
-#pragma 
-};
+        string _shaderName = "main";
+#pragma
+    };
+}

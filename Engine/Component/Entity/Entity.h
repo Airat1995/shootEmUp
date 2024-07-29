@@ -4,21 +4,26 @@
 #include <vector>
 #include "Component/Component/IComponent.h"
 
-class Entity {
-public:
-    virtual ~Entity();
+namespace Engine::Component::Entity
+{
+    using namespace Engine::Component::Component;
 
-    virtual void AddComponent(IComponent& component);
+    class Entity
+    {
+    public:
+        virtual ~Entity();
 
-    virtual void RemoveComponent(long long id);
+        virtual void AddComponent(Component::IComponent &component);
 
-    virtual void Update(double deltaTime);
+        virtual void RemoveComponent(long long id);
 
-    virtual void FixedUpdate(double deltaTime);
+        virtual void Update(double deltaTime);
 
-    virtual void PrerenderUpdate(double alpha);
+        virtual void FixedUpdate(double deltaTime);
 
-protected:
+        virtual void PrerenderUpdate(double alpha);
 
-    std::vector<IComponent> components;
-};
+    protected:
+        std::vector<Component::IComponent> components;
+    };
+}

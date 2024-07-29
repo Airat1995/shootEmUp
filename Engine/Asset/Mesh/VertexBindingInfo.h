@@ -1,9 +1,12 @@
 #pragma once
 
-struct VertexBindingInfo {
-    bool Instanced;
+namespace Engine::Assets::Mesh
+{
+    struct VertexBindingInfo {
+        bool Instanced;
 
-    int Size;
+        int Size;
 
-    int BindId;
-};
+        int BindId;
+    };
+}

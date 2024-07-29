@@ -1,12 +1,14 @@
 #pragma once
 
 #include <cstdint>
-
-enum class InputMapState : uint8_t
+namespace Engine::Input
 {
-    Inactive,
-    NotPressed,
-    KeyDown,
-    Pressed,
-    KeyUp
-};
+    enum class InputMapState : uint8_t
+    {
+        Inactive,
+        NotPressed,
+        KeyDown,
+        Pressed,
+        KeyUp
+    };
+}

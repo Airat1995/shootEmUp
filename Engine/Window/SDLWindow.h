@@ -2,36 +2,40 @@
 #include "IWindow.h"
 #include <SDL2/SDL.h>
 
-class IRender;
 
-class SDLWindow : public IWindow
+namespace Engine::Window
 {
-public:	
-	SDLWindow(int width, int height, const string& name, WindowType windowType, IRender* render);
 
-	~SDLWindow() override;
-	
-	void SetWidth(int width) override;
-	
-	void SetHeight(int height) override;
-	
-	void SetName(string name) override;
+	using namespace Engine::Render;
 
-	void UpdateWindow() const;
+	class SDLWindow : public IWindow
+	{
+	public:	
+		SDLWindow(int width, int height, const string& name, WindowType windowType, IRender* render);
 
-	SDL_Window* Window();
+		~SDLWindow() override;
+		
+		void SetWidth(int width) override;
+		
+		void SetHeight(int height) override;
+		
+		void SetName(string name) override;
 
-	void Update() override;
+		void UpdateWindow() const;
 
-protected:
+		SDL_Window* Window();
 
-	SDL_Window* _window;
+		void Update() override;
 
-	SDL_Surface* _surface;
+	protected:
 
-	vector<const char*> GetExtensions() const;
+		SDL_Window* _window;
 
-private:
-	static Uint32 WindowTypeToSDLWindowFlags(WindowType windowType);
-};
+		SDL_Surface* _surface;
 
+		vector<const char*> GetExtensions() const;
+
+	private:
+		static Uint32 WindowTypeToSDLWindowFlags(WindowType windowType);
+	};
+}

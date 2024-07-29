@@ -18,8 +18,8 @@ const std::string shaderHeaderTemplate = "#pragma once\n"
                                          "\n";
 
 const std::string materialHeaderTemplate = "#pragma once\n"
-                                         "\n"
-                                         "#include \"Asset/Material/IMaterial.h\"\n";
+                                           "\n"
+                                           "#include \"Asset/Material/IMaterial.h\"\n";
 
 const std::string inlineMethodOffset = "\t";
 const std::string propertyOffset = "\t\t";
@@ -28,24 +28,21 @@ const std::string inlinePropPlatform = "\t\t\t";
 const std::unordered_map<std::string, ShaderType> shaderTypes = {{".vert", ShaderType::Vertex},
                                                                  {".frag", ShaderType::Fragment}};
 
-const std::unordered_map<ShaderType, std::string> shaderTypeToFile = {{ShaderType::Vertex, "Vertex"},
+const std::unordered_map<ShaderType, std::string> shaderTypeToFile = {{ShaderType::Vertex,   "Vertex"},
                                                                       {ShaderType::Fragment, "Fragment"}};
 
-std::string getShaderClassName(std::string &className, ShaderType shaderType)
-{
+std::string getShaderClassName(std::string &className, ShaderType shaderType) {
     const std::string shaderClassName = className + shaderTypeToFile.at(shaderType);
     return shaderClassName;
 }
 
-const bool generateShaderClass(std::string &className, ShaderType shaderType, const std::filesystem::path &filePath)
-{
+const bool generateShaderClass(std::string &className, ShaderType shaderType, const std::filesystem::path &filePath) {
 
     std::fstream shaderClassGenFile;
     auto absolutePath = std::filesystem::canonical(filePath);
     std::string shadeFileName = getShaderClassName(className, shaderType) + "Shader.h";
     shaderClassGenFile.open(shadeFileName, std::fstream::out);
-    if (shaderClassGenFile.fail())
-    {
+    if (shaderClassGenFile.fail()) {
         return false;
     }
 
@@ -87,8 +84,7 @@ const bool generateShaderClass(std::string &className, ShaderType shaderType, co
     return true;
 }
 
-std::vector<VertexStruct> readAllVertex(const std::string &fileLocation)
-{
+std::vector<VertexStruct> readAllVertex(const std::string &fileLocation) {
     std::regex vertexRegex(vertexRegexStr, std::regex_constants::ECMAScript | std::regex_constants::optimize);
     std::ifstream shaderFile(fileLocation);
     std::string shader((std::istreambuf_iterator<char>(shaderFile)), std::istreambuf_iterator<char>());
@@ -97,8 +93,7 @@ std::vector<VertexStruct> readAllVertex(const std::string &fileLocation)
                                            std::sregex_iterator{}};
 
     std::vector<VertexStruct> shaderVertecies;
-    for (const auto &match : matches)
-    {
+    for (const auto &match: matches) {
         const auto location = match.str(1);
         const auto name = match.str(4);
         const auto inputType = match.str(2);
@@ -110,21 +105,18 @@ std::vector<VertexStruct> readAllVertex(const std::string &fileLocation)
     return shaderVertecies;
 }
 
-bool generateDataClass(const std::string &className, const std::vector<VertexStruct> &verteciesInfo)
-{
+bool generateDataClass(const std::string &className, const std::vector<VertexStruct> &verteciesInfo) {
     std::fstream classFile;
     std::string dataFileName = className + std::string("Data.h");
     classFile.open(dataFileName, std::fstream::out);
-    if (classFile.fail())
-    {
+    if (classFile.fail()) {
         return false;
     }
 
     classFile << headerTemplate;
     classFile << "class " << className << "VertexData : BaseVertexData {\n";
     classFile << "public: \n";
-    for (const auto &vertexStruct : verteciesInfo)
-    {
+    for (const auto &vertexStruct: verteciesInfo) {
         classFile << "\t" << vertexStruct.TypeToCPPType() << " " << vertexStruct.name << ";\n";
     }
     classFile << "};";
@@ -133,14 +125,12 @@ bool generateDataClass(const std::string &className, const std::vector<VertexStr
     return true;
 }
 
-bool generateVertexInfoClass(const std::string &fileName, const std::vector<VertexStruct> &verteciesInfo)
-{
+bool generateVertexInfoClass(const std::string &fileName, const std::vector<VertexStruct> &verteciesInfo) {
     std::fstream classFile;
     const auto className = fileName + std::string("Descriptor");
     std::string infoFileName = className + std::string(".h");
     classFile.open(infoFileName, std::fstream::out);
-    if (classFile.fail())
-    {
+    if (classFile.fail()) {
         return false;
     }
 
@@ -151,8 +141,7 @@ bool generateVertexInfoClass(const std::string &fileName, const std::vector<Vert
     classFile << "\t" << className << "VertexDescriptor"
               << "() {\n";
     classFile << propertyOffset << "_vertexInfo = vector<VertexAttributeInfo>();\n";
-    for (const auto &vertexInfo : verteciesInfo)
-    {
+    for (const auto &vertexInfo: verteciesInfo) {
         classFile << propertyOffset << "VertexAttributeInfo " << vertexInfo.name << "{};\n";
         classFile << propertyOffset << vertexInfo.name << ".Location = " << vertexInfo.location << ";\n";
         classFile << propertyOffset << vertexInfo.name << ".Offset = " << totalOffset << ";\n";
@@ -177,34 +166,30 @@ bool generateVertexInfoClass(const std::string &fileName, const std::vector<Vert
 }
 
 
-void checkShaderWithValidator(const std::string &shaderPath)
-{
+void checkShaderWithValidator(const std::string &shaderPath) {
     std::string validationCall = "glslangValidator " + shaderPath;
     system(validationCall.c_str());
 }
 
-bool generateMaterialClass(const std::string &className, const std::unordered_map<ShaderType, std::string> &shaders)
-{
+bool generateMaterialClass(const std::string &className, const std::unordered_map<ShaderType, std::string> &shaders) {
     std::fstream materialFile;
     std::string infoFileName = className + std::string("Material.h");
     materialFile.open(infoFileName, std::fstream::out);
-    if (materialFile.fail())
-    {
+    if (materialFile.fail()) {
         return false;
     }
     materialFile << materialHeaderTemplate;
-    for (auto [shaderType, className] : shaders)
-    {
-        materialFile << "#include \"" <<className<< "Shader.h\"\n";
+    for (auto [shaderType, className]: shaders) {
+        materialFile << "#include \"" << className << "Shader.h\"\n";
     }
     materialFile << "\n";
 
     materialFile << "class " << className << "Material : public IMaterial {\n";
     materialFile << "public:\n";
     materialFile << inlineMethodOffset << className << "Material() {\n";
-    for (auto [shaderType, className] : shaders)
-    {
-        materialFile << propertyOffset << "_shaders.emplace(ShaderType::" << shaderTypeToFile.at(shaderType) << ", " << className<< "Shader());\n";
+    for (auto [shaderType, className]: shaders) {
+        materialFile << propertyOffset << "_shaders.emplace(ShaderType::" << shaderTypeToFile.at(shaderType) << ", "
+                     << className << "Shader());\n";
     }
     materialFile << inlineMethodOffset << "}\n";
     materialFile << "};";
@@ -212,10 +197,8 @@ bool generateMaterialClass(const std::string &className, const std::unordered_ma
 
 }
 
-int main(int argc, char **argv)
-{
-    if (argc < 2)
-    {
+int main(int argc, char **argv) {
+    if (argc < 2) {
         std::cerr << "Arguments not enough!" << std::endl;
         return -1;
     }
@@ -223,18 +206,15 @@ int main(int argc, char **argv)
     std::unordered_map<ShaderType, std::string> materialShaders = {};
 
     auto className = std::string(argv[1]);
-    for (int argumentIndex = 2; argumentIndex < argc; argumentIndex++)
-    {
+    for (int argumentIndex = 2; argumentIndex < argc; argumentIndex++) {
         const auto shaderFile = std::string(argv[argumentIndex]);
         const auto shaderFilePath = std::filesystem::path(shaderFile);
         const auto shaderType = shaderTypes.at(shaderFilePath.extension().c_str());
 
         checkShaderWithValidator(shaderFile);
 
-        switch (shaderType)
-        {
-        case ShaderType::Vertex:
-            {
+        switch (shaderType) {
+            case ShaderType::Vertex: {
                 const std::vector<VertexStruct> allVertecies = readAllVertex(shaderFile);
                 const bool ableToCreateDataClass = generateDataClass(className, allVertecies);
                 if (!ableToCreateDataClass)
@@ -261,6 +241,6 @@ int main(int argc, char **argv)
     }
 
     const bool ableToGenerateMaterialClass = generateMaterialClass(className, materialShaders);
-    if(!ableToGenerateMaterialClass)
+    if (!ableToGenerateMaterialClass)
         throw std::runtime_error("Unable to generate material class!");
 }

@@ -6,54 +6,56 @@
 
 #include "SwapchainBuffer.h"
 
-class ISwapchain
+namespace Engine::Render::Swapchain
 {
-public:
-	ISwapchain(VkDevice device, VkExtent2D swapchainExtent, VkSurfaceCapabilitiesKHR surfaceCapabilities,
-	           VkSurfaceKHR surface, std::vector<VkPhysicalDevice>& gpus, uint32_t graphicsQueueFamilyIndex,
-	           uint32_t presentQueueFamilyIndex);
+    class ISwapchain
+    {
+    public:
+        ISwapchain(VkDevice device, VkExtent2D swapchainExtent, VkSurfaceCapabilitiesKHR surfaceCapabilities,
+                   VkSurfaceKHR surface, std::vector<VkPhysicalDevice>& gpus, uint32_t graphicsQueueFamilyIndex,
+                   uint32_t presentQueueFamilyIndex);
 
-	VkSwapchainCreateInfoKHR SwapchainInfo();
+        VkSwapchainCreateInfoKHR SwapchainInfo();
 
-	std::vector<SwapchainBuffer>& SwapchainBuffers();
+        std::vector<SwapchainBuffer>& SwapchainBuffers();
 
-	~ISwapchain();
+        ~ISwapchain();
 
-	VkSemaphore ImageAvailableSemaphore();
+        VkSemaphore ImageAvailableSemaphore();
 
-	VkSemaphore RenderFinishSemaphore();
+        VkSemaphore RenderFinishSemaphore();
 
-	VkSwapchainKHR Swapchain();
-		
-	void RecreateSwapchain();
+        VkSwapchainKHR Swapchain();
 
-protected:
+        void RecreateSwapchain();
 
-	void DestroySwapchain();
+    protected:
 
-	void CreateSwapchainAndImages(VkDevice device, VkSwapchainCreateInfoKHR swapchainInfo);
+        void DestroySwapchain();
 
-	static VkSurfaceTransformFlagBitsKHR GetPresentMode(VkSurfaceCapabilitiesKHR surfaceCapabilities);
+        void CreateSwapchainAndImages(VkDevice device, VkSwapchainCreateInfoKHR swapchainInfo);
 
-	static VkCompositeAlphaFlagBitsKHR GetCompositeAlpha(VkSurfaceCapabilitiesKHR surfaceCapabilities);
+        static VkSurfaceTransformFlagBitsKHR GetPresentMode(VkSurfaceCapabilitiesKHR surfaceCapabilities);
 
-	static VkFormat GetSupportedFormat(std::vector<VkPhysicalDevice>& gpus, VkSurfaceKHR surface);
+        static VkCompositeAlphaFlagBitsKHR GetCompositeAlpha(VkSurfaceCapabilitiesKHR surfaceCapabilities);
 
-	void CreateSemaphore();
+        static VkFormat GetSupportedFormat(std::vector<VkPhysicalDevice>& gpus, VkSurfaceKHR surface);
 
-	std::vector<SwapchainBuffer> _swapchainBuffers;
+        void CreateSemaphore();
 
-	VkSwapchainKHR _swapChain{};
+        std::vector<SwapchainBuffer> _swapchainBuffers;
 
-	VkSwapchainKHR _swapChainRebuild{};
+        VkSwapchainKHR _swapChain{};
 
-	VkSwapchainCreateInfoKHR _swapchainInfo = {};
+        VkSwapchainKHR _swapChainRebuild{};
 
-	VkDevice _device;
+        VkSwapchainCreateInfoKHR _swapchainInfo = {};
 
-	VkSemaphore _imageAvailableSemaphore{};
+        VkDevice _device;
 
-	VkSemaphore _renderFinishSemaphore{};
-	
-};
+        VkSemaphore _imageAvailableSemaphore{};
 
+        VkSemaphore _renderFinishSemaphore{};
+
+    };
+}

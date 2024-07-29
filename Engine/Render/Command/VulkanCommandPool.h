@@ -1,39 +1,40 @@
 #pragma once
 
 #include <vector>
-#include <exception>
 #include <vulkan/vulkan.h>
 #include "Render/Command/ICommandPool.h"
 #include "VulkanCommandBuffer.h"
 
-class VulkanCommandPool : public ICommandPool
+namespace Engine::Render::Command
 {
-public:
-	VulkanCommandPool(VkDevice device, int queueFamilyIndex);
+    class VulkanCommandPool : public ICommandPool
+    {
+    public:
+        VulkanCommandPool(VkDevice device, int queueFamilyIndex);
 
-	virtual ~VulkanCommandPool();
+        virtual ~VulkanCommandPool();
 
-	void AddCommandBuffer();
+        void AddCommandBuffer();
 
-	void BeginCommandPool();
+        void BeginCommandPool();
 
-	int CommandBufferCount();
+        int CommandBufferCount();
 
-	VulkanCommandBuffer& CommandBuffer(int index);
+        VulkanCommandBuffer& CommandBuffer(int index);
 
-	void ResetCommandBuffers();
+        void ResetCommandBuffers();
 
-	VkCommandPool CommandPool();
+        VkCommandPool CommandPool();
 
-	VkCommandBuffer* CommandBuffersData();
+        VkCommandBuffer* CommandBuffersData();
 
-private:
-	VkCommandPool _commandPool;
+    private:
+        VkCommandPool _commandPool;
 
-	VkDevice _device;
+        VkDevice _device;
 
-	std::vector<VkCommandBuffer> _vulkanCommandBuffers;
+        std::vector<VkCommandBuffer> _vulkanCommandBuffers;
 
-	std::vector<VulkanCommandBuffer> _commandBuffers;
-};
-
+        std::vector<VulkanCommandBuffer> _commandBuffers;
+    };
+}
