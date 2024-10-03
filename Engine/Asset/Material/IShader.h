@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Common/IO/FileReader.h"
+#include "Asset/Resources/IResource.h"
+
 namespace Engine::Assets::Material
 {
     enum class ShaderType {
@@ -16,9 +18,11 @@ namespace Engine::Assets::Material
         Mesh = 0x00000080,
     };
 
-    class IShader {
+    using namespace Engine::Assets::Resource;
+
+    class IShader : public IResource {
     public:
-        explicit IShader(char *shaderData, unsigned long size, std::string name) :
+        explicit IShader(char *shaderData, unsigned long size, std::string name) : IResource(),
                 _name(std::move(name)), _size(size) {
             _shaderData = new char[size];
             memcpy(_shaderData, shaderData, size);
@@ -40,7 +44,7 @@ namespace Engine::Assets::Material
 
     protected:
         //Used in code generated shaders
-        IShader() : _shaderData(nullptr), _size(0) {}
+        IShader() : IResource(), _shaderData(nullptr), _size(0) {}
 
         std::string _name;
 

@@ -9,10 +9,11 @@ namespace Engine::Render::Buffer
 
     class VertexBuffer {
     public:
+        VertexBuffer(){}                                            // Empty constructor
         VertexBuffer(const VertexBuffer &) = default;               // Copy constructor
         VertexBuffer(VertexBuffer &&) = default;                    // Move constructor
-        VertexBuffer &operator=(const VertexBuffer &) = default;  // Copy assignment operator
-        VertexBuffer &operator=(VertexBuffer &&) = default;       // Move assignment operator
+        VertexBuffer &operator=(const VertexBuffer &) = default;    // Copy assignment operator
+        VertexBuffer &operator=(VertexBuffer &&) = default;         // Move assignment operator
         virtual ~VertexBuffer() {}
 
         VertexBuffer(VkDevice device, VkPhysicalDevice physical, int bufferSize, int vertexCount) : _device(device),

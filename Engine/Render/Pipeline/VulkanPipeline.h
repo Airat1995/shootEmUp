@@ -15,15 +15,44 @@ namespace Engine::Render::Pipeline
     using namespace Engine::Render::Render;
     using namespace Engine::Render::Shader;
 
-    class VulkanPipeline : public IPipeline, public IVulkanRenderMeshBufferCreator
+    class VulkanPipeline : public IPipeline
     {
     public:
         explicit VulkanPipeline(VkDevice device, VkPhysicalDevice physical, VulkanRenderpass& renderpass,
             VulkanMeshData& vulkanMeshData, VkExtent2D extent);
 
-        virtual ~VulkanPipeline();
+        
+        VulkanPipeline(const VulkanPipeline& copy) noexcept
+            : _pipelineLayout(copy._pipelineLayout), _device(copy._device), 
+              _physical(copy._physical), _descriptorPool(copy._descriptorPool),
+              _descriptorSets(copy._descriptorSets), _descriptorSetLayout(copy._descriptorSetLayout), _renderPass(copy._renderPass),
+              _drawMeshes(std::move(copy._drawMeshes)), _firstBinding(copy._firstBinding), _bindingCount(copy._bindingCount)
+        {
+        }
 
-        void Initialize(VkDevice device, VulkanMeshData& vulkanMeshData, VkExtent2D extent);
+        virtual VulkanPipeline& operator=(const VulkanPipeline& copy)
+        {
+            if (this == &copy)
+                return *this;
+            VulkanPipeline temp(copy);
+            return *this;
+        }
+        
+        VulkanPipeline(VulkanPipeline&& move) noexcept
+            : _pipelineLayout(move._pipelineLayout), _device(move._device), 
+              _physical(move._physical), _descriptorPool(move._descriptorPool),
+              _descriptorSets(move._descriptorSets), _descriptorSetLayout(move._descriptorSetLayout), _renderPass(move._renderPass),
+              _drawMeshes(std::move(move._drawMeshes)), _firstBinding(move._firstBinding), _bindingCount(move._bindingCount)
+        {
+        }
+
+        virtual VulkanPipeline& operator=(VulkanPipeline&& move) noexcept
+        {
+            VulkanPipeline temp(std::move(move));
+            return temp;
+        }
+
+        virtual ~VulkanPipeline();
 
         VkPipeline Pipeline();
 
@@ -31,22 +60,19 @@ namespace Engine::Render::Pipeline
 
         void DestroyPipeline() const;
 
-        void BindBuffer(VkCommandBuffer commandBuffer);
-
         void BindPipeline(VkCommandBuffer commandBuffer);
 
         void BuildCommandbuffer(VkCommandBuffer commandBuffer);
 
+        void AddMesh(VulkanMeshData mesh);
 
-        void AddMesh(IMesh* mesh, vector<VulkanBuffer> perObjectBuffers) override;
+        bool TryRemoveMesh(IMesh* mesh);
 
-        void RemoveMesh(IMesh* mesh) override;
+        bool ShouldUseThisPipeline(VulkanMeshData& meshData);
 
     private:
 
-        void CreateBuffers(VulkanMeshData& meshData);
-
-        vector<VulkanShader> BaseShadersToVulkanShader(VkDevice device, std::map<ShaderType, IShader>& shaders);
+        vector<VulkanShader> BaseShadersToVulkanShader(VkDevice device, std::unordered_map<const ShaderType, IShader>& shaders);
 
         VkDynamicState _dynamicStates[2] = {
             VK_DYNAMIC_STATE_VIEWPORT,
@@ -69,20 +95,11 @@ namespace Engine::Render::Pipeline
 
         VulkanRenderpass& _renderPass;
 
-        VulkanMeshData& _meshData;
+        vector<VulkanMeshData> _drawMeshes;
 
-        vector<VertexBuffer> _meshBuffers;
+        vector<uint32_t> _drawMeshIds;
 
-        std::map<VertexBuffer, vector<VulkanBuffer>> _perObjectBuffer;
-
-        std::map<IMesh*, int> _meshPosition;
-        std::map<IMesh*, int> _perObjectsBuffersPosition;
-
-        vector<VulkanBuffer> _indices;
-
-        std::map<VertexBuffer, int> _indicesSize;
-
-        vector<VulkanBuffer> _dataBuffers;
+        uint32_t _pipelineShaderId;
 
         uint32_t _firstBinding;
 

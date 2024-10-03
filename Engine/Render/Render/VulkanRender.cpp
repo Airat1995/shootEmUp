@@ -82,133 +82,122 @@ namespace Engine::Render::Render
         _renderpass = new VulkanRenderpass(_device, _swapchain->SwapchainInfo().imageFormat, _depthBuffer->Format());
 
         // First init with empty pipelines
-        _pipelines = map<int, vector<VulkanPipeline *>>();
+        _pipelines = map<int, vector<VulkanPipeline*>>();
 
 
         _framebuffer = new VulkanFramebuffer(_device, _graphicsQueueFamilyIndex, _presentQueueFamilyIndex, *_swapchain,
                                              *_renderpass, *_commandPool, *_depthBuffer);
         vector<VulkanMeshData> meshData = vector<VulkanMeshData>();
+
+        _frameBuffersCount = _framebuffer->FramebufferCount();
+        _currentDrawFramebuffer = 0;
     }
 
     VkInstance VulkanRender::GetInstance() const { return _instance; }
 
     VkSurfaceKHR *VulkanRender::GetSurface() { return &_surface; }
 
-    void VulkanRender::DrawFrame()
-    {
-        int frameBuffersCount = _framebuffer->FramebufferCount();
-        for (size_t frameBufferIndex = 0; frameBufferIndex < frameBuffersCount; frameBufferIndex++)
-        {
-            VulkanCommandBuffer commandBuffer = _commandPool->CommandBuffer(frameBufferIndex);
-            commandBuffer.BeginCommandBuffer();
+    void VulkanRender::DrawFrame() {
+        VulkanCommandBuffer vulkanCommandBuffer = _commandPool->CommandBuffer(_currentDrawFramebuffer);
+        VkFramebuffer framebuffer = _framebuffer->Framebuffer(_currentDrawFramebuffer);
+        VkCommandBuffer commandbuffer = vulkanCommandBuffer.CommandBuffer();
+        vulkanCommandBuffer.BeginCommandBuffer();
+                
+        _renderpass->BeginRenderPass(_width, _height, framebuffer, commandbuffer);
 
-            for (auto *shadowmap : _shadowmaps)
-            {
-                for (int index = 0; index < 6; index++)
-                {
-                    shadowmap->Update(index);
-                    shadowmap->Draw(&commandBuffer, frameBufferIndex);
-                }
+        for (auto &&renderQueuePipelines : _pipelines) {
+            for (auto &&renderPipeline : renderQueuePipelines.second) {
+                renderPipeline->BindPipeline(commandbuffer);
+                renderPipeline->BuildCommandbuffer(commandbuffer);
             }
-
-            _renderpass->BeginRenderPass(_width, _height, *_framebuffer->Framebuffer(frameBufferIndex),
-                                         commandBuffer.CommandBuffer());
-
-            for (auto &&renderQueuePipelines : _pipelines)
-            {
-                for (auto &&renderPipeline : renderQueuePipelines.second)
-                {
-                    renderPipeline->BindPipeline(commandBuffer.CommandBuffer());
-                    renderPipeline->BindBuffer(commandBuffer.CommandBuffer());
-                    renderPipeline->BuildCommandbuffer(commandBuffer.CommandBuffer());
-                }
-            }
-
-            _renderpass->EndRenderPass(commandBuffer.CommandBuffer());
-            commandBuffer.EndCommandBuffer();
-
-            for (auto *shadowmap : _shadowmaps)
-            {
-                shadowmap->Submit(frameBufferIndex);
-            }
-            _framebuffer->SubmitFramebuffer(frameBufferIndex);
         }
+
+        _renderpass->EndRenderPass(commandbuffer);
+        vulkanCommandBuffer.EndCommandBuffer();
+        _framebuffer->SubmitFramebuffer(_currentDrawFramebuffer);
         vkDeviceWaitIdle(_device);
         _commandPool->ResetCommandBuffers();
+        _currentDrawFramebuffer++;
+        _currentDrawFramebuffer = _currentDrawFramebuffer % _frameBuffersCount;
     }
 
     void VulkanRender::AddMesh(IMesh *mesh)
     {
-        vector<VulkanBuffer> buffers{};
-        for (vector<IBuffer *>::value_type &buffer : mesh->PerObjectBuffers())
+        VulkanMeshData meshData {mesh, _device, _gpus[0], _commandPool, _graphicsQueueFamilyIndex};
+        uint32_t shaderHash = 0;
+        auto& meshShaders = mesh->Shaders();
+        for (auto&& shader: meshShaders)
         {
-            VulkanBuffer meshBuffer =
-                VulkanBuffer(_device, _gpus[0], buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(),
-                             buffer->RawData(), buffer->Size(), buffer->BindingId());
-            buffers.push_back(meshBuffer);
+            shaderHash += shader.second.GetResourceId();
         }
 
-
-        for (auto &&meshData : _meshDataCollection)
-        {
-            if (meshData->ShouldCombine(mesh))
-            {
-                meshData->AddMesh(mesh, buffers);
-                return;
-            }
-        }
-
-        vector<VulkanBuffer> vulkanBuffers = vector<VulkanBuffer>();
-        for (auto *buffer : mesh->Material()->Buffers())
-        {
-            VulkanBuffer bufferData =
-                VulkanBuffer(_device, _gpus[0], buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(),
-                             buffer->RawData(), buffer->Size(), buffer->BindingId());
-            vulkanBuffers.push_back(bufferData);
-        }
-
-        vector<VulkanImage> images = vector<VulkanImage>();
-        for (auto *image : mesh->Material()->Images())
-        {
-            auto imageData = VulkanImage(_commandPool, image->Format(), image->Type(), image->Usage(), image->Stage(),
-                                         image->Width(), image->Height(), *image->ImageData(), _device, _gpus[0],
-                                         image->Binding(), _graphicsQueueFamilyIndex, image->SampleCount());
-            images.push_back(imageData);
-        }
-        VulkanMeshData *currentMeshData = new VulkanMeshData(mesh, vulkanBuffers, images, buffers);
-        VulkanPipeline *pipeline = new VulkanPipeline(_device, _gpus[0], *_renderpass, *currentMeshData, _swapchain->SwapchainInfo().imageExtent);
-        _meshDataCollection.push_back(currentMeshData);
         int renderQueue = mesh->Material()->GetRenderQueue();
-
         auto pipelineIter = _pipelines.find(renderQueue);
-        if (pipelineIter == _pipelines.end())
+        
+        bool foundRenderQueue = false;
+        for (auto &&pipelineInfo : _pipelines)
         {
-            vector<VulkanPipeline *> emptyPipelines;
-            _pipelines.insert(pair(renderQueue, emptyPipelines));
+            if(pipelineInfo.first != renderQueue)
+            {
+                continue;
+            }
+            for (auto &&pipeline : pipelineInfo.second)
+            {
+               if(pipeline->ShouldUseThisPipeline(meshData))
+               {
+                   pipeline->AddMesh(meshData);
+                   foundRenderQueue = true;
+                   break;
+               }
+            }
+
+            if(foundRenderQueue)
+            {
+                break;
+            }
+
+            VulkanPipeline* pipeline = new VulkanPipeline(_device, _gpus[0], *_renderpass, meshData, _swapchain->SwapchainInfo().imageExtent);
+            pipelineInfo.second.insert(pipelineInfo.second.end(), pipeline);
+            pipeline->AddMesh(std::move(meshData));
+            foundRenderQueue = true;
+            break;
         }
-        _pipelines.at(renderQueue).push_back(pipeline);
+
+        if(!foundRenderQueue)
+        {
+            vector<VulkanPipeline*> emptyPipelines;
+            VulkanPipeline* pipeline = new VulkanPipeline(_device, _gpus[0], *_renderpass, meshData, _swapchain->SwapchainInfo().imageExtent);
+            pipeline->AddMesh(std::move(meshData));
+            emptyPipelines.insert(emptyPipelines.end(), pipeline);
+           _pipelines.insert(pair(renderQueue, emptyPipelines));
+        }
     }
 
     void VulkanRender::RemoveMesh(IMesh *mesh)
     {
-        int foundIndex = -1;
-        for (int index = 0; index < _meshDataCollection.size(); index++)
-        {
-            if(!_meshDataCollection[index]->ContainsMesh(mesh)) continue;
-            foundIndex = index;
-            break;
-        }
-        if(foundIndex == -1) return;
-        _meshDataCollection[foundIndex]->RemoveMesh(mesh);
-        _meshDataCollection.erase(_meshDataCollection.begin() + foundIndex);
-    }
 
-    void VulkanRender::AddShadowmap(vec4 *lightPosition, CameraObject *camera)
-    {
-        VulkanOmniShadowmap *vulkan_omni_shadowmap = new VulkanOmniShadowmap(
-            lightPosition, camera, &_meshDataCollection, _commandPool, _swapchain, _device, _gpus[0],
-            _graphicsQueueFamilyIndex, _presentQueueFamilyIndex, 0, _graphicsQueueFamilyIndex, _width, _height);
-        _shadowmaps.push_back(vulkan_omni_shadowmap);
+        for (auto &&pipelineInfo : _pipelines)
+        {
+            for (auto &&pipeline : pipelineInfo.second)
+            {
+               if(pipeline->TryRemoveMesh(mesh))
+               {
+                    return;
+               }
+            }
+            
+        }
+//        int foundIndex = -1;
+//        for (int index = 0; index < _meshDataCollection.size(); index++)
+//        {
+//            if(!_meshDataCollection[index]->ContainsMesh(mesh)) continue;
+//            foundIndex = index;
+//            break;
+//        }
+//        if(foundIndex == -1) return;
+//        _meshDataCollection[foundIndex]->RemoveMesh(mesh);
+//        delete _meshDataCollection[foundIndex];
+//        _meshDataCollection.erase(_meshDataCollection.begin() + foundIndex);
     }
 
     VkDevice &VulkanRender::Device() { return _device; }
@@ -235,7 +224,7 @@ namespace Engine::Render::Render
         appInfo.applicationVersion = 1;
         appInfo.pEngineName = "";
         appInfo.engineVersion = 1;
-        appInfo.apiVersion = VK_API_VERSION_1_2;
+        appInfo.apiVersion = VK_API_VERSION_1_3;
 
         return appInfo;
     }

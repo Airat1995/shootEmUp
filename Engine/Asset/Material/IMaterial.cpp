@@ -2,7 +2,7 @@
 
 namespace Engine::Assets::Material
 {
-    IMaterial::IMaterial(std::map<ShaderType, IShader> &shaders, RenderQueue renderQueue) :
+    IMaterial::IMaterial(std::unordered_map<const ShaderType, IShader> &shaders, RenderQueue renderQueue) : IResource(),
         _shaders(shaders), _renderQueue(renderQueue)
     {
         _buffers = std::vector<IBuffer *>();
@@ -14,7 +14,7 @@ namespace Engine::Assets::Material
 
     void IMaterial::AddImage(IImage *image) { _images.push_back(image); }
 
-    std::map<ShaderType, IShader> &IMaterial::MaterialShaders() { return _shaders; }
+    const std::unordered_map<const ShaderType, IShader>& IMaterial::MaterialShaders() const { return _shaders; }
 
     std::vector<IBuffer *> &IMaterial::Buffers() { return _buffers; }
 

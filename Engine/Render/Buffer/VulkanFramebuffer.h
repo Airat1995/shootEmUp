@@ -26,7 +26,7 @@ namespace Engine::Render::Buffer
                           VulkanDepthBuffer &depthBuffer);
 
 
-        VkFramebuffer *Framebuffer(int index);
+        VkFramebuffer Framebuffer(int index);
 
         int FramebufferCount() const;
 

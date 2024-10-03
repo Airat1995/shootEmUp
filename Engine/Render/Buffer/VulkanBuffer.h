@@ -14,6 +14,8 @@ namespace Engine::Render::Buffer
     class VulkanBuffer {
     public:
 
+        VulkanBuffer() {} //Empty constructor
+
         VulkanBuffer(VkDevice device, VkPhysicalDevice physical, Assets::Image::BufferStageFlag stageFlag, BufferUsageFlag usage,
                      BufferSharingMode sharingMode, const void *data, int size, int bindingId);
 
@@ -28,7 +30,7 @@ namespace Engine::Render::Buffer
 
         void Destroy() const noexcept;
 
-        VkBuffer &Buffer();
+        VkBuffer Buffer() const;
 
         [[nodiscard]] int Binding() const;
 

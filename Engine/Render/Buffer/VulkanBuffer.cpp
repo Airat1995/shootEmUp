@@ -90,7 +90,7 @@ namespace Engine::Render::Buffer
         vkFreeMemory(_device, _memory, nullptr);
     }
 
-    VkBuffer &VulkanBuffer::Buffer() {
+    VkBuffer VulkanBuffer::Buffer() const {
         return _buffer;
     }
 

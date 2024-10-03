@@ -14,6 +14,4 @@ include_directories(.)
 include_directories(../Shared)
 
 # We declare the project as a static library and add all the source code files to it.
-add_library(Input STATIC ${Input_SRC} InputMap.cpp InputMap.h KeyCode.h InputState.h
-        InputContext.h
-        InputContext.cpp)
+add_library(Input STATIC ${Input_SRC})

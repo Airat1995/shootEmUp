@@ -3,13 +3,13 @@
 namespace Engine::Assets::Image
 {
     IImage::IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
-                   int height, int sampleCount, std::vector<unsigned char> &imageData)
-            : _width(width), _height(height), _binding(binding), _sampleCount(sampleCount), _imageData(imageData),
+                   int height, int sampleCount, std::vector<unsigned char> &imageData) : IResource(),
+            _width(width), _height(height), _binding(binding), _sampleCount(sampleCount), _imageData(imageData),
               _format(format), _type(type), _usage(usage), _stage(stage) {
     }
 
     IImage::IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
-                   int height, int sampleCount) : _width(width), _height(height), _binding(binding),
+                   int height, int sampleCount) : IResource(), _width(width), _height(height), _binding(binding),
                                                   _sampleCount(sampleCount), _imageData(), _format(format), _type(type),
                                                   _usage(usage), _stage(stage) {
 

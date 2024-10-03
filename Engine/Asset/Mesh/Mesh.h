@@ -5,9 +5,11 @@
 
 #include "IMesh.h"
 #include "BaseVertexDescriptor.h"
+#include "Asset/Resources/IResource.h"
 
 namespace Engine::Assets::Mesh
 {
+    using namespace Engine::Assets::Resource;
     using namespace Engine::Assets::Material;
 
     template
@@ -17,10 +19,10 @@ namespace Engine::Assets::Mesh
             >
     class Mesh : public IMesh {
     public:
-        Mesh(const Mesh &) = default;               // Copy constructor
-        Mesh(Mesh &&) = default;                    // Move constructor
-        Mesh &operator=(const Mesh &) = delete;  // Copy assignment operator
-        Mesh &operator=(Mesh &&) = delete;       // Move assignment operator
+        Mesh(const Mesh &mesh) : IResource (mesh) {}
+        Mesh(Mesh &&mesh) : IResource(mesh) {}
+        Mesh &operator=(const Mesh &) = delete;
+        Mesh &operator=(Mesh &&) = delete;
         virtual ~Mesh() = default;
 
         Mesh(VertexDataT &vertexDescriptor, IMaterial &material)
@@ -71,7 +73,7 @@ namespace Engine::Assets::Mesh
             return _vertices.at(0).GetBindingInfo();
         }
 
-        map<ShaderType, IShader> &Shaders() override {
+        const unordered_map<const ShaderType, IShader>& Shaders() const override {
             return _material.MaterialShaders();
         }
 

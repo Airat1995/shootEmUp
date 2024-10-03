@@ -4,34 +4,34 @@
 
 namespace Game::Scripts
 {
-    Player::Player(InputHandler &inputHandler, Camera &camera, IRender &render) :
-        _inputHandler(inputHandler), _camera(camera), _render(render), moveDelta(vec3(0))
+    Player::Player(InputHandler &inputHandler, Camera &camera, IRender &render, Engine::Physics::World::World &world, MainMaterial* material) :
+        _inputHandler(inputHandler), _camera(camera), _render(render), _world(world), moveDelta(vec3(0)), _mainMaterial(material)
     {
-        uniformBuffer = new BaseBuffer(BufferUsageFlag::UniformBuffer, BufferSharingMode::Exclusive, &camera.GetCameraObject(),
-                                 BufferStageFlag::Vertex, 1);
 
-        _mainMaterial = new MainMaterial();
-        _mainMaterial->AddBuffer(uniformBuffer);
-
-        _mesh = MainMesh::Parse("/Users/airat/Projects/shootEmUp/Game/Assets/Obj/monkey.obj", _mainMaterial);
+        _mesh = MainMesh::Parse("/Users/airat/Projects/shootEmUp/Game/Assets/Obj/cube.obj", _mainMaterial);
+        _mesh->SetStatic(true);
 
         render.AddMesh(_mesh);
 
         _context = {};
-        forwardInput = new InputMap("forward", KeyCode::W);
-        backwardInput = new InputMap("backward", KeyCode::S);
-        removeInput = new InputMap("remove", KeyCode::D);
-        addInput = new InputMap("add", KeyCode::A);
 
-        moveInput = new InputSOCD("movement", KeyCode::W, KeyCode::S);
-        _context.AddInputMap(moveInput);
-        _context.AddInputMap(removeInput);
-        _context.AddInputMap(addInput);
+        moveForwardInput = new InputSOCD("movementForward", KeyCode::W, KeyCode::S);
+        moveLeftInput = new InputSOCD("movementLeft", KeyCode::D, KeyCode::A);
+        moveUpInput = new InputSOCD("movementRight", KeyCode::Q, KeyCode::E);
+
+        _context.AddInputMap(moveForwardInput);
+        _context.AddInputMap(moveLeftInput);
+        _context.AddInputMap(moveUpInput);
 
         exitGameInput = new InputMap("exit", KeyCode::ESCAPE);
         _context.AddInputMap(exitGameInput);
         inputHandler.Subscribe(&_context);
         _transform = new Transform();
+
+        _boxCollider = new Engine::Physics::Collider::BoxCollider(*_transform, {-.5, -.5, -.5}, {.5, .5, .5});
+        _sphereCollider = new Engine::Physics::Collider::SphereCollider(*_transform, 1);
+
+        world.AddCollider(_boxCollider);
     }
 
     void Player::Update(double deltaTime)
@@ -39,21 +39,11 @@ namespace Game::Scripts
         Entity::Update(deltaTime);
 
         moveDelta = glm::vec3(0);
-        moveDelta = vec3(.0f, .0f, .1f * moveInput->Value());
+        moveDelta = vec3(.1f * moveLeftInput->Value(), .1f * moveUpInput->Value(), .1f * moveForwardInput->Value());
 
         if(exitGameInput->State() == InputMapState::Pressed || exitGameInput->State() == InputMapState::KeyDown)
         {
             Engine::Common::Application::Application::GetInstance().SetReadyToExit(true);
-        }
-
-        if(removeInput->State() == InputMapState::Pressed)
-        {
-            _render.RemoveMesh(_mesh);
-        }
-
-        if(addInput->State() == InputMapState::Pressed)
-        {
-            _render.AddMesh(_mesh);
         }
     }
 

@@ -11,11 +11,15 @@
 #include "../Assets/Mesh/MainMaterial.h"
 #include "../Assets/Mesh/MainMesh.h"
 #include "Component/Component/Transform.h"
+#include "Physics/World/World.h"
+#include "Physics/Colliders/BoxCollider.h"
+#include "Physics/Colliders/SphereCollider.h"
 #include "Input/InputSOCD.h"
 
 
 namespace Game::Scripts
 {
+    using namespace Engine::Physics;
     using namespace Engine::Component::Entity;
     using namespace Engine::Input;
     using namespace Engine::Camera;
@@ -25,7 +29,7 @@ namespace Game::Scripts
     class Player : public Entity
     {
     public:
-        Player(InputHandler &inputHandler, Camera &camera, Engine::Render::Render::IRender &render);
+        Player(InputHandler &inputHandler, Camera &camera, Engine::Render::Render::IRender &render, Engine::Physics::World::World &world, MainMaterial* material);
 
         void Update(double deltaTime) override;
 
@@ -33,25 +37,32 @@ namespace Game::Scripts
 
         void PrerenderUpdate(double alpha) override;
 
+        inline void SetPosition(glm::vec3 position)
+        {
+            _transform->SetPosition(position);
+        }
+
     protected:
         InputHandler &_inputHandler;
         IBuffer *uniformBuffer;
         Camera &_camera;
         IRender &_render;
+        Engine::Physics::World::World &_world;
         InputContext _context;
         MainMesh *_mesh;
         MainMaterial *_mainMaterial;
         Transform *_transform;
+        Collider::BoxCollider *_boxCollider;
+        Collider::SphereCollider *_sphereCollider;
         glm::vec3 moveDelta;
 
-        InputMap *forwardInput;
-        InputMap *backwardInput;
-        InputMap *removeInput;
-        InputMap *addInput;
         InputMap *exitGameInput;
 
-        InputSOCD *moveInput;
+        InputSOCD *moveForwardInput;
+        InputSOCD *moveLeftInput;
+        InputSOCD *moveUpInput;
 
         float _speed = 0.01f;
+        int _meshCount = 0;
     };
 } // namespace Game::Scripts

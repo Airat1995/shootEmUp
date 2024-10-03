@@ -23,7 +23,5 @@ namespace Engine::Render::Render
         virtual void RemoveMesh(IMesh *mesh) = 0;
 
         virtual void DrawFrame() = 0;
-
-        virtual void AddShadowmap(glm::vec4 *lightPosition, CameraObject *camera) = 0;
     };
 }

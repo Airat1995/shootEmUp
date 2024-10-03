@@ -37,7 +37,7 @@ namespace Game::Assets::Mesh
 
         std::vector<VertexBindingInfo> GetVertexBindingInfo() override;
 
-        std::map<ShaderType, IShader> &Shaders() override;
+        const std::unordered_map<const ShaderType, IShader> &Shaders() const override;
 
         void AddPerObjectBuffer(IBuffer *buffer) override;
 

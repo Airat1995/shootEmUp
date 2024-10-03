@@ -58,142 +58,142 @@ namespace Engine::Render::Shadowmap
 
     void VulkanOmniShadowmap::Draw(ICommandBuffer* commandBuffer, int index)
     {
-        VulkanCommandBuffer* vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
-        _offscreenRenderpass->BeginRenderPass(_width, _height, *_frameBuffer->Framebuffer(index), vulkanCommandBuffer->CommandBuffer());
-        _pipeline->BindPipeline(vulkanCommandBuffer->CommandBuffer());
-        _pipeline->BindBuffer(vulkanCommandBuffer->CommandBuffer());
+    //     VulkanCommandBuffer* vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
+    //     _offscreenRenderpass->BeginRenderPass(_width, _height, _frameBuffer->Framebuffer(index), vulkanCommandBuffer->CommandBuffer());
+    //     _pipeline->BindPipeline(vulkanCommandBuffer->CommandBuffer());
+    //     _pipeline->BindBuffer(vulkanCommandBuffer->CommandBuffer());
 
-        _pipeline->BuildCommandbuffer(vulkanCommandBuffer->CommandBuffer());
-        _offscreenRenderpass->EndRenderPass(vulkanCommandBuffer->CommandBuffer());
+    //     _pipeline->BuildCommandbuffer(vulkanCommandBuffer->CommandBuffer());
+    //     _offscreenRenderpass->EndRenderPass(vulkanCommandBuffer->CommandBuffer());
 
-        VkImageSubresourceRange cubeFaceSubresourceRange = {};
-        cubeFaceSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        cubeFaceSubresourceRange.baseMipLevel = 0;
-        cubeFaceSubresourceRange.levelCount = 1;
-        cubeFaceSubresourceRange.baseArrayLayer = _indexFace;
-        cubeFaceSubresourceRange.layerCount = 1;
+    //     VkImageSubresourceRange cubeFaceSubresourceRange = {};
+    //     cubeFaceSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+    //     cubeFaceSubresourceRange.baseMipLevel = 0;
+    //     cubeFaceSubresourceRange.levelCount = 1;
+    //     cubeFaceSubresourceRange.baseArrayLayer = _indexFace;
+    //     cubeFaceSubresourceRange.layerCount = 1;
 
-        SetImageLayout(
-            vulkanCommandBuffer->CommandBuffer(),
-            _image->Image(),
-            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-            VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-            cubeFaceSubresourceRange,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+    //     SetImageLayout(
+    //         vulkanCommandBuffer->CommandBuffer(),
+    //         _image->Image(),
+    //         VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+    //         VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+    //         cubeFaceSubresourceRange,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
 
-        VkImageCopy copyRegion = {};
+    //     VkImageCopy copyRegion = {};
 
-        copyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        copyRegion.srcSubresource.baseArrayLayer = 0;
-        copyRegion.srcSubresource.mipLevel = 0;
-        copyRegion.srcSubresource.layerCount = 1;
-        copyRegion.srcOffset = { 0, 0, 0 };
+    //     copyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+    //     copyRegion.srcSubresource.baseArrayLayer = 0;
+    //     copyRegion.srcSubresource.mipLevel = 0;
+    //     copyRegion.srcSubresource.layerCount = 1;
+    //     copyRegion.srcOffset = { 0, 0, 0 };
 
-        copyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        copyRegion.dstSubresource.baseArrayLayer = _indexFace;
-        copyRegion.dstSubresource.mipLevel = 0;
-        copyRegion.dstSubresource.layerCount = 1;
-        copyRegion.dstOffset = { 0, 0, 0 };
+    //     copyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+    //     copyRegion.dstSubresource.baseArrayLayer = _indexFace;
+    //     copyRegion.dstSubresource.mipLevel = 0;
+    //     copyRegion.dstSubresource.layerCount = 1;
+    //     copyRegion.dstOffset = { 0, 0, 0 };
 
-        copyRegion.extent.width = _width;
-        copyRegion.extent.height = _height;
-        copyRegion.extent.depth = 1;
+    //     copyRegion.extent.width = _width;
+    //     copyRegion.extent.height = _height;
+    //     copyRegion.extent.depth = 1;
 
-        vkCmdCopyImage(
-            vulkanCommandBuffer->CommandBuffer(),
-            _image->Image(),
-            VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-            *_swapchain->SwapchainBuffers().at(0).Image(),
-            VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-            1,
-            &copyRegion);
+    //     vkCmdCopyImage(
+    //         vulkanCommandBuffer->CommandBuffer(),
+    //         _image->Image(),
+    //         VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+    //         *_swapchain->SwapchainBuffers().at(0).Image(),
+    //         VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+    //         1,
+    //         &copyRegion);
 
-        SetImageLayout(
-            vulkanCommandBuffer->CommandBuffer(),
-            *_swapchain->SwapchainBuffers().at(0).Image(),
-            VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-            VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-            cubeFaceSubresourceRange,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
-
-
-        SetImageLayout(
-            vulkanCommandBuffer->CommandBuffer(),
-            _image->Image(),
-            VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-            cubeFaceSubresourceRange,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
-    }
-
-    void VulkanOmniShadowmap::Update(int indexFace)
-    {
-        _indexFace = indexFace;
-        glm::mat4 viewMatrix = glm::mat4(1.0f);
-        switch (indexFace)
-        {
-        case 0: // POSITIVE_X
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            break;
-        case 1:	// NEGATIVE_X
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            break;
-        case 2:	// POSITIVE_Y
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            break;
-        case 3:	// NEGATIVE_Y
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            break;
-        case 4:	// POSITIVE_Z
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            break;
-        case 5:	// NEGATIVE_Z
-            viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-            break;
-        }
-        _shadowmapBuffer.ViewMatrix = viewMatrix;
-        _shadowmapBuffer.ProjectionMatrix = _currentCamera->_proj;
-        _shadowmapBuffer.ModelMatrix = _currentCamera->_model;
-        _shadowmapBuffer.LightPosition = *_lightPosition;
-    }
-
-    void VulkanOmniShadowmap::Submit(int index)
-    {
-        _frameBuffer->SubmitFramebuffer(index);
-    }
-
-    void VulkanOmniShadowmap::CreateVulkanPipeline(IMesh* mesh)
-    {
-        vector<VulkanBuffer> buffers{};
-        for (vector<IBuffer*>::value_type& buffer : mesh->PerObjectBuffers())
-        {
-            VulkanBuffer meshBuffer = VulkanBuffer(_device, _gpu, buffer->StageFlag(),
-                buffer->Usage(), buffer->SharingMode(),
-                buffer->RawData(), buffer->Size(), buffer->BindingId());
-            buffers.push_back(meshBuffer);
-        }
+    //     SetImageLayout(
+    //         vulkanCommandBuffer->CommandBuffer(),
+    //         *_swapchain->SwapchainBuffers().at(0).Image(),
+    //         VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+    //         VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+    //         cubeFaceSubresourceRange,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
 
 
-        vector<VulkanBuffer> vulkanBuffers = vector<VulkanBuffer>();
-        for (auto* buffer : mesh->Material()->Buffers())
-        {
-            VulkanBuffer bufferData = VulkanBuffer(_device, _gpu, buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(), buffer->RawData(), buffer->Size(), buffer->BindingId());;
-            vulkanBuffers.push_back(bufferData);
-        }
+    //     SetImageLayout(
+    //         vulkanCommandBuffer->CommandBuffer(),
+    //         _image->Image(),
+    //         VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+    //         VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+    //         cubeFaceSubresourceRange,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+    //         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+    // }
 
-        vector<VulkanImage> images = vector<VulkanImage>();
+    // void VulkanOmniShadowmap::Update(int indexFace)
+    // {
+    //     _indexFace = indexFace;
+    //     glm::mat4 viewMatrix = glm::mat4(1.0f);
+    //     switch (indexFace)
+    //     {
+    //     case 0: // POSITIVE_X
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //         break;
+    //     case 1:	// NEGATIVE_X
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //         break;
+    //     case 2:	// POSITIVE_Y
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //         break;
+    //     case 3:	// NEGATIVE_Y
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //         break;
+    //     case 4:	// POSITIVE_Z
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //         break;
+    //     case 5:	// NEGATIVE_Z
+    //         viewMatrix = glm::rotate(viewMatrix, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    //         break;
+    //     }
+    //     _shadowmapBuffer.ViewMatrix = viewMatrix;
+    //     _shadowmapBuffer.ProjectionMatrix = _currentCamera->_proj;
+    //     _shadowmapBuffer.ModelMatrix = _currentCamera->_model;
+    //     _shadowmapBuffer.LightPosition = *_lightPosition;
+    // }
 
-        VkExtent2D extent;
-        extent.width = _width;
-        extent.height = _height;
+    // void VulkanOmniShadowmap::Submit(int index)
+    // {
+    //     _frameBuffer->SubmitFramebuffer(index);
+    // }
 
-        VulkanMeshData* currentMeshData = new VulkanMeshData(mesh, vulkanBuffers, images, buffers);
-        _pipeline = new VulkanPipeline(_device, _gpu, *_offscreenRenderpass, *currentMeshData, extent);
+    // void VulkanOmniShadowmap::CreateVulkanPipeline(IMesh* mesh)
+    // {
+    //     vector<VulkanBuffer> buffers{};
+    //     for (vector<IBuffer*>::value_type& buffer : mesh->PerObjectBuffers())
+    //     {
+    //         VulkanBuffer meshBuffer = VulkanBuffer(_device, _gpu, buffer->StageFlag(),
+    //             buffer->Usage(), buffer->SharingMode(),
+    //             buffer->RawData(), buffer->Size(), buffer->BindingId());
+    //         buffers.push_back(meshBuffer);
+    //     }
+
+
+    //     vector<VulkanBuffer> vulkanBuffers = vector<VulkanBuffer>();
+    //     for (auto* buffer : mesh->Material()->Buffers())
+    //     {
+    //         VulkanBuffer bufferData = VulkanBuffer(_device, _gpu, buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(), buffer->RawData(), buffer->Size(), buffer->BindingId());;
+    //         vulkanBuffers.push_back(bufferData);
+    //     }
+
+    //     vector<VulkanImage> images = vector<VulkanImage>();
+
+    //     VkExtent2D extent;
+    //     extent.width = _width;
+    //     extent.height = _height;
+
+    //     VulkanMeshData* currentMeshData = new VulkanMeshData(mesh, vulkanBuffers, images, buffers);
+    //     _pipeline = new VulkanPipeline(_device, _gpu, *_offscreenRenderpass, *currentMeshData, extent);
     }
 
 

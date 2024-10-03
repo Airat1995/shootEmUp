@@ -1,8 +1,8 @@
 //
 // Created by Айрат Насыров on 29.07.2024.
 //
-
 #include "Transform.h"
+
 glm::vec3 Engine::Component::Component::Transform::GetPosition() const noexcept
 {
     return _currentState.position;
@@ -32,7 +32,53 @@ glm::vec3 Engine::Component::Component::Transform::GetInterpolatedScale(const do
 
 glm::quat Engine::Component::Component::Transform::GetInterpolatedRotation(const double alpha) const noexcept
 {
-    glm::quat interpolatedRotation = _currentState.rotation * static_cast<float>(alpha) + _previousState.rotation * static_cast<float>(1 - alpha);
+    glm::quat interpolatedRotation;
+    const float lx = _previousState.rotation.x;
+    const float ly = _previousState.rotation.y;
+    const float lz = _previousState.rotation.z;
+    const float lw = _previousState.rotation.w;
+
+    float rx = _currentState.rotation.x;
+    float ry = _currentState.rotation.y;
+    float rz = _currentState.rotation.z;
+    float rw = _currentState.rotation.w;
+
+    float cosHalfTheta = lx * rx + ly + ry + lz + rz + lw * rw;
+    if(cosHalfTheta < 0) {
+        rx = -rx;
+        ry = -ry;
+        rz = -rz;
+        rw = -rw;
+        cosHalfTheta = -cosHalfTheta;
+    }
+
+    if(glm::abs(cosHalfTheta) >= 1) {
+        interpolatedRotation.x = rx;
+        interpolatedRotation.y = ry;
+        interpolatedRotation.z = rz;
+        interpolatedRotation.w = lw;
+        return interpolatedRotation;
+    }
+
+    const float halfTheta = glm::acos(cosHalfTheta);
+    const float sinHalfTheta = glm::sqrt(1 -  cosHalfTheta * cosHalfTheta);
+
+    if(abs(sinHalfTheta) < 0.001) {
+        interpolatedRotation.x = lx * 0.5f + rx * 0.5f;
+        interpolatedRotation.y = ly * 0.5f + ry * 0.5f;
+        interpolatedRotation.z = lz * 0.5f + rw * 0.5f;
+        interpolatedRotation.w = lw * 0.5f + rw * 0.5f;
+        return interpolatedRotation;
+    }
+
+    const float rationA = sin((1 - alpha) * halfTheta)/sinHalfTheta;
+    const float rationB = sin(alpha * halfTheta)/sinHalfTheta;
+
+    interpolatedRotation.x = lx * rationA + rx * rationB;
+    interpolatedRotation.y = ly * rationA + ry * rationB;
+    interpolatedRotation.z = lz * rationA + rw * rationB;
+    interpolatedRotation.w = lw * rationA + rw * rationB;
+
     return interpolatedRotation;
 }
 

@@ -12,14 +12,7 @@ namespace Engine::Render::Pipeline
      */
     VulkanPipeline::VulkanPipeline(VkDevice device, VkPhysicalDevice physical, VulkanRenderpass &renderpass,
                                    VulkanMeshData &vulkanMeshData, VkExtent2D extent) :
-        _device(device), _physical(physical), _renderPass(renderpass), _meshData(vulkanMeshData)
-    {
-        Initialize(device, vulkanMeshData, extent);
-        CreateBuffers(vulkanMeshData);
-        vulkanMeshData.SetBufferRecreateEventListener(this);
-    }
-
-    void VulkanPipeline::Initialize(VkDevice device, VulkanMeshData &vulkanMeshData, VkExtent2D extent)
+        _device(device), _physical(physical), _renderPass(renderpass)
     {
         vector<VkVertexInputAttributeDescription> attributeDescription = vulkanMeshData.AttributeDescriptions();
         auto attributeDescriptions = new VkVertexInputAttributeDescription[attributeDescription.size()];
@@ -162,7 +155,8 @@ namespace Engine::Render::Pipeline
         }
 
         auto shadersInfo = vector<VkPipelineShaderStageCreateInfo>();
-        auto basicShaders = _meshData.Meshes()[0]->Shaders();
+        auto basicShaders = vulkanMeshData.RawMesh()->Shaders();
+        _pipelineShaderId = vulkanMeshData.RawMesh()->ShaderId();
         auto shaders = BaseShadersToVulkanShader(_device, basicShaders);
         for (auto &shader : shaders)
             shadersInfo.push_back(shader.GetShaderStageInfo());
@@ -200,8 +194,8 @@ namespace Engine::Render::Pipeline
         pipelineInfo.flags = 0;
         pipelineInfo.pNext = nullptr;
 
-        _firstBinding = _meshData.BindingDescriptions()[0].binding;
-        _bindingCount = _meshData.BindingDescriptions().size();
+        _firstBinding = vulkanMeshData.BindingDescriptions()[0].binding;
+        _bindingCount = vulkanMeshData.BindingDescriptions().size();
 
 
         if (vkCreateGraphicsPipelines(device, nullptr, 1, &pipelineInfo, nullptr, &_pipeline) != VK_SUCCESS)
@@ -294,10 +288,16 @@ namespace Engine::Render::Pipeline
         vkUpdateDescriptorSets(device, writeDescriptorSet.size(), writeDescriptorSet.data(), 0, nullptr);
     }
 
-    std::vector<VulkanShader> VulkanPipeline::BaseShadersToVulkanShader(VkDevice device, map<ShaderType, IShader> &shaders)
+    bool VulkanPipeline::ShouldUseThisPipeline(VulkanMeshData &meshData) 
+    {
+        const auto shaderId = meshData.RawMesh()->ShaderId();
+        return _pipelineShaderId == shaderId;
+    }
+
+    std::vector<VulkanShader> VulkanPipeline::BaseShadersToVulkanShader(VkDevice device, unordered_map<const ShaderType, IShader> &shaders)
     {
         auto vulkanShaders = vector<VulkanShader>();
-        for (auto &shader : shaders)
+        for (auto &&shader : shaders)
             vulkanShaders.push_back(VulkanShader(device, shader.second, shader.first));
 
         return vulkanShaders;
@@ -315,46 +315,20 @@ namespace Engine::Render::Pipeline
 
     VulkanPipeline::~VulkanPipeline()
     {
-
-    }
-
-    void VulkanPipeline::BindBuffer(VkCommandBuffer commandBuffer)
-    {
-        vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipelineLayout, 0, 1, &_descriptorSets, 0,
-                                nullptr);
-        for (auto &dataBuffer : _dataBuffers)
-            dataBuffer.Fill();
+        vkDestroyPipeline(_device, _pipeline, nullptr);
     }
 
     void VulkanPipeline::BindPipeline(VkCommandBuffer commandBuffer)
     {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipeline);
+        vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipelineLayout, 0, 1, &_descriptorSets, 0, nullptr);
     }
 
     void VulkanPipeline::BuildCommandbuffer(VkCommandBuffer commandBuffer)
     {
-        VkDeviceSize offsets[1] = {0};
-        int indicesIndex = 0;
-        for (auto &meshBuffer : _meshBuffers)
+        for (auto &&mesh : _drawMeshes)
         {
-            bool indexedDraw = _indicesSize.find(meshBuffer) != _indicesSize.end();
-            auto constantBuffers = _perObjectBuffer.at(meshBuffer);
-            for (auto &&constantBuffer : constantBuffers)
-            {
-                vkCmdPushConstants(commandBuffer, _pipelineLayout, constantBuffer.DescriptorBindingInfo().stageFlags, 0,
-                                   constantBuffer.Size(), constantBuffer.DataLocation());
-            }
-            vkCmdBindVertexBuffers(commandBuffer, _firstBinding, _bindingCount, &meshBuffer.Buffer(), offsets);
-            if (indexedDraw)
-            {
-                vkCmdBindIndexBuffer(commandBuffer, _indices[indicesIndex].Buffer(), 0, VK_INDEX_TYPE_UINT32);
-                vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(_indicesSize[meshBuffer]), 1, 0, 0, 0);
-                indicesIndex++;
-            }
-            else
-            {
-                vkCmdDraw(commandBuffer, meshBuffer.VertexCount(), 1, 0, 0);
-            }
+            mesh.Draw(commandBuffer, _pipelineLayout, _firstBinding, _bindingCount);
         }
     }
 
@@ -363,60 +337,43 @@ namespace Engine::Render::Pipeline
         vkDestroyPipelineLayout(_device, _pipelineLayout, nullptr);
     }
 
-    void VulkanPipeline::AddMesh(IMesh *mesh, vector<VulkanBuffer> perObjectBuffers)
+    void VulkanPipeline::AddMesh(VulkanMeshData mesh)
     {
-        VertexBuffer vertexBuffer {_device, _physical, mesh->RequiredBufferSize(), mesh->VertexCount()};
-        vertexBuffer.Fill(mesh->VerticesData());
-        _meshBuffers.push_back(vertexBuffer);
-        _perObjectBuffer.insert({vertexBuffer, perObjectBuffers});
+        _drawMeshes.push_back(mesh);
+        _drawMeshIds.push_back(mesh.RawMesh()->GetResourceId());
     }
 
-    void VulkanPipeline::RemoveMesh(IMesh *mesh)
+    bool VulkanPipeline::TryRemoveMesh(IMesh* mesh)
     {
-        int meshIndex = _meshPosition[mesh];
-
-        _meshBuffers.erase(_meshBuffers.begin() + meshIndex);
-        int index = 0;
-        for (auto itr = _perObjectBuffer.begin(); itr != _perObjectBuffer.end(); ++itr)
+        uint32_t meshResourceId = mesh->GetResourceId();
+        bool meshFound = false;
+        for (int index = 0; index < _drawMeshIds.size(); index++)
         {
-            if (index == meshIndex)
+            if(meshResourceId == _drawMeshIds[index])
             {
-                _perObjectBuffer.erase(itr);
-                break;
-            }
-            index++;
-        }
-
-        _meshPosition.erase(mesh);
-        _perObjectsBuffersPosition.erase(mesh);
-    }
-
-    void VulkanPipeline::CreateBuffers(VulkanMeshData &meshData)
-    {
-        for (IMesh *mesh : meshData.Meshes())
-        {
-            VertexBuffer vertexBuffer {_device, _physical, mesh->RequiredBufferSize(), mesh->VertexCount()};
-            vertexBuffer.Fill(mesh->VerticesData());
-            _meshBuffers.push_back(vertexBuffer);
-            _perObjectBuffer.insert({vertexBuffer, meshData.PerObjectBuffersInfo(mesh)});
-            _meshPosition.emplace(mesh, _meshBuffers.size()-1);
-
-            if (mesh->IndexCount() > 0)
-            {
-                VulkanBuffer indexedBuffer {_device, _physical, BufferStageFlag::Vertex,
-                                                          BufferUsageFlag::IndexBuffer | BufferUsageFlag::TransferDst, BufferSharingMode::Exclusive,
-                                                          mesh->IndicesData(), mesh->IndexSize() * mesh->IndexCount(), 0};
-
-                indexedBuffer.Fill();
-
-                _indices.push_back(indexedBuffer);
-                _indicesSize.insert({vertexBuffer, mesh->IndexCount()});
+                _drawMeshes.erase(_drawMeshes.begin() + index);
+                _drawMeshIds.erase(_drawMeshIds.begin() + index);
+                meshFound = true;
             }
         }
 
-        for (const VulkanBuffer &data : meshData.Buffers())
-        {
-            _dataBuffers.push_back(data);
-        }
+        return meshFound;
+        
+        // int meshIndex = _meshPosition[mesh];
+
+        // _meshBuffers.erase(_meshBuffers.begin() + meshIndex);
+        // int index = 0;
+        // for (auto itr = _perObjectBuffer.begin(); itr != _perObjectBuffer.end(); ++itr)
+        // {
+        //     if (index == meshIndex)
+        //     {
+        //         _perObjectBuffer.erase(itr);
+        //         break;
+        //     }
+        //     index++;
+        // }
+
+        // _meshPosition.erase(mesh);
+        // _perObjectsBuffersPosition.erase(mesh);
     }
-}
+} // namespace Engine::Render::Pipeline

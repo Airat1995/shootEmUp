@@ -4,6 +4,11 @@
 namespace Engine::Input
 {
     void InputHandler::Update(double deltaTime) {
+        accumulator += deltaTime;
+        if(accumulator < updateFrameRate)
+            return;
+        
+        accumulator = 0.0;
         SDL_Event event;
         SDL_PollEvent(&event);
 
@@ -11,7 +16,6 @@ namespace Engine::Input
             return;
 
         _activeInput->Update(deltaTime, event);
-
     }
 
     void InputHandler::Subscribe(InputContext *inputMap) {

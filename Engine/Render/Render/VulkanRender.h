@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include "glm/fwd.hpp"
 #include "vulkan/vulkan.h"
 #include "IRender.h"
 #include "Render/Pipeline/VulkanPipeline.h"
@@ -42,8 +41,6 @@ namespace Engine::Render::Render
         void AddMesh(IMesh *mesh) override;
 
         void RemoveMesh(IMesh *mesh) override;
-
-        void AddShadowmap(glm::vec4 *lightPosition, CameraObject *camera) override;
 
         VkDevice &Device();
 
@@ -99,17 +96,16 @@ namespace Engine::Render::Render
 
         ISwapchain *_swapchain;
 
-        std::map<int, vector<VulkanPipeline *>> _pipelines{};
-
-        std::vector<VulkanMeshData *> _meshDataCollection{};
-
-        std::vector<VulkanOmniShadowmap *> _shadowmaps;
+        std::map<int, vector<VulkanPipeline*>> _pipelines{};
 
         VulkanRenderpass *_renderpass;
 
         std::vector<IBuffer> _mapBuffers;
 
         VulkanBuffer *_buffer;
+
+        int _frameBuffersCount;
+        int _currentDrawFramebuffer;
 
         static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
                 VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,

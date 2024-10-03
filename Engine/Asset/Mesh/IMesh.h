@@ -10,12 +10,14 @@
 #include "VertexAttributeInfo.h"
 #include "VertexBindingInfo.h"
 #include "Shared/RenderAsset/IBuffer.h"
+#include "Asset/Resources/IResource.h"
 
 namespace Engine::Assets::Mesh
 {
+    using namespace Engine::Assets::Resource;
     using namespace Engine::Assets::Material;
 
-    class IMesh {
+    class IMesh : public IResource {
     public:
         virtual ~IMesh() = default;
 
@@ -37,7 +39,7 @@ namespace Engine::Assets::Mesh
 
         virtual std::vector<VertexBindingInfo> GetVertexBindingInfo() = 0;
 
-        virtual std::map<ShaderType, IShader> &Shaders() = 0;
+        const virtual std::unordered_map<const ShaderType, IShader>& Shaders() const = 0;
 
         virtual void AddPerObjectBuffer(IBuffer *buffer) = 0;
 
@@ -59,6 +61,10 @@ namespace Engine::Assets::Mesh
 
         virtual void SetPosition(glm::vec3& position) {
             _model = glm::translate(glm::mat4(1), position);
+        }
+
+        virtual uint32_t ShaderId() {
+            return _material->ShaderId();
         }
 
     protected:

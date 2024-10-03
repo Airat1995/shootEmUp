@@ -25,5 +25,9 @@ namespace Engine::Input
 
         std::queue<InputContext *> _allInputMaps;
         InputContext *_activeInput = nullptr;
+        double accumulator = 0.0;
+        
+        //minimum time should be left before next update
+        static constexpr double updateFrameRate = 4.0f;
     };
 }

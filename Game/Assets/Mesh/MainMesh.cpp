@@ -36,6 +36,7 @@ namespace Game::Assets::Mesh
         _modelBuffer = new BaseBuffer(BufferUsageFlag::UniformBuffer, BufferSharingMode::Exclusive, &_model,
                                     BufferStageFlag::Vertex, 0);
         _perObjectBuffers.push_back(_modelBuffer);
+        _isStatic = true;
     }
 
     MainMesh::MainMesh(std::vector<MainVertexData> vertecies, std::vector<uint32_t> indicies, IMaterial *material)
@@ -51,6 +52,7 @@ namespace Game::Assets::Mesh
         _modelBuffer = new BaseBuffer(BufferUsageFlag::UniformBuffer, BufferSharingMode::Exclusive, &_model,
                                     BufferStageFlag::Vertex, 0);
         _perObjectBuffers.push_back(_modelBuffer);
+        _isStatic = true;
     }
 
     MainMesh *MainMesh::Parse(const std::filesystem::path &filePath, IMaterial *material) {
@@ -105,6 +107,7 @@ namespace Game::Assets::Mesh
         }
 
         auto *parsedMesh = new MainMesh(vertecies, indicies, material);
+        parsedMesh->_isStatic = true;
 
         return parsedMesh;
     }
@@ -145,7 +148,7 @@ namespace Game::Assets::Mesh
         return _descriptor.GetBindingInfo();
     }
 
-    std::map<ShaderType, IShader> &MainMesh::Shaders() {
+    const std::unordered_map<const ShaderType, IShader>& MainMesh::Shaders() const {
         return _material->MaterialShaders();
     }
 

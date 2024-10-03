@@ -4,10 +4,13 @@
 
 #include "ImageFlags.h"
 #include "StageFlag.h"
+#include "Asset/Resources/IResource.h"
 
 namespace Engine::Assets::Image
 {
-    class IImage {
+    using namespace Engine::Assets::Resource;
+
+    class IImage : public IResource {
     public:
         IImage(ImageFormat format, ImageType type, ImageUsage usage, BufferStageFlag stage, int binding, int width,
                int height, int sampleCount, std::vector<unsigned char> &imageData);

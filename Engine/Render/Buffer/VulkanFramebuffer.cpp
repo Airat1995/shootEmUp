@@ -70,8 +70,8 @@ namespace Engine::Render::Buffer
         }
     }
 
-    VkFramebuffer *VulkanFramebuffer::Framebuffer(int index) {
-        return &_swapChainFramebuffers->at(index);
+    VkFramebuffer VulkanFramebuffer::Framebuffer(int index) {
+        return _swapChainFramebuffers->at(index);
     }
 
     int VulkanFramebuffer::FramebufferCount() const {

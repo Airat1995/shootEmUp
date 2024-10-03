@@ -2,18 +2,50 @@
 
 namespace Engine::Render::AssetWrapper
 {
-    VulkanMeshData::VulkanMeshData(IMesh* mesh, vector<VulkanBuffer>& buffers, vector<VulkanImage>& images, vector<VulkanBuffer>& perObjectBuffers)
-        : _buffers(buffers), _images(images), _needRebuild(true), _perObjectBuffers(map<IMesh*, vector<VulkanBuffer>>())
-    {
-        _perObjectBuffers = map<IMesh*, vector<VulkanBuffer>>();
-        _meshes = vector<IMesh*>();
-        _meshes.push_back(mesh);
+    VulkanMeshData::VulkanMeshData(IMesh* mesh, VkDevice device, VkPhysicalDevice gpu, VulkanCommandPool* commandPool, uint32_t graphicsQueueFamilyIndex) : _mesh(mesh), _vertexBuffer{}
+    {  
+       for (auto *buffer : mesh->Material()->Buffers())
+       {
+           VulkanBuffer bufferData =
+               VulkanBuffer(device, gpu, buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(),
+                            buffer->RawData(), buffer->Size(), buffer->BindingId());
+            bufferData.Fill();
+           _buffers.push_back(bufferData);
+       }
 
-        _perObjectBuffers.insert({ mesh, perObjectBuffers });
+       for (auto *image : mesh->Material()->Images())
+       {
+           auto imageData = VulkanImage(commandPool, image->Format(), image->Type(), image->Usage(), image->Stage(),
+                                        image->Width(), image->Height(), *image->ImageData(), device, gpu,
+                                        image->Binding(), graphicsQueueFamilyIndex, image->SampleCount());
+           _images.push_back(imageData);
+       }
+
+        for (vector<IBuffer *>::value_type &buffer : mesh->PerObjectBuffers())
+        {
+            VulkanBuffer constBuffer = {device, gpu, buffer->StageFlag(), buffer->Usage(), buffer->SharingMode(),
+                            buffer->RawData(), buffer->Size(), buffer->BindingId()};
+            _perObjectBuffers.push_back(constBuffer);
+        }
+
+       _vertexBuffer = {device, gpu, mesh->RequiredBufferSize(), mesh->VertexCount()};
+       _vertexBuffer.Fill(mesh->VerticesData());
+       _vertexCount = mesh->VertexCount();
+
+        if (mesh->IndexCount() > 0)
+        {
+            _indices = {device, gpu, BufferStageFlag::Vertex,
+                                                      BufferUsageFlag::IndexBuffer | BufferUsageFlag::TransferDst, BufferSharingMode::Exclusive,
+                                                      mesh->IndicesData(), mesh->IndexSize() * mesh->IndexCount(), 0};
+
+            _indices.Fill();
+            _indicesSize = mesh->IndexCount();
+            _indexed = true;
+        }
 
         _bindingDescriptions = vector<VkVertexInputBindingDescription>();
-        vector<VertexAttributeInfo> vertexAttributesBindings = mesh->VertexInfo();
-        vector<VertexBindingInfo> vertexBindings = mesh->GetVertexBindingInfo();
+        vector<VertexAttributeInfo> vertexAttributesBindings = _mesh->VertexInfo();
+        vector<VertexBindingInfo> vertexBindings = _mesh->GetVertexBindingInfo();
         for (auto& vertexBinding : vertexBindings)
         {
             for (auto& attributeBinding : vertexAttributesBindings)
@@ -42,83 +74,73 @@ namespace Engine::Render::AssetWrapper
         return _attributeDescriptions;
     }
 
-    void VulkanMeshData::AddMesh(IMesh* mesh, vector<VulkanBuffer>& vulkanBuffers)
+    IMesh* VulkanMeshData::RawMesh() const noexcept
     {
-        _needRebuild = true;
-        _meshes.push_back(mesh);
-        if(_bufferCreator == nullptr) return;
-        _perObjectBuffers.insert({mesh, vulkanBuffers});
-        const vector<VulkanBuffer> buffers = PerObjectBuffersInfo(mesh);
-        _bufferCreator->AddMesh(mesh, buffers);
+        return _mesh;
     }
 
-    bool VulkanMeshData::MultipleMeshes() const noexcept { return _meshes.size() > 1; }
-
-    bool VulkanMeshData::ContainsMesh(IMesh *mesh)
-    {
-        return std::find(_meshes.begin(), _meshes.end(), mesh) != _meshes.end();
-    }
-
-    void VulkanMeshData::RemoveMesh(IMesh* mesh)
-    {
-        _needRebuild = true;
-        _meshes.erase(std::find(_meshes.begin(), _meshes.end(), mesh));
-        _bufferCreator->RemoveMesh(mesh);
-        _perObjectBuffers.erase(mesh);
-    }
-
-    vector<IMesh*>& VulkanMeshData::Meshes() noexcept
-    {
-        return _meshes;
-    }
-
-    vector<VulkanBuffer>& VulkanMeshData::Buffers() const noexcept
+    vector<VulkanBuffer>& VulkanMeshData::Buffers() noexcept
     {
         return _buffers;
     }
 
-    vector<VulkanImage>& VulkanMeshData::Images() const noexcept {
+    vector<VulkanImage>& VulkanMeshData::Images() noexcept {
         return _images;
     }
 
     vector<VulkanBuffer>& VulkanMeshData::PerObjectBuffersInfo()
     {
-        return _perObjectBuffers.at(*_meshes.begin());
+        return _perObjectBuffers;
     }
 
-    vector<VulkanBuffer>& VulkanMeshData::PerObjectBuffersInfo(IMesh* mesh)
+    void VulkanMeshData::Draw(VkCommandBuffer commandBuffer, VkPipelineLayout pipelineLayout, uint32_t firstBinding, uint32_t bindingCount) noexcept
     {
-        return _perObjectBuffers.at(mesh);
-    }
+        VkDeviceSize offsets[1] = {0};
+        int indicesIndex = 0;
 
-    void VulkanMeshData::SetBufferRecreateEventListener(IVulkanRenderMeshBufferCreator* bufferCreator)
-    {
-        _bufferCreator = bufferCreator;
-    }
-
-    bool VulkanMeshData::ShouldCombine(IMesh *mesh) const
-    {
-        bool sameShaders = true;
-        map<ShaderType, IShader> shaders = _meshes[0]->Shaders();
-        map<ShaderType, IShader> meshShaders = mesh->Shaders();
-
-        if (shaders.size() != meshShaders.size())
-            return false;
-        const bool isBothSameStaticType = _meshes[0]->IsStatic() && mesh->IsStatic();
-        for (auto &[shaderType, shader] : shaders)
+        for (auto &&constantBuffer : _perObjectBuffers)
         {
-            if (const bool containsSameShader = meshShaders.count(shaderType) != 0; !containsSameShader)
-            {
-                sameShaders = false;
-                break;
-            }
-            if (const bool sameShaderData = meshShaders.at(shaderType).ShaderData() == shader.ShaderData(); !sameShaderData)
-            {
-                sameShaders = false;
-                break;
-            }
+            vkCmdPushConstants(commandBuffer, pipelineLayout, constantBuffer.DescriptorBindingInfo().stageFlags, 0,
+                               constantBuffer.Size(), constantBuffer.DataLocation());
         }
+        vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, &_vertexBuffer.Buffer(), offsets);
+        if (_indexed)
+        {
+            vkCmdBindIndexBuffer(commandBuffer, _indices.Buffer(), 0, VK_INDEX_TYPE_UINT32);
+            vkCmdDrawIndexed(commandBuffer, _indicesSize, 1, 0, 0, 0);
+            indicesIndex++;
+        }
+        else
+        {
+            vkCmdDraw(commandBuffer, _vertexCount, 1, 0, 0);
+        }
+    }
 
-        return sameShaders && isBothSameStaticType;
+    bool VulkanMeshData::ShouldCombine(IMesh *mesh) const noexcept
+    {
+        return false;
+
+        // bool sameShaders = true;
+        // map<ShaderType, IShader>& shaders = _mesh->Shaders();
+        // map<ShaderType, IShader>& meshShaders = mesh->Shaders();
+
+        // if (shaders.size() != meshShaders.size())
+        //     return false;
+        // const bool isBothSameStaticType = _mesh->IsStatic() && mesh->IsStatic();
+        // for (auto &[shaderType, shader] : shaders)
+        // {
+        //     if (const bool containsSameShader = meshShaders.count(shaderType) != 0; !containsSameShader)
+        //     {
+        //         sameShaders = false;
+        //         break;
+        //     }
+        //     if (const bool sameShaderData = meshShaders.at(shaderType).GetResourceId() == shader.GetResourceId(); !sameShaderData)
+        //     {
+        //         sameShaders = false;
+        //         break;
+        //     }
+        // }
+
+        // return sameShaders && isBothSameStaticType;
     }
 }

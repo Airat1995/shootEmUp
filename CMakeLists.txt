@@ -17,6 +17,10 @@ if (DEBUG_CODE)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DENGINE_DEBUG")
 endif (DEBUG_CODE)
 
+if (APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_USE_PLATFORM_MACOS_MVK -DVK_EXAMPLE_XCODE_GENERATED")
+endif (APPLE)
+
 find_package(SDL2 REQUIRED)
 include_directories(shootEmUp ${SDL2_INCLUDE_DIRS})
 
@@ -35,6 +39,7 @@ add_subdirectory(Engine/Common)
 add_subdirectory(Engine/Camera)
 add_subdirectory(Engine/Input)
 add_subdirectory(Engine/Component)
+add_subdirectory(Engine/Physics)
 add_subdirectory(Tools/ShaderToCode)
 
-target_link_libraries(shootEmUp Render Window Asset Common Camera Input Component)
+target_link_libraries(shootEmUp Render Window Asset Common Camera Input Component Physics)
