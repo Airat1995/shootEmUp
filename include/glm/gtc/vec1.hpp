@@ -8,7 +8,7 @@
 ///
 /// Include <glm/gtc/vec1.hpp> to use the features of this extension.
 ///
-/// Add vec1, ivec1, uvec1 and bvec1 types.
+/// TryAdd vec1, ivec1, uvec1 and bvec1 types.
 
 #pragma once
 

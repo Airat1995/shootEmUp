@@ -2,6 +2,7 @@
   "C_Cpp.intelliSenseEngine": "Default",
   "files.associations": {
     "*.cpp": "cpp",
+    "*.binary": "code-text-binary",
     "vector": "cpp",
     "array": "cpp",
     "__locale": "cpp",
@@ -60,11 +61,39 @@
     "typeinfo": "cpp",
     "unordered_map": "cpp",
     "variant": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "condition_variable": "cpp",
+    "execution": "cpp",
+    "numbers": "cpp",
+    "typeindex": "cpp",
+    "bit": "cpp",
+    "*.tcc": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "functional": "cpp",
+    "iterator": "cpp",
+    "memory": "cpp",
+    "memory_resource": "cpp",
+    "random": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "thread": "cpp",
+    "cinttypes": "cpp",
+    "regex": "cpp",
+    "set": "cpp",
+    "stack": "cpp",
+    "span": "cpp",
+    "__memory": "cpp",
+    "forward_list": "cpp",
+    "print": "cpp"
   },
   "cmake.debugConfig": {
     "args": [
       "-DDEBUG_CODE=1"
     ]
-  }
+  },
+  "C_Cpp.errorSquiggles": "enabled",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "seaube.clangformat",
+  "clangFormat.executable.default": "/Users/airat/Projects/shootEmUp/.clang-format"
 }

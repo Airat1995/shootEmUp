@@ -115,32 +115,4 @@ namespace Engine::Render::AssetWrapper
             vkCmdDraw(commandBuffer, _vertexCount, 1, 0, 0);
         }
     }
-
-    bool VulkanMeshData::ShouldCombine(IMesh *mesh) const noexcept
-    {
-        return false;
-
-        // bool sameShaders = true;
-        // map<ShaderType, IShader>& shaders = _mesh->Shaders();
-        // map<ShaderType, IShader>& meshShaders = mesh->Shaders();
-
-        // if (shaders.size() != meshShaders.size())
-        //     return false;
-        // const bool isBothSameStaticType = _mesh->IsStatic() && mesh->IsStatic();
-        // for (auto &[shaderType, shader] : shaders)
-        // {
-        //     if (const bool containsSameShader = meshShaders.count(shaderType) != 0; !containsSameShader)
-        //     {
-        //         sameShaders = false;
-        //         break;
-        //     }
-        //     if (const bool sameShaderData = meshShaders.at(shaderType).GetResourceId() == shader.GetResourceId(); !sameShaderData)
-        //     {
-        //         sameShaders = false;
-        //         break;
-        //     }
-        // }
-
-        // return sameShaders && isBothSameStaticType;
-    }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Asset/Mesh/IMesh.h"
+#include "Render/Buffer/VertexBuffer.h"
 #include "Render/Shader/VulkanShader.h"
 #include "Render/Buffer/VulkanBuffer.h"
 #include "Render/Pipeline/IVulkanRenderMeshBufferCreator.h"
@@ -14,51 +15,46 @@ namespace Engine::Render::AssetWrapper
     class VulkanMeshData
     {
     public:
-        VulkanMeshData(IMesh * mesh, vector<VulkanBuffer>& buffers, vector<VulkanImage>& images,
-            vector<VulkanBuffer>& perObjectBuffers);
+        VulkanMeshData(IMesh * mesh, VkDevice device, VkPhysicalDevice gpu, VulkanCommandPool* commandPool, uint32_t graphicsQueueFamilyIndex);
+
+        IMesh* RawMesh() const noexcept;
+
+        void Draw(VkCommandBuffer commandBuffer, VkPipelineLayout pipelineLayout, uint32_t firstBinding, uint32_t bindingCount) noexcept;
 
         vector<VkVertexInputBindingDescription> BindingDescriptions();
 
         vector<VkVertexInputAttributeDescription> AttributeDescriptions();
 
-        void AddMesh(IMesh *mesh, vector<VulkanBuffer> &vulkanBuffers);
+        vector<VulkanBuffer>& Buffers() noexcept;
 
-        bool MultipleMeshes() const noexcept;
-
-        void RemoveMesh(IMesh * mesh);
-
-        vector<IMesh *>& Meshes() noexcept;
-
-        vector<VulkanBuffer>& Buffers() const noexcept;
-
-        vector<VulkanImage>& Images() const noexcept;
+        vector<VulkanImage>& Images() noexcept;
 
         vector<VulkanBuffer>& PerObjectBuffersInfo();
-
-        vector<VulkanBuffer>& PerObjectBuffersInfo(IMesh * mesh);
-
-        void SetBufferRecreateEventListener(IVulkanRenderMeshBufferCreator* bufferCreator);
-
-        bool ShouldCombine(IMesh *mesh) const;
-
-        bool ContainsMesh(IMesh *mesh);
 
     private:
         vector<VkVertexInputBindingDescription> _bindingDescriptions;
 
         vector<VkVertexInputAttributeDescription> _attributeDescriptions;
 
-        vector<IMesh *> _meshes;
+        IMesh* _mesh;
 
-        vector<VulkanBuffer>& _buffers;
+        vector<VulkanBuffer> _buffers;
 
-        vector<VulkanImage>& _images;
+        vector<VulkanImage> _images;
 
-        std::map<IMesh *, vector<VulkanBuffer>> _perObjectBuffers;// = std::map<IMesh*, vector<VulkanBuffer>>();
+        vector<VulkanBuffer> _perObjectBuffers;// = std::map<IMesh*, vector<VulkanBuffer>>();
 
-        IVulkanRenderMeshBufferCreator* _bufferCreator = nullptr;
+        VertexBuffer _vertexBuffer;
+
+        VulkanBuffer _indices;
+
+        int _vertexCount;
+
+        int _indicesSize;
 
         bool _needRebuild;
+
+        bool _indexed;
 
         inline VkVertexInputAttributeDescription CreateAttributeDescription(
             uint32_t binding,

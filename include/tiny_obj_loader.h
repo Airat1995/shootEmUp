@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 
 //
-// version 2.0.0 : Add new object oriented API. 1.x API is still provided.
+// version 2.0.0 : TryAdd new object oriented API. 1.x API is still provided.
 //                 * Support line primitive.
 //                 * Support points primitive.
 //                 * Support multiple search path for .mtl(v1 API).
@@ -38,7 +38,7 @@ THE SOFTWARE.
 // version 1.1.0 : Support parsing vertex color(#144)
 // version 1.0.8 : Fix parsing `g` tag just after `usemtl`(#138)
 // version 1.0.7 : Support multiple tex options(#126)
-// version 1.0.6 : Add TINYOBJLOADER_USE_DOUBLE option(#124)
+// version 1.0.6 : TryAdd TINYOBJLOADER_USE_DOUBLE option(#124)
 // version 1.0.5 : Ignore `Tr` when `d` exists in MTL(#43)
 // version 1.0.4 : Support multiple filenames for 'mtllib'(#112)
 // version 1.0.3 : Support parsing texture options(#85)

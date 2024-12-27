@@ -81,6 +81,14 @@
 # CMake
 cmake-build-*/
 build
+# clangd index. (".clangd" is a config file now, thus trailing slash)
+.clangd/
+.cache
+# static analyzer regression testing project files
+/clang/utils/analyzer/projects/*/CachedSource
+/clang/utils/analyzer/projects/*/PatchedSource
+/clang/utils/analyzer/projects/*/ScanBuildResults
+/clang/utils/analyzer/projects/*/RefScanBuildResults
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
@@ -168,3 +176,7 @@ _deps
 *-prefix/
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,cmake,clion
+
+
+### XCode project folder
+/proj

@@ -17,4 +17,4 @@ add_library(Physics STATIC ${Physics_SRC})
 
 set_target_properties(Physics PROPERTIES LINKER_LANGUAGE CXX)
 
-target_link_libraries(Physics Component)
+target_link_libraries(Physics Component Common)

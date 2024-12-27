@@ -8,7 +8,7 @@
 ///
 /// Include <glm/gtx/hash.hpp> to use the features of this extension.
 ///
-/// Add std::hash support for glm types
+/// TryAdd std::hash support for glm types
 
 #pragma once
 
