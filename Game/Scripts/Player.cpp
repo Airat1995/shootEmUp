@@ -30,8 +30,6 @@ namespace Game::Scripts
 
         _boxCollider = new Engine::Physics::Collider::BoxCollider(*_transform, {-.5, -.5, -.5}, {.5, .5, .5});
         _sphereCollider = new Engine::Physics::Collider::SphereCollider(*_transform, 1);
-
-        world.AddCollider(_boxCollider);
     }
 
     void Player::Update(double deltaTime)

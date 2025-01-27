@@ -1,57 +1,17 @@
 #include "Octree.h"
 
-namespace Engine::Physics::World
+int Engine::Physics::World::Octree::Octree::MAX_COLLIDERS_PER_NODE = Engine::Physics::World::DEFAULT_MAX_COLLIDERS_PER_NODE;
+float Engine::Physics::World::Octree::Octree::MIN_NODE_SIZE = Engine::Physics::World::DEFAULT_MIN_NODE_SIZE;
+
+Engine::Physics::World::Octree::Octree(Engine::Physics::Common::BoundingBox treeBox, float minNodeSize, int maxCollidersCountPerNode) :
+    _rootNode(nullptr, treeBox)
 {
-    Octree::Octree(glm::vec3 minPos, glm::vec3 maxPos) : _childNodes(), _colliders(), _box({0,0,0}, 1.0f)
-    {
-        _area = {minPos, maxPos};
-    }
+    Octree::MAX_COLLIDERS_PER_NODE = maxCollidersCountPerNode;
+    Octree::MIN_NODE_SIZE = minNodeSize;
+    _rootNode.SetNestedIndex(0);
+}
 
-    Octree::Octree(glm::vec3 minPos, glm::vec3 maxPos, std::vector<Collider::Collider *> colliders)
-        : _childNodes(), _colliders(std::move(colliders)), _box({0,0,0}, 1.0f)
-    {
-        _area = {minPos, maxPos};
-    }
-
-    Octree::~Octree()
-    {
-//        /* Firstly clear data recursively */
-//        clear();
-//
-//        /* Deallocate memory pool */
-//        CORRADE_ASSERT(_numAllocatedNodes ==
-//                           (_freeNodeBlocks.size() + _activeNodeBlocks.size())*8 + 1,
-//                       "Internal data corrupted, maybe all nodes were not returned from the tree", );
-//
-//        for(OctreeNodeBlock* nodeBlock: _freeNodeBlocks)
-//            delete nodeBlock;
-//        for(OctreeNodeBlock* nodeBlock: _activeNodeBlocks)
-//            delete nodeBlock;
-    }
-
-    void Octree::Update(double deltaTime)
-    {
-
-    }
-
-    void Octree::Build()
-    {
-        if(_colliders.size() <= 1)
-            return;
-
-        glm::vec3 size = _area.GetMax() - _area.GetMin();
-        if(size == MathConst::ZERO)
-        {
-
-        }
-    }
-
-    void Octree::Clear()
-    {
-        
-    }
-
-    std::array<OctreeNode*, NODE_CHILD_COUNT>* Octree::RequestChildrenFromPool()
-    {
-    }
-} // namespace Engine::Physics::World
+void Engine::Physics::World::Octree::Insert(Collider::Collider *collider)
+{
+    _rootNode.InsertCollider(collider);
+}

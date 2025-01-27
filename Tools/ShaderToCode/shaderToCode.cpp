@@ -61,13 +61,13 @@ const bool generateShaderClass(std::string &className, ShaderType shaderType, co
     shaderClassGenFile << inlineMethodOffset << shaderClassName << "Shader() : IShader() {\n";
     shaderClassGenFile << propertyOffset << "_name = "
                        << "\"" << className << "\";\n";
-    shaderClassGenFile << propertyOffset << "_size = " << fileSize << ";\n";
+    shaderClassGenFile << propertyOffset << "_halfSize = " << fileSize << ";\n";
     shaderClassGenFile << propertyOffset << "std::ifstream shaderFile (\"" << absolutePath.c_str()
                        << "\", std::ios::in|std::ios::binary|std::ios::ate);\n"
                        << propertyOffset << "if (shaderFile.is_open())\n"
                        << propertyOffset << "{\n"
                        << inlinePropPlatform << "const auto size = shaderFile.tellg();\n"
-                       << inlinePropPlatform << "_size = shaderFile.tellg();\n"
+                       << inlinePropPlatform << "_halfSize = shaderFile.tellg();\n"
                        << inlinePropPlatform << "_shaderData = new char [size];\n"
                        << inlinePropPlatform << "shaderFile.seekg (0, std::ios::beg);\n"
                        << inlinePropPlatform << "shaderFile.read (_shaderData, size);\n"

@@ -14,12 +14,15 @@ namespace Engine::Physics::Collider
 
         [[nodiscard]] bool IsInsideCell(const glm::vec3 minCell, const glm::vec3 maxCell) const noexcept override;
 
-        [[nodiscard]] glm::vec3 GetMin() const noexcept;
+        virtual Engine::Physics::Common::BoundingBox& GetBoundingBox() override;
 
-        [[nodiscard]] glm::vec3 GetMax() const noexcept;
+        [[nodiscard]] inline glm::vec3 GetMin() const noexcept;
+
+        [[nodiscard]] inline glm::vec3 GetMax() const noexcept;
 
     protected:
         glm::vec3 min;
         glm::vec3 max;
+        Engine::Physics::Common::BoundingBox box;
     };
 }

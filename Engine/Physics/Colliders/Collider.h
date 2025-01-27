@@ -1,7 +1,8 @@
 #pragma once
 #include <__atomic/aliases.h>
-#include "CollisionState.h"
 #include "ColliderType.h"
+#include "CollisionState.h"
+#include "Physics/Common/BoundingBox.h"
 #include "Component/Component/Transform.h"
 
 namespace Engine::Physics::Collider
@@ -28,6 +29,8 @@ namespace Engine::Physics::Collider
         [[nodiscard]] virtual bool IsColliding(Collider* anotherCollider) const noexcept = 0;
 
         [[nodiscard]] virtual bool IsInsideCell(const glm::vec3 minCell, const glm::vec3 maxCell) const noexcept = 0;
+
+        virtual Engine::Physics::Common::BoundingBox& GetBoundingBox() = 0;
 
         [[nodiscard]] glm::vec3 GetPosition() const noexcept {
             return _transform.GetPosition();

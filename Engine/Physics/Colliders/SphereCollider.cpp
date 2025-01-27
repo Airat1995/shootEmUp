@@ -6,7 +6,7 @@ namespace Engine::Physics::Collider
 {
     SphereCollider::SphereCollider(Component::Component::Transform &transform,
                                                               double radius) :
-        Collider(transform, ColliderType::Sphere), radius(radius) {}
+        Collider(transform, ColliderType::Sphere), radius(radius), box({transform.GetPosition(), (float)radius}) {}
 
     SphereCollider::~SphereCollider() {
         radius = 0;
@@ -35,5 +35,10 @@ namespace Engine::Physics::Collider
 
     double SphereCollider::GetRadius() const noexcept {
         return radius;
+    }
+    Engine::Physics::Common::BoundingBox &SphereCollider::GetBoundingBox()
+    {
+        box.SetPosition(_transform.GetPosition());
+        return box;
     }
 }

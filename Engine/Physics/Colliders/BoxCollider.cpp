@@ -5,7 +5,7 @@
 namespace Engine::Physics::Collider
 {
     BoxCollider::BoxCollider(Component::Component::Transform &transform, const glm::vec3 min, const glm::vec3 max) :
-        Collider(transform, ColliderType::Box), min(min), max(max) {}
+        Collider(transform, ColliderType::Box), min(min), max(max), box({transform.GetPosition(), (max.x-min.x)/2}) {}
 
     BoxCollider::~BoxCollider() {
         _collisionState = CollisionState::Idle;
@@ -43,5 +43,10 @@ namespace Engine::Physics::Collider
 
     glm::vec3 BoxCollider::GetMax() const noexcept {
         return _transform.GetPosition() + max;
+    }
+    Engine::Physics::Common::BoundingBox &BoxCollider::GetBoundingBox()
+    {
+        box.SetPosition(_transform.GetPosition());
+        return box;
     }
 }

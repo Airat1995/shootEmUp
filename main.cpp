@@ -22,7 +22,17 @@ int main()
     Engine::Window::VulkanRender render{};
     Engine::Window::SDLWindow window{1920, 1080, "shootEmUp", Engine::Window::WindowType::Windowed, &render};
     Engine::Input::InputHandler inputHandler;
-    Engine::Physics::World::World world {glm::vec3(-5, -5, -5), glm::vec3(5, 5, 5), glm::vec3(1,1,1)};
+    Engine::Physics::World::World world {glm::vec3(0,0,0), 10, 2};
+
+    for (int i = 0; i < 3; ++i) {
+         auto* transform = new Engine::Component::Component::Transform();
+         transform->SetPosition(glm::vec3(i,i,i));
+         auto* collder = new Engine::Physics::Collider::BoxCollider(*transform, glm::vec3(i-1, i-1, i-1), glm::vec3(i+1, i+1, i+1));
+         world.InsertCollider(collder);
+
+    }
+
+    return 0;
 
     std::vector<Engine::Component::Entity::Entity*> entities;
 
@@ -41,18 +51,17 @@ int main()
      Engine::Physics::Collider::BoxCollider staticBox {boxTransform, glm::vec3(-.5, -.5,-.5), glm::vec3(.5, .5,.5) };
      boxTransform.SetPosition(glm::vec3(0,0, -3));
 
-     world.AddCollider(&staticBox);
 
-     for (int x = 0; x < 10; ++x) {
-         for (int y = 0; y < 10; ++y) {
-             for (int z = 0; z < 10; ++z) {
-                 Game::Scripts::Player *player = new Game::Scripts::Player(inputHandler, camera, render, world, mainMaterial);
-                 player->SetPosition(glm::vec3{-5 + x, -5 + y, -5 + z });
-
-                 entities.push_back(player);
-             }
-         }
-     }
+//     for (int x = 0; x < 10; ++x) {
+//         for (int y = 0; y < 10; ++y) {
+//             for (int z = 0; z < 10; ++z) {
+//                 Game::Scripts::Player *player = new Game::Scripts::Player(inputHandler, camera, render, world, mainMaterial);
+//                 player->SetPosition(glm::vec3{-5 + x, -5 + y, -5 + z });
+//
+//                 entities.push_back(player);
+//             }
+//         }
+//     }
 
     double time = 0.0;
     double targetFrameTime = 16.0f;
@@ -72,7 +81,6 @@ int main()
 
         window.Update();
         inputHandler.Update(deltaTime);
-        world.Update(deltaTime);
 
         start = newTime;
         accumulator += deltaTime;
@@ -98,8 +106,6 @@ int main()
             entity->PrerenderUpdate(alpha);
         }
         render.DrawFrame();
-
-        world.ClearGraph();
     }
     return 0;
 }
