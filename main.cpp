@@ -24,12 +24,17 @@ int main()
     Engine::Input::InputHandler inputHandler;
     Engine::Physics::World::World world {glm::vec3(0,0,0), 10, 2};
 
+    Engine::Physics::Collider::BoxCollider* collders[3];
     for (int i = 0; i < 3; ++i) {
          auto* transform = new Engine::Component::Component::Transform();
          transform->SetPosition(glm::vec3(i,i,i));
          auto* collder = new Engine::Physics::Collider::BoxCollider(*transform, glm::vec3(i-1, i-1, i-1), glm::vec3(i+1, i+1, i+1));
+         collders[i] = collder;
          world.InsertCollider(collder);
+    }
 
+    for (int i = 0; i < 3; ++i) {
+        world.RemoveCollider(collders[i]);
     }
 
     return 0;

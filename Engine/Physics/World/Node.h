@@ -34,6 +34,8 @@ namespace Engine::Physics::World
 
         void InsertCollider(Collider::Collider* collider);
 
+        void RemoveCollider(Collider::Collider* collider);
+
         inline bool IsOverlap(Common::BoundingBox& colliderBox) noexcept;
 
     private:

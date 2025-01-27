@@ -22,6 +22,8 @@ namespace Engine::Physics::World
         static int MAX_COLLIDERS_PER_NODE;
         static float MIN_NODE_SIZE;
 
+        void Remove(Collider::Collider *collider);
+
     protected:
         Engine::Physics::World::Node _rootNode;
     };

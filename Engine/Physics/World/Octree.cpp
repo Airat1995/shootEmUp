@@ -11,7 +11,11 @@ Engine::Physics::World::Octree::Octree(Engine::Physics::Common::BoundingBox tree
     _rootNode.SetNestedIndex(0);
 }
 
-void Engine::Physics::World::Octree::Insert(Collider::Collider *collider)
+void Engine::Physics::World::Octree::Insert(Collider::Collider* collider)
 {
     _rootNode.InsertCollider(collider);
+}
+void Engine::Physics::World::Octree::Remove(Engine::Physics::Collider::Collider* collider)
+{
+    _rootNode.RemoveCollider(collider);
 }

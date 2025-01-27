@@ -12,6 +12,8 @@ namespace Engine::Physics::World
 
         void InsertCollider(Engine::Physics::Collider::Collider* collider);
 
+        void RemoveCollider(Engine::Physics::Collider::Collider *collider);
+
     private:
         Octree _tree;
         std::vector<Engine::Physics::Collider::Collider*> _treeColliders;

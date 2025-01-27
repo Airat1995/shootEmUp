@@ -6,8 +6,16 @@ Engine::Physics::World::World::World(glm::vec3 position, float halfSize, float m
 {
 }
 
-void Engine::Physics::World::World::InsertCollider(Engine::Physics::Collider::Collider *collider)
+void Engine::Physics::World::World::InsertCollider(Engine::Physics::Collider::Collider* collider)
 {
     _treeColliders.emplace_back(collider);
     _tree.Insert(collider);
+}
+void Engine::Physics::World::World::RemoveCollider(Engine::Physics::Collider::Collider* collider)
+{
+    if(std::find(_treeColliders.begin(), _treeColliders.end(), collider) == _treeColliders.end())
+        return;
+
+    _treeColliders.erase(std::remove(_treeColliders.begin(), _treeColliders.end(), collider), _treeColliders.end());
+    _tree.Remove(collider);
 }

@@ -21,8 +21,11 @@ Engine::Physics::World::Node::~Node()
     _size = 0;
     _parentNode = nullptr;
     _collidersInNode.clear();
-    for (int childIndex = 0; childIndex < OCTREE_CHILD_COUNT; ++childIndex) {
-        delete _childNodes[childIndex];
+    if(_state == NodeState::Node)
+    {
+        for (int childIndex = 0; childIndex < OCTREE_CHILD_COUNT; ++childIndex) {
+            delete _childNodes[childIndex];
+        }
     }
 }
 void Engine::Physics::World::Node::UpdateNode() noexcept
@@ -103,4 +106,41 @@ void Engine::Physics::World::Node::InsertCollider(Engine::Physics::Collider::Col
 bool Engine::Physics::World::Node::IsOverlap(Engine::Physics::Common::BoundingBox &colliderBox) noexcept
 {
     return _box.IsOverlap(colliderBox);
+}
+void Engine::Physics::World::Node::RemoveCollider(Engine::Physics::Collider::Collider *collider)
+{
+    switch (_state)
+    {
+    case NodeState::Empty:
+        break;
+    case NodeState::Node:
+        {
+            bool allEmpty = true;
+            for (int childIndex = 0; childIndex < OCTREE_CHILD_COUNT; ++childIndex) {
+                _childNodes[childIndex]->RemoveCollider(collider);
+                allEmpty &= _childNodes[childIndex]->_state == NodeState::Empty;
+            }
+            if (allEmpty) {
+                _state = NodeState::Empty;
+                for (int childIndex = 0; childIndex < OCTREE_CHILD_COUNT; ++childIndex) {
+                    delete _childNodes[childIndex];
+                }
+            }
+        }
+        break;
+    case NodeState::Leaf:
+        for (int colliderIndex = 0; colliderIndex < _collidersInNode.size(); ++colliderIndex) {
+            if(_collidersInNode[colliderIndex] == collider)
+            {
+                _collidersInNode.erase(std::remove(_collidersInNode.begin(), _collidersInNode.end(), _collidersInNode[colliderIndex]), _collidersInNode.end());
+                break;
+            }
+        }
+
+        if(_collidersInNode.empty())
+        {
+            _state = NodeState::Empty;
+        }
+        break;
+    }
 }
