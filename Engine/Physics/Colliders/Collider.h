@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <__atomic/aliases.h>
 #include "ColliderType.h"
 #include "CollisionState.h"
@@ -7,14 +8,18 @@
 
 namespace Engine::Physics::Collider
 {
+    using NodeId = std::atomic_uint32_t;
+    static NodeId base = -1;
     class Collider
     {
-        using NodeId = std::atomic_uint32_t;
-        static constexpr NodeId null = -1;
-
     public:
+
         virtual ~Collider() = default;
-        explicit Collider(Component::Component::Transform& transform, ColliderType type) : _transform(transform), _type(type) {}
+
+        Collider(Component::Component::Transform& transform, ColliderType type) : _transform(transform), _type(type)
+        {
+            _id = (base.fetch_add(1, std::memory_order_relaxed) + 1);
+        }
 
         [[nodiscard]] CollisionState GetState() const noexcept
         {
@@ -32,7 +37,8 @@ namespace Engine::Physics::Collider
 
         virtual Engine::Physics::Common::BoundingBox& GetBoundingBox() = 0;
 
-        [[nodiscard]] glm::vec3 GetPosition() const noexcept {
+        [[nodiscard]] glm::vec3 GetPosition() const noexcept
+        {
             return _transform.GetPosition();
         }
 
@@ -40,9 +46,15 @@ namespace Engine::Physics::Collider
             _collisionState = state;
         }
 
+        int64_t GetId() {
+            return _id;
+        }
+
     protected:
         CollisionState _collisionState = CollisionState::Idle;
         Component::Component::Transform& _transform;
         ColliderType _type = ColliderType::None;
+    private:
+        uint32_t _id;
     };
 }

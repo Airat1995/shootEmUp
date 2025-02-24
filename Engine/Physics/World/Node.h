@@ -2,6 +2,7 @@
 
 #include <array>
 #include <vector>
+#include "CollisionInfoContainer.h"
 #include "Physics/Colliders/Collider.h"
 #include "Physics/Common/BoundingBox.h"
 
@@ -37,6 +38,8 @@ namespace Engine::Physics::World
         void RemoveCollider(Collider::Collider* collider);
 
         inline bool IsOverlap(Common::BoundingBox& colliderBox) noexcept;
+
+        void FillCollidedObjects(CollisionInfoContainer& collisionInfo);
 
     private:
 

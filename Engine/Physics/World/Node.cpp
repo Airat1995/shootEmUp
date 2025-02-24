@@ -144,3 +144,32 @@ void Engine::Physics::World::Node::RemoveCollider(Engine::Physics::Collider::Col
         break;
     }
 }
+void Engine::Physics::World::Node::FillCollidedObjects(CollisionInfoContainer& collisionInfo) {
+    switch (_state) {
+
+    case NodeState::Empty:
+        return;
+    case NodeState::Node:
+        for (int nodeIndex = 0; nodeIndex < OCTREE_CHILD_COUNT; ++nodeIndex) {
+            _childNodes[nodeIndex]->FillCollidedObjects(collisionInfo);
+        }
+        break;
+    case NodeState::Leaf:
+        if(_collidersInNode.size() <= 1)
+        {
+            return;
+        }
+
+        for (int colliderIndex = 0; colliderIndex < _collidersInNode.size(); ++colliderIndex)
+        {
+            for (int secondColliderIndex = colliderIndex + 1; secondColliderIndex < _collidersInNode.size(); ++secondColliderIndex)
+            {
+                if(_collidersInNode[colliderIndex]->IsColliding(_collidersInNode[secondColliderIndex]))
+                {
+                    collisionInfo.TryInsert(_collidersInNode[colliderIndex],_collidersInNode[secondColliderIndex]);
+                }
+            }
+        }
+        break;
+    }
+}

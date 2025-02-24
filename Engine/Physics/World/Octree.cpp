@@ -19,3 +19,8 @@ void Engine::Physics::World::Octree::Remove(Engine::Physics::Collider::Collider*
 {
     _rootNode.RemoveCollider(collider);
 }
+
+void Engine::Physics::World::Octree::FillCollidedObjects(CollisionInfoContainer& collisionInfoContainer)
+{
+    return _rootNode.FillCollidedObjects(collisionInfoContainer);
+}

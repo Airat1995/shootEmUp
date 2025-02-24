@@ -4,6 +4,7 @@
 Engine::Physics::World::World::World(glm::vec3 position, float halfSize, float minNodeSize,
                                      int maxCollidersCountPerNode) : _tree({position, halfSize}, minNodeSize, maxCollidersCountPerNode)
 {
+    _frameColliders = {};
 }
 
 void Engine::Physics::World::World::InsertCollider(Engine::Physics::Collider::Collider* collider)
@@ -18,4 +19,8 @@ void Engine::Physics::World::World::RemoveCollider(Engine::Physics::Collider::Co
 
     _treeColliders.erase(std::remove(_treeColliders.begin(), _treeColliders.end(), collider), _treeColliders.end());
     _tree.Remove(collider);
+}
+void Engine::Physics::World::World::PhysicalUpdate(double deltaTime)
+{
+    _tree.FillCollidedObjects(_frameColliders);
 }
