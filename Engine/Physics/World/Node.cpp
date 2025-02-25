@@ -91,10 +91,6 @@ void Engine::Physics::World::Node::InsertCollider(Engine::Physics::Collider::Col
                             didntFoundAnyChild = false;
                         }
                     }
-                    if(didntFoundAnyChild)
-                    {
-
-                    }
                 }
 
                 _collidersInNode.clear();
@@ -171,5 +167,22 @@ void Engine::Physics::World::Node::FillCollidedObjects(CollisionInfoContainer& c
             }
         }
         break;
+    }
+}
+void Engine::Physics::World::Node::Clear()
+{
+    switch (_state) {
+
+    case NodeState::Empty:
+        return;
+    case NodeState::Node:
+        for (int nodeIndex = 0; nodeIndex < OCTREE_CHILD_COUNT; ++nodeIndex) {
+            _childNodes[nodeIndex]->Clear();
+            delete _childNodes[nodeIndex];
+        }
+        _state = NodeState::Empty;
+        break;
+    case NodeState::Leaf:
+        _collidersInNode.clear();
     }
 }

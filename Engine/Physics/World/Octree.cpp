@@ -24,3 +24,7 @@ void Engine::Physics::World::Octree::FillCollidedObjects(CollisionInfoContainer&
 {
     return _rootNode.FillCollidedObjects(collisionInfoContainer);
 }
+void Engine::Physics::World::Octree::Clear()
+{
+    _rootNode.Clear();
+}

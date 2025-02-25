@@ -31,23 +31,32 @@ namespace Engine::Physics::Collider
             return _type;
         }
 
-        [[nodiscard]] virtual bool IsColliding(Collider* anotherCollider) const noexcept = 0;
+        [[nodiscard]] virtual bool IsColliding(Collider* anotherCollider) const = 0;
 
-        [[nodiscard]] virtual bool IsInsideCell(const glm::vec3 minCell, const glm::vec3 maxCell) const noexcept = 0;
+        [[nodiscard]] virtual bool IsInsideCell(const glm::vec3 minCell, const glm::vec3 maxCell) const = 0;
 
         virtual Engine::Physics::Common::BoundingBox& GetBoundingBox() = 0;
 
-        [[nodiscard]] glm::vec3 GetPosition() const noexcept
+        [[nodiscard]] glm::vec3 GetPosition() const
         {
             return _transform.GetPosition();
         }
 
-        void SetState(CollisionState state) {
+        void SetState(CollisionState state, Collider* collider) {
             _collisionState = state;
         }
 
-        int64_t GetId() {
+        int64_t GetId() const noexcept {
             return _id;
+        }
+
+        void SetColliding(Collider *collidingWith) {
+            switch (_collisionState) {
+            case CollisionState::Idle:
+                break;
+            case CollisionState::Stay:
+                break;
+            }
         }
 
     protected:

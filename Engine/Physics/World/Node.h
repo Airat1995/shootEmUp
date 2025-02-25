@@ -41,6 +41,8 @@ namespace Engine::Physics::World
 
         void FillCollidedObjects(CollisionInfoContainer& collisionInfo);
 
+        void Clear();
+
     private:
 
         static const int OCTREE_CHILD_COUNT = 8;

@@ -28,6 +28,8 @@ namespace Engine::Physics::World
 
         void FillCollidedObjects(CollisionInfoContainer& collisionInfoContainer);
 
+        void Clear();
+
     protected:
         Engine::Physics::World::Node _rootNode;
     };

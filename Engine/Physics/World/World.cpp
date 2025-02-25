@@ -22,5 +22,12 @@ void Engine::Physics::World::World::RemoveCollider(Engine::Physics::Collider::Co
 }
 void Engine::Physics::World::World::PhysicalUpdate(double deltaTime)
 {
+    _tree.Clear();
+    for (int colliderIndex = 0; colliderIndex < _treeColliders.size(); ++colliderIndex) {
+        _tree.Insert(_treeColliders[colliderIndex]);
+    }
+
+    _frameColliders.StartColliding();
     _tree.FillCollidedObjects(_frameColliders);
+    _frameColliders.NotifyAllColliders();
 }

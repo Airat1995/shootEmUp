@@ -21,8 +21,8 @@ namespace Engine::Physics::Collider
         [[nodiscard]] inline glm::vec3 GetMax() const noexcept;
 
     protected:
-        glm::vec3 min;
-        glm::vec3 max;
+        glm::vec3 sizeMin;
+        glm::vec3 sizeMax;
         Engine::Physics::Common::BoundingBox box;
     };
 }
