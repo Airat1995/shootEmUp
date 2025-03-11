@@ -48,19 +48,21 @@ namespace Engine::Physics::Collider
         }
 
         static bool BoxToBoxCollision(glm::vec3 lhsMin, glm::vec3 lhsMax, glm::vec3 rhsMin, glm::vec3 rhsMax) {
-            bool collision = true;
+//            return lhsMin.x <= rhsMax.x && lhsMax.x >= rhsMin.x && lhsMin.y <= rhsMax.y && lhsMax.y >= rhsMax.y &&
+//                lhsMin.z <= rhsMax.z && lhsMax.z >= rhsMin.z;
+
             if( lhsMax.x < rhsMin.x || lhsMin.x > rhsMax.x ) {
-                collision = false;
+                return false;
             }
             if( lhsMax.y < rhsMin.y || lhsMin.y > rhsMax.y ) {
-                collision = false;
+                return false;
             }
 
             if( lhsMax.z < rhsMin.z || lhsMin.z > rhsMax.z ) {
-                collision = false;
+                return false;
             }
 
-            return collision;
+            return true;
         }
 
         static bool SphereToSphereCollision(Collider* sphereCollider, Collider* anotherSphere) {

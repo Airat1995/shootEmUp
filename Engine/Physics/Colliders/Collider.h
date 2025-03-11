@@ -1,10 +1,11 @@
 #pragma once
-#include <utility>
 #include <__atomic/aliases.h>
+#include <utility>
 #include "ColliderType.h"
 #include "CollisionState.h"
-#include "Physics/Common/BoundingBox.h"
 #include "Component/Component/Transform.h"
+#include "Physics/Common/BoundingBox.h"
+
 
 namespace Engine::Physics::Collider
 {
@@ -13,7 +14,6 @@ namespace Engine::Physics::Collider
     class Collider
     {
     public:
-
         virtual ~Collider() = default;
 
         Collider(Component::Component::Transform& transform, ColliderType type) : _transform(transform), _type(type)
@@ -26,7 +26,7 @@ namespace Engine::Physics::Collider
             return _collisionState;
         }
 
-        [[nodiscard]] ColliderType GetType() const noexcept
+        [[nodiscard]] inline ColliderType GetType() const noexcept
         {
             return _type;
         }
@@ -37,20 +37,13 @@ namespace Engine::Physics::Collider
 
         virtual Engine::Physics::Common::BoundingBox& GetBoundingBox() = 0;
 
-        [[nodiscard]] glm::vec3 GetPosition() const
+        [[nodiscard]] inline glm::vec3 GetPosition() const
         {
             return _transform.GetPosition();
         }
 
         void SetState(CollisionState state, Collider* collider) {
             _collisionState = state;
-        }
-
-        int64_t GetId() const noexcept {
-            return _id;
-        }
-
-        void SetColliding(Collider *collidingWith) {
             switch (_collisionState) {
             case CollisionState::Idle:
                 break;
@@ -59,10 +52,15 @@ namespace Engine::Physics::Collider
             }
         }
 
+        inline uint32_t GetId() const noexcept {
+            return _id;
+        }
+
     protected:
         CollisionState _collisionState = CollisionState::Idle;
         Component::Component::Transform& _transform;
         ColliderType _type = ColliderType::None;
+
     private:
         uint32_t _id;
     };

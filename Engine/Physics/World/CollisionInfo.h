@@ -9,29 +9,53 @@ namespace Engine::Physics::World
 
     public:
         Collider *FirstCollider;
+        uint32_t _firstIdCollider;
         Collider *SecondCollider;
+        uint32_t _secondIdCollider;
 
         CollisionInfo(Collider *firstCollider, Collider *secondCollider) :
-            FirstCollider(firstCollider), SecondCollider(secondCollider), _usageCount(0) {}
+            FirstCollider(firstCollider), _firstIdCollider(firstCollider->GetId()), SecondCollider(secondCollider), _secondIdCollider(secondCollider->GetId()), _usageCount(0) {}
 
-        inline bool IsSame(Collider *anotherFirst, Collider *anotherSecond) {
-            int containerFCId = FirstCollider->GetId();
-            int containerSCId = SecondCollider->GetId();
-
-            int anotherFCId = anotherFirst->GetId();
-            int anotherSCId = anotherSecond->GetId();
-
-            if(anotherFCId == anotherSCId) {
-                printf("SAME ADDED!");
+        inline bool IsSame(uint32_t anotherFCId, uint32_t anotherSCId) {
+            
+            if(_firstIdCollider != anotherFCId)
+            {
+                if(_firstIdCollider != anotherSCId)
+                {
+                    return false;
+                }
             }
 
-            bool containedFirst = containerFCId == anotherFCId || containerFCId == anotherSCId;
-            bool containedSecond = containerSCId == anotherFCId || containerSCId == anotherSCId;
+            if(_secondIdCollider != anotherFCId)
+            {
+                if(_secondIdCollider != anotherSCId)
+                {
+                    return false;
+                }
+            }
 
-            return containedFirst && containedSecond;
+            return true;
         }
-        inline bool IsSame(CollisionInfo info) {
-            return IsSame(info.FirstCollider, info.SecondCollider);
+
+        static inline bool IsSame(uint32_t firstIdCollider, uint32_t secondIdCollider, uint32_t anotherFCId, uint32_t anotherSCId) {
+
+            if(firstIdCollider != anotherFCId)
+            {
+                if(firstIdCollider != anotherSCId)
+                {
+                    return false;
+                }
+            }
+            
+            if(secondIdCollider != anotherFCId)
+            {
+                if(secondIdCollider != anotherSCId)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         inline void IncreaseUsageCount() noexcept {

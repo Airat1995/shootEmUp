@@ -15,7 +15,7 @@ namespace Engine::Physics::Common
             return _pos;
         }
 
-        [[nodiscard]] inline void SetPosition(glm::vec3 newPosition) noexcept
+        inline void SetPosition(glm::vec3 newPosition) noexcept
         {
             _pos = newPosition;
         }
