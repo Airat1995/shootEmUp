@@ -92,9 +92,9 @@ namespace Game::Assets::Mesh
                 };
 
                 vertex.normal = {
-                        attributes.normals[3 * index.vertex_index + 0],
-                        attributes.normals[3 * index.vertex_index + 1],
-                        attributes.normals[3 * index.vertex_index + 2],
+                    attributes.normals[3 * index.normal_index + 0],
+                    attributes.normals[3 * index.normal_index + 1],
+                    attributes.normals[3 * index.normal_index + 2],
                 };
 
                 if (uniqueVertices.count(vertex) == 0) {
